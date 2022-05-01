@@ -27,4 +27,15 @@ class PasswordRepositoryImpl extends PasswordRepository {
     );
     return _localDataSource.savePassword(passwordEntity);
   }
+
+  @override
+  Future<void> deletePassword(String passwordId) {
+    return _localDataSource.deletePassword(passwordId);
+  }
+
+  @override
+  Future<Password> getPasswordById(String passwordId) {
+    return _localDataSource.getPasswordById(passwordId)
+      .then((value) => value.toModel());
+  }
 }

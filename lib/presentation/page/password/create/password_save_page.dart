@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/main.dart';
-import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_create_bloc.dart';
-import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_create_events.dart';
-import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_create_state.dart';
+import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_bloc.dart';
+import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_events.dart';
+import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 
-class PasswordCreatePage extends StatefulWidget {
-  const PasswordCreatePage({Key? key}) : super(key: key);
+class SavePasswordPageArg {
+  SavePasswordPageArg({this.id});
 
-  @override
-  State<PasswordCreatePage> createState() => _PasswordCreatePageState();
+  final String? id;
 }
 
-class _PasswordCreatePageState extends State<PasswordCreatePage> {
-  final PasswordCreateBloc _bloc = getIt<PasswordCreateBloc>();
+class PasswordSavePage extends StatefulWidget {
+  const PasswordSavePage({Key? key, this.arg}) : super(key: key);
+
+  final SavePasswordPageArg? arg;
+
+  @override
+  State<PasswordSavePage> createState() => _PasswordSavePageState();
+}
+
+class _PasswordSavePageState extends State<PasswordSavePage> {
+  final PasswordSaveBloc _bloc = getIt<PasswordSaveBloc>();
   late TextEditingController _nameTextEdtCtrl;
   late TextEditingController _accNameTextEdtCtrl;
   late TextEditingController _passwordTextEdtCtrl;
@@ -22,6 +30,7 @@ class _PasswordCreatePageState extends State<PasswordCreatePage> {
   @override
   void initState() {
     super.initState();
+    print('[PasswordSavePage] id=${widget.arg?.id}');
     _nameTextEdtCtrl = TextEditingController()
       ..addListener(() {
         _bloc.onNameChanged(_nameTextEdtCtrl.text);
@@ -48,15 +57,21 @@ class _PasswordCreatePageState extends State<PasswordCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create'),
-      ),
+      appBar: AppBar(title: Text('Save Password')),
       body: BlocProvider(
-        create: (ctx) => _bloc,
-        child: BlocListener<PasswordCreateBloc, PasswordCreateState>(
+        create: (ctx) =>
+            _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
+        child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
           listener: (context, state) {
             if (state.loadState == LoadState.success) {
               Navigator.of(context).pop();
+            }
+
+            final password = state.password;
+            if (password != null) {
+              _nameTextEdtCtrl.text = state.password!.name;
+              _accNameTextEdtCtrl.text = state.password!.accName;
+              _passwordTextEdtCtrl.text = state.password!.password;
             }
           },
           child: Column(
@@ -96,7 +111,7 @@ class _PasswordCreatePageState extends State<PasswordCreatePage> {
   Widget _confirmBtn() {
     return TextButton(
       onPressed: () {
-        _bloc.add(PasswordConfirmCreationEvent());
+        _bloc.add(PasswordSaveConfirmEvent());
       },
       child: Text('Confirm'),
     );

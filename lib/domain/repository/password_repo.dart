@@ -4,4 +4,8 @@ abstract class PasswordRepository {
   Future<List<Password>> getAllPasswords();
 
   Future<void> savePassword(Password password);
+
+  Future<void> deletePassword(String passwordId);
+
+  Future<Password> getPasswordById(String passwordId);
 }

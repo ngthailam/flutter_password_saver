@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
+import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
+import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
+import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
+import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_password_saver/util/string_ext.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -19,22 +24,32 @@ class _PasswordListItemState extends State<PasswordListItem> {
   Widget build(BuildContext context) {
     return Slidable(
       endActionPane: ActionPane(
-        motion: DrawerMotion(),
-        extentRatio: 1/2,
+        motion: const DrawerMotion(),
+        extentRatio: 1 / 2,
         children: [
           SlidableAction(
-            onPressed: (ctx) {},
-            backgroundColor: Color(0xFF7BC043),
+            onPressed: (ctx) {
+              // TODO: maybe move to bloc ??
+              Navigator.of(context).pushNamed(AppRouter.savePassword,
+                  arguments: SavePasswordPageArg(
+                    id: widget.password.id,
+                  ));
+            },
+            backgroundColor: Colors.blueAccent,
             foregroundColor: Colors.white,
-            icon: Icons.archive,
-            label: 'Archive',
+            icon: Icons.edit,
+            label: 'Edit',
           ),
           SlidableAction(
-            onPressed: (ctx) {},
-            backgroundColor: Color(0xFF0392CF),
+            onPressed: (ctx) {
+              context
+                  .read<PasswordBloc>()
+                  .add(DeletePasswordEvent(id: widget.password.id));
+            },
+            backgroundColor: Colors.redAccent,
             foregroundColor: Colors.white,
-            icon: Icons.save,
-            label: 'Save',
+            icon: Icons.delete,
+            label: 'Delete',
           ),
         ],
       ),
@@ -46,9 +61,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
         child: Row(
           children: [
             _toggleVisibilityIcon(),
-            const SizedBox(width: 8),
+            const SizedBox(width: 16),
             _divider(),
-            const SizedBox(width: 8),
+            const SizedBox(width: 16),
             _mainContent(),
           ],
         ),
@@ -77,6 +92,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
 
   Widget _mainContent() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.password.name),
         Text(widget.password.accName.obscureText(!_contentVisible)),

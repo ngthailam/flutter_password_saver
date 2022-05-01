@@ -81,7 +81,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         child: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            Navigator.of(context).pushNamed(AppRouter.createPassword);
+            Navigator.of(context).pushNamed(AppRouter.savePassword);
           },
         ),
       ),
