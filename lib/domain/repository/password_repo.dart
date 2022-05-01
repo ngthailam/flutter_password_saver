@@ -8,4 +8,6 @@ abstract class PasswordRepository {
   Future<void> deletePassword(String passwordId);
 
   Future<Password> getPasswordById(String passwordId);
+
+  Future<List<Password>> searchPassword(String keyword);
 }

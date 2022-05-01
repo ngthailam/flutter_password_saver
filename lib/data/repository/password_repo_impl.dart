@@ -35,7 +35,15 @@ class PasswordRepositoryImpl extends PasswordRepository {
 
   @override
   Future<Password> getPasswordById(String passwordId) {
-    return _localDataSource.getPasswordById(passwordId)
-      .then((value) => value.toModel());
+    return _localDataSource
+        .getPasswordById(passwordId)
+        .then((value) => value.toModel());
+  }
+
+  @override
+  Future<List<Password>> searchPassword(String keyword) {
+    return _localDataSource
+        .searchPassword(keyword)
+        .then((value) => value.map((e) => e.toModel()).toList());
   }
 }

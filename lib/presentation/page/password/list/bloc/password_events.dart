@@ -7,3 +7,9 @@ class DeletePasswordEvent extends PasswordEvent {
 
   final String id;
 }
+
+class SearchPasswordEvent extends PasswordEvent {
+  SearchPasswordEvent({this.keyword = ''});
+
+  final String keyword;
+}

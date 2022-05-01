@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
+import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 
 class PasswordPage extends StatefulWidget {
-  PasswordPage({Key? key}) : super(key: key);
+  const PasswordPage({Key? key}) : super(key: key);
 
   @override
   State<PasswordPage> createState() => _PasswordPageState();
@@ -56,6 +56,8 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   Widget _body() {
     return Stack(
       children: [
+        const SizedBox(height: 16),
+        _searchBox(),
         _passwordList(),
         _createPassFab(),
       ],
@@ -63,12 +65,15 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   }
 
   Widget _passwordList() {
-    return ListView.builder(
-      itemCount: _bloc.state.passwords.length,
-      itemBuilder: (context, i) {
-        final item = _bloc.state.passwords[i];
-        return PasswordListItem(key: ValueKey(item.id), password: item);
-      },
+    return Container(
+      margin: const EdgeInsets.only(top: 64),
+      child: ListView.builder(
+        itemCount: _bloc.state.passwords.length,
+        itemBuilder: (context, i) {
+          final item = _bloc.state.passwords[i];
+          return PasswordListItem(key: ValueKey(item.id), password: item);
+        },
+      ),
     );
   }
 
@@ -85,6 +90,15 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
           },
         ),
       ),
+    );
+  }
+
+  Widget _searchBox() {
+    return SearchBox(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      onChanged: (text) {
+        _bloc.add(SearchPasswordEvent(keyword: text));
+      },
     );
   }
 }

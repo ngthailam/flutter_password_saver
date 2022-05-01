@@ -6,8 +6,13 @@ part 'password_state.g.dart';
 
 @CopyWith()
 class PasswordState {
-  PasswordState({this.loadState = LoadState.none, this.passwords = const []});
+  PasswordState({
+    this.loadState = LoadState.none,
+    this.passwords = const [],
+    this.searchKeyword = '',
+  });
 
   final LoadState loadState;
   final List<Password> passwords;
+  final String searchKeyword;
 }

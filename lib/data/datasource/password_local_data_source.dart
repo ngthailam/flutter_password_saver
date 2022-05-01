@@ -1,5 +1,4 @@
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
-import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,6 +10,8 @@ abstract class PasswordLocalDataSource {
   Future<void> deletePassword(String passwordId);
 
   Future<PasswordEntity> getPasswordById(String passwordId);
+
+  Future<List<PasswordEntity>> searchPassword(String keyword);
 }
 
 @Injectable(as: PasswordLocalDataSource)
@@ -70,5 +71,20 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
     } finally {
       await box.close();
     }
+  }
+
+  @override
+  Future<List<PasswordEntity>> searchPassword(String keyword) {
+    return getAllPaswords().then((value) {
+      if (keyword.isEmpty) {
+        return value;
+      } else {
+        return value
+            .where((element) =>
+                element.accName.contains(keyword) ||
+                element.name.contains(keyword))
+            .toList();
+      }
+    });
   }
 }
