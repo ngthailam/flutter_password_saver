@@ -3,7 +3,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/password_
 import 'package:flutter_password_saver/presentation/page/settings/settings_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,8 +13,8 @@ class _HomePageState extends State<HomePage> {
   int _pageIndex = 0;
 
   List<Widget> pages = [
-    PasswordPage(),
-    SettingsPage(),
+    const PasswordPage(),
+    const SettingsPage(),
   ];
 
   @override

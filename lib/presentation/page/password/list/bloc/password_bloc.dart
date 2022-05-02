@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/domain/model/user.dart';
+import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/delete_password_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/get_all_paswords_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/search_password_use_case.dart';
@@ -15,7 +17,9 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     this._getAllPasswordsUseCase,
     this._deletePasswordUseCase,
     this._searchPasswordUseCase,
+    this._getCurrentAccountUseCase,
   ) : super(PasswordState()) {
+    _getCurrentAccount();
     on<GetPasswordEvent>(_getPasswords);
     on<DeletePasswordEvent>(_deletePassword);
     on<SearchPasswordEvent>(_searchPassword);
@@ -24,6 +28,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   final GetAllPasswordsUseCase _getAllPasswordsUseCase;
   final DeletePasswordUseCase _deletePasswordUseCase;
   final SearchPasswordUseCase _searchPasswordUseCase;
+  final GetCurrentAccountUseCase _getCurrentAccountUseCase;
 
   bool get isSearching => state.searchKeyword.isNotEmpty;
 
@@ -61,5 +66,10 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     } else {
       add(GetPasswordEvent());
     }
+  }
+
+  Future<void> _getCurrentAccount() async {
+    final User? user = await _getCurrentAccountUseCase.execute(null);
+    print('[PasswordBloc] getUser=$user');
   }
 }

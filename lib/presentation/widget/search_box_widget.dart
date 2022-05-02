@@ -21,7 +21,7 @@ class SearchBox extends StatelessWidget {
         const Icon(Icons.search),
         Expanded(
           child: TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search',
             ),
             maxLines: 1,

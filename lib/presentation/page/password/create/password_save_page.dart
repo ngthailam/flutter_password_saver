@@ -57,7 +57,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Save Password')),
+      appBar: AppBar(title: const Text('Save Password')),
       body: BlocProvider(
         create: (ctx) =>
             _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
@@ -90,21 +90,21 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   Widget _nameTextField() {
     return TextField(
       controller: _nameTextEdtCtrl,
-      decoration: InputDecoration(hintText: 'Name'),
+      decoration: const InputDecoration(hintText: 'Name'),
     );
   }
 
   Widget _accNameTextField() {
     return TextField(
       controller: _accNameTextEdtCtrl,
-      decoration: InputDecoration(hintText: 'Acc Name'),
+      decoration: const InputDecoration(hintText: 'Acc Name'),
     );
   }
 
   Widget _passTextField() {
     return TextField(
       controller: _passwordTextEdtCtrl,
-      decoration: InputDecoration(hintText: 'Password'),
+      decoration: const InputDecoration(hintText: 'Password'),
     );
   }
 
@@ -113,7 +113,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
       onPressed: () {
         _bloc.add(PasswordSaveConfirmEvent());
       },
-      child: Text('Confirm'),
+      child: const Text('Confirm'),
     );
   }
 }

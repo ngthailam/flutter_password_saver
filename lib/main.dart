@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
+import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -21,15 +22,16 @@ void configureDependencies() => $initGetIt(getIt);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  initDatabase();
+  await initDatabase();
 
   runApp(const MyApp());
 }
 
-void initDatabase() {
+Future<void> initDatabase() async {
+  await Hive.initFlutter();
   Hive
-    ..initFlutter()
-    ..registerAdapter(PasswordEntityAdapter());
+    ..registerAdapter(PasswordEntityAdapter())
+    ..registerAdapter(UserEntityAdapter());
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +48,11 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: (RouteSettings settings) =>
           AppRouter.generateRoute(settings),
-      initialRoute: AppRouter.home,
+      initialRoute: getInitialRoute(),
     );
+  }
+
+  String getInitialRoute() {
+    return AppRouter.gateway;
   }
 }
