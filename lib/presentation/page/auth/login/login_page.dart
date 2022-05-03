@@ -4,8 +4,8 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_event.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_state.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_event.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 
 class LoginPage extends StatefulWidget {
@@ -43,10 +43,9 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocListener<LoginBloc, LoginState>(
           listener: ((context, state) {
             if (state.loginLoadState == LoadState.success) {
-              Navigator.of(context).popAndPushNamed(AppRouter.home);
+              Navigator.of(context).popAndPushNamed(AppRouter.password);
             } else if (state.loginLoadState == LoadState.failure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Username or password incorect')));
+              context.showSnackBar('Username or password incorect');
             }
 
             if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {

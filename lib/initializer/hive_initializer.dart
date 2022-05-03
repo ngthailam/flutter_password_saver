@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
+import 'package:flutter_password_saver/data/entity/password_settings_entity.dart';
 import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,5 +20,6 @@ Future<void> initHive() async {
 
   Hive
     ..registerAdapter(PasswordEntityAdapter())
+    ..registerAdapter(PasswordSettingsEntityAdapter())
     ..registerAdapter(UserEntityAdapter());
 }

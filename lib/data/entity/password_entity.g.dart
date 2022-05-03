@@ -15,6 +15,8 @@ abstract class _$PasswordEntityCWProxy {
 
   PasswordEntity password(String password);
 
+  PasswordEntity settings(HiveList<PasswordSettingsEntity>? settings);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `PasswordEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -26,6 +28,7 @@ abstract class _$PasswordEntityCWProxy {
     String? id,
     String? name,
     String? password,
+    HiveList<PasswordSettingsEntity>? settings,
   });
 }
 
@@ -48,6 +51,10 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
   PasswordEntity password(String password) => this(password: password);
 
   @override
+  PasswordEntity settings(HiveList<PasswordSettingsEntity>? settings) =>
+      this(settings: settings);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `PasswordEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -60,6 +67,7 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
     Object? id = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
+    Object? settings = const $CopyWithPlaceholder(),
   }) {
     return PasswordEntity(
       accName: accName == const $CopyWithPlaceholder() || accName == null
@@ -78,6 +86,10 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
           ? _value.password
           // ignore: cast_nullable_to_non_nullable
           : password as String,
+      settings: settings == const $CopyWithPlaceholder()
+          ? _value.settings
+          // ignore: cast_nullable_to_non_nullable
+          : settings as HiveList<PasswordSettingsEntity>?,
     );
   }
 }
@@ -106,13 +118,14 @@ class PasswordEntityAdapter extends TypeAdapter<PasswordEntity> {
       name: fields[1] as String,
       accName: fields[2] as String,
       password: fields[3] as String,
+      settings: (fields[4] as HiveList?)?.castHiveList(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PasswordEntity obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -120,7 +133,9 @@ class PasswordEntityAdapter extends TypeAdapter<PasswordEntity> {
       ..writeByte(2)
       ..write(obj.accName)
       ..writeByte(3)
-      ..write(obj.password);
+      ..write(obj.password)
+      ..writeByte(4)
+      ..write(obj.settings);
   }
 
   @override

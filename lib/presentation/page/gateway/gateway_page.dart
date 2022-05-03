@@ -45,7 +45,7 @@ class _GatewayPageState extends State<GatewayPage> {
         );
       }
 
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     });
   }
 }

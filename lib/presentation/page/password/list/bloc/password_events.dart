@@ -1,4 +1,8 @@
+import 'package:flutter_password_saver/domain/model/password_settings.dart';
+
 abstract class PasswordEvent {}
+
+class GetAccountEvent extends PasswordEvent {}
 
 class GetPasswordEvent extends PasswordEvent {}
 
@@ -12,4 +16,16 @@ class SearchPasswordEvent extends PasswordEvent {
   SearchPasswordEvent({this.keyword = ''});
 
   final String keyword;
+}
+
+class UpdateSettingsEvent extends PasswordEvent {
+  final String passwordId;
+  final PasswordSettingsName name;
+  final dynamic value;
+
+  UpdateSettingsEvent({
+    required this.passwordId,
+    required this.name,
+    this.value,
+  });
 }

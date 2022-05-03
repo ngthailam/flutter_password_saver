@@ -1,13 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_password_saver/data/entity/password_entity.dart';
-import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'main.config.dart';
 

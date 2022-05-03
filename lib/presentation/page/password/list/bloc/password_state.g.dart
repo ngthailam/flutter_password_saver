@@ -13,6 +13,8 @@ abstract class _$PasswordStateCWProxy {
 
   PasswordState searchKeyword(String searchKeyword);
 
+  PasswordState user(User? user);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `PasswordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -23,6 +25,7 @@ abstract class _$PasswordStateCWProxy {
     LoadState? loadState,
     List<Password>? passwords,
     String? searchKeyword,
+    User? user,
   });
 }
 
@@ -44,6 +47,9 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
       this(searchKeyword: searchKeyword);
 
   @override
+  PasswordState user(User? user) => this(user: user);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `PasswordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -55,6 +61,7 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
     Object? loadState = const $CopyWithPlaceholder(),
     Object? passwords = const $CopyWithPlaceholder(),
     Object? searchKeyword = const $CopyWithPlaceholder(),
+    Object? user = const $CopyWithPlaceholder(),
   }) {
     return PasswordState(
       loadState: loadState == const $CopyWithPlaceholder() || loadState == null
@@ -70,6 +77,10 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
               ? _value.searchKeyword
               // ignore: cast_nullable_to_non_nullable
               : searchKeyword as String,
+      user: user == const $CopyWithPlaceholder()
+          ? _value.user
+          // ignore: cast_nullable_to_non_nullable
+          : user as User?,
     );
   }
 }

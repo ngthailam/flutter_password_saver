@@ -15,6 +15,8 @@ abstract class _$PasswordCWProxy {
 
   Password password(String password);
 
+  Password settings(List<PasswordSettings> settings);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Password(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -26,6 +28,7 @@ abstract class _$PasswordCWProxy {
     String? id,
     String? name,
     String? password,
+    List<PasswordSettings>? settings,
   });
 }
 
@@ -48,6 +51,10 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
   Password password(String password) => this(password: password);
 
   @override
+  Password settings(List<PasswordSettings> settings) =>
+      this(settings: settings);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Password(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -60,6 +67,7 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
     Object? id = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
+    Object? settings = const $CopyWithPlaceholder(),
   }) {
     return Password(
       accName: accName == const $CopyWithPlaceholder() || accName == null
@@ -78,6 +86,10 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
           ? _value.password
           // ignore: cast_nullable_to_non_nullable
           : password as String,
+      settings: settings == const $CopyWithPlaceholder() || settings == null
+          ? _value.settings
+          // ignore: cast_nullable_to_non_nullable
+          : settings as List<PasswordSettings>,
     );
   }
 }

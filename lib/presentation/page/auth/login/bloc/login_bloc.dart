@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/auth/login_use_case.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/presentation/modelext/user_ext.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({Key? key}) : super(key: key);
@@ -16,11 +18,12 @@ class PasswordPage extends StatefulWidget {
 }
 
 class _PasswordPageState extends State<PasswordPage> with RouteAware {
-  final PasswordBloc _bloc = getIt<PasswordBloc>();
+  late PasswordBloc _bloc;
 
   @override
   void initState() {
     super.initState();
+    _bloc = getIt<PasswordBloc>();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       routeObserver.subscribe(this, ModalRoute.of(context)!);
     });
@@ -29,6 +32,8 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   @override
   void dispose() {
     super.dispose();
+    print('[PasswordPage] disposed');
+    _bloc.close();
     routeObserver.unsubscribe(this);
   }
 
@@ -40,27 +45,33 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc..add(GetPasswordEvent()),
-      child: BlocConsumer<PasswordBloc, PasswordState>(
-        listener: (BuildContext context, PasswordState state) {
-          // TODO
-        },
-        builder: (BuildContext context, PasswordState state) {
-          return _body();
-        },
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => _bloc
+          ..add(GetAccountEvent())
+          ..add(GetPasswordEvent()),
+        child: BlocConsumer<PasswordBloc, PasswordState>(
+          listener: (BuildContext context, PasswordState state) {
+            // TODO
+          },
+          builder: (BuildContext context, PasswordState state) {
+            return _body(state);
+          },
+        ),
       ),
     );
   }
 
-  Widget _body() {
-    return Stack(
-      children: [
-        const SizedBox(height: 16),
-        _searchBox(),
-        _passwordList(),
-        _createPassFab(),
-      ],
+  Widget _body(PasswordState state) {
+    return SafeArea(
+      child: Stack(
+        children: [
+          const SizedBox(height: 16),
+          _searchBox(state.user),
+          _passwordList(),
+          _createPassFab(),
+        ],
+      ),
     );
   }
 
@@ -71,7 +82,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         itemCount: _bloc.state.passwords.length,
         itemBuilder: (context, i) {
           final item = _bloc.state.passwords[i];
-          return PasswordListItem(key: ValueKey(item.id), password: item);
+          return PasswordListItem(key: ObjectKey(item), password: item);
         },
       ),
     );
@@ -93,9 +104,13 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
     );
   }
 
-  Widget _searchBox() {
+  Widget _searchBox(User? user) {
     return SearchBox(
+      accountNameInitials: user?.getInitials() ?? '',
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      onProfileTap: () {
+        Navigator.of(context).pushNamed(AppRouter.setting);
+      },
       onChanged: (text) {
         _bloc.add(SearchPasswordEvent(keyword: text));
       },

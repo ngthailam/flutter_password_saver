@@ -1,4 +1,5 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:flutter_password_saver/data/entity/password_settings_entity.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:hive/hive.dart';
 
@@ -14,6 +15,7 @@ class PasswordEntity extends HiveObject {
     this.name = '',
     this.accName = '',
     this.password = '',
+    this.settings,
   });
 
   @HiveField(0)
@@ -24,6 +26,8 @@ class PasswordEntity extends HiveObject {
   final String accName;
   @HiveField(3)
   final String password;
+  @HiveField(4)
+  final HiveList<PasswordSettingsEntity>? settings;
 
   @override
   get key => id;
@@ -36,12 +40,14 @@ class PasswordEntity extends HiveObject {
   factory PasswordEntity.fromPassword({
     required Password password,
     required String newId,
+    HiveList<PasswordSettingsEntity>? settings,
   }) =>
       PasswordEntity(
         id: password.id.isEmpty ? newId : password.id,
         name: password.name,
         accName: password.accName,
         password: password.password,
+        settings: settings,
       );
 
   Password toModel() => Password(
@@ -49,5 +55,11 @@ class PasswordEntity extends HiveObject {
         name: name,
         accName: accName,
         password: password,
+        settings: settings
+                ?.castHiveList<PasswordSettingsEntity>()
+                .toList()
+                .map((PasswordSettingsEntity e) => e.toModel())
+                .toList() ??
+            [],
       );
 }

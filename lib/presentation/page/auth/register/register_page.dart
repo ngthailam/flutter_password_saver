@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: BlocListener<RegisterBloc, RegisterState>(
           listener: (context, state) {
             if (state.loadState == LoadState.success) {
-              Navigator.of(context).popAndPushNamed(AppRouter.home);
+              Navigator.of(context).popAndPushNamed(AppRouter.password);
             }
           },
           child: Stack(

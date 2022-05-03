@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
+import 'package:flutter_password_saver/domain/model/password_settings.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
+import 'package:flutter_password_saver/presentation/page/password/list/widget/password_item_setting_bottom_sheet.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_password_saver/util/string_ext.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:collection/collection.dart';
 
 class PasswordListItem extends StatefulWidget {
   const PasswordListItem({Key? key, required this.password}) : super(key: key);
@@ -19,39 +25,29 @@ class PasswordListItem extends StatefulWidget {
 
 class _PasswordListItemState extends State<PasswordListItem> {
   bool _contentVisible = false;
+  bool _alwaysShow = false;
+
+  @override
+  void initState() {
+    _alwaysShow = widget.password.settings
+            .firstWhereOrNull(
+                (element) => element.name == PasswordSettingsName.alwaysShow)
+            ?.value ??
+        false;
+    if (_alwaysShow) {
+      _contentVisible = true;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      key: ValueKey('slide-${widget.password.accName}'),
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
-        extentRatio: 1 / 2,
-        children: [
-          SlidableAction(
-            onPressed: (ctx) {
-              // TODO: maybe move to bloc ??
-              Navigator.of(context).pushNamed(AppRouter.savePassword,
-                  arguments: SavePasswordPageArg(
-                    id: widget.password.id,
-                  ));
-            },
-            backgroundColor: Colors.blueAccent,
-            foregroundColor: Colors.white,
-            icon: Icons.edit,
-            label: 'Edit',
-          ),
-          SlidableAction(
-            onPressed: (ctx) {
-              context
-                  .read<PasswordBloc>()
-                  .add(DeletePasswordEvent(id: widget.password.id));
-            },
-            backgroundColor: Colors.redAccent,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ],
+        extentRatio: 0.8,
+        children: _slidableActions(context),
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -71,22 +67,81 @@ class _PasswordListItemState extends State<PasswordListItem> {
     );
   }
 
+  List<SlidableAction> _slidableActions(BuildContext context) {
+    return [
+      SlidableAction(
+        onPressed: (ctx) {
+          showPasswordSettingsBottomSheet(
+            context,
+            password: widget.password,
+            onChanged: (name, value) {
+              switch (name) {
+                case PasswordSettingsName.alwaysShow:
+                  context.read<PasswordBloc>().add(
+                        UpdateSettingsEvent(
+                          passwordId: widget.password.id,
+                          name: name,
+                          value: value,
+                        ),
+                      );
+                  break;
+                default:
+                  break;
+              }
+            },
+          );
+        },
+        backgroundColor: AppColors.green400,
+        foregroundColor: Colors.white,
+        icon: Icons.settings,
+        label: 'Settings',
+      ),
+      SlidableAction(
+        onPressed: (ctx) {
+          Navigator.of(context).pushNamed(AppRouter.savePassword,
+              arguments: SavePasswordPageArg(id: widget.password.id));
+        },
+        backgroundColor: AppColors.blue400,
+        foregroundColor: Colors.white,
+        icon: Icons.edit,
+        label: 'Edit',
+      ),
+      SlidableAction(
+        onPressed: (ctx) {
+          context
+              .read<PasswordBloc>()
+              .add(DeletePasswordEvent(id: widget.password.id));
+        },
+        backgroundColor: AppColors.red400,
+        foregroundColor: Colors.white,
+        icon: Icons.delete,
+        label: 'Delete',
+      ),
+    ];
+  }
+
   Widget _toggleVisibilityIcon() {
     return GestureDetector(
       onTap: () {
         setState(() {
+          if (_alwaysShow) {
+            return;
+          }
           _contentVisible = !_contentVisible;
         });
       },
-      child: Icon(_contentVisible ? Icons.visibility_off : Icons.visibility),
+      child: Icon(
+        _contentVisible ? Icons.visibility_off : Icons.visibility,
+        color: AppColors.blue500,
+      ),
     );
   }
 
   Widget _divider() {
     return Container(
-      color: Colors.black,
+      color: AppColors.blue400,
       width: 1,
-      height: 15,
+      height: 42,
     );
   }
 
@@ -95,8 +150,35 @@ class _PasswordListItemState extends State<PasswordListItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.password.name),
-        Text(widget.password.accName.obscureText(!_contentVisible)),
-        Text(widget.password.password.obscureText(!_contentVisible)),
+        _textWithCopy(widget.password.accName),
+        _textWithCopy(widget.password.password),
+      ],
+    );
+  }
+
+  Widget _textWithCopy(String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(text.obscureText(!_contentVisible)),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: () {
+            if (_contentVisible) {
+              Clipboard.setData(ClipboardData(text: text));
+              context.showSnackBar('Coppied: $text');
+            } else {
+              context.showSnackBar(
+                'Must press eye icon to toggle visibility before copying',
+              );
+            }
+          },
+          child: const Icon(
+            Icons.copy,
+            size: 12,
+          ),
+        )
       ],
     );
   }
