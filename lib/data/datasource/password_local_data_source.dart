@@ -1,3 +1,4 @@
+import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -16,9 +17,13 @@ abstract class PasswordLocalDataSource {
 
 @Injectable(as: PasswordLocalDataSource)
 class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
+  PasswordLocalDataSourceImpl(this._secureStorage);
+
+  final SecureStorage _secureStorage;
+
   @override
   Future<List<PasswordEntity>> getAllPaswords() async {
-    final box = await Hive.openBox(passwordEntityBox);
+    final box = await _getPasswordBox();
     try {
       final passwords =
           box.values.cast().map((e) => e as PasswordEntity).toList();
@@ -33,7 +38,7 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
 
   @override
   Future<void> savePassword(PasswordEntity password) async {
-    final box = await Hive.openBox(passwordEntityBox);
+    final box = await _getPasswordBox();
     try {
       await box.put(password.key, password);
       return;
@@ -47,7 +52,7 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
 
   @override
   Future<void> deletePassword(String passwordId) async {
-    final box = await Hive.openBox(passwordEntityBox);
+    final box = await _getPasswordBox();
     try {
       await box.delete(passwordId);
       return;
@@ -61,7 +66,7 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
 
   @override
   Future<PasswordEntity> getPasswordById(String passwordId) async {
-    final Box<PasswordEntity> box = await Hive.openBox(passwordEntityBox);
+    final box = await _getPasswordBox();
     try {
       final result = box.get(passwordId);
       return result!;
@@ -86,5 +91,13 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
             .toList();
       }
     });
+  }
+
+  Future<Box<PasswordEntity>> _getPasswordBox() async {
+    final encryptionKey = await _secureStorage.getDbEncryptionKey();
+    return Hive.openBox(
+      passwordEntityBox,
+      encryptionCipher: HiveAesCipher(encryptionKey!),
+    );
   }
 }

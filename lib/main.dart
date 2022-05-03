@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:flutter_password_saver/data/entity/user_entity.dart';
+import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -22,18 +26,10 @@ void configureDependencies() => $initGetIt(getIt);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  await initDatabase();
+  await initHive();
 
   runApp(const MyApp());
 }
-
-Future<void> initDatabase() async {
-  await Hive.initFlutter();
-  Hive
-    ..registerAdapter(PasswordEntityAdapter())
-    ..registerAdapter(UserEntityAdapter());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 

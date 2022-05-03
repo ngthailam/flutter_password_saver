@@ -1,3 +1,4 @@
+import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -13,9 +14,13 @@ abstract class AuthLocalDataSource {
 
 @Injectable(as: AuthLocalDataSource)
 class AuthLocalDataSourceImpl extends AuthLocalDataSource {
+  AuthLocalDataSourceImpl(this._secureStorage);
+
+  final SecureStorage _secureStorage;
+
   @override
   Future<UserEntity?> getCurrentUser() async {
-    final box = await Hive.openBox(userBox);
+    final box = await _getUserBox();
     try {
       final user = await box.values.cast().first as UserEntity;
       return user;
@@ -28,7 +33,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
 
   @override
   Future<bool> saveAccount(UserEntity user) async {
-    final box = await Hive.openBox(userBox);
+    final box = await _getUserBox();
     try {
       await box.put(user.name, user);
       return true;
@@ -48,5 +53,13 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
       return true;
     }
     return false;
+  }
+
+  Future<Box<UserEntity>> _getUserBox() async {
+    final encryptionKey = await _secureStorage.getDbEncryptionKey();
+    return Hive.openBox(
+      userBox,
+      encryptionCipher: HiveAesCipher(encryptionKey!),
+    );
   }
 }

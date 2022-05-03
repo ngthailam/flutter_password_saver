@@ -4,6 +4,7 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_event.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_state.dart';
+import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_event.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 
@@ -49,7 +50,9 @@ class _LoginPageState extends State<LoginPage> {
             }
 
             if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {
-              _nameTextEdtCtrl.text = state.user?.name ?? '';
+              final userName = state.user!.name;
+              _nameTextEdtCtrl.text = userName;
+              _loginBloc.onNameChanged(userName);
             }
           }),
           child: Column(

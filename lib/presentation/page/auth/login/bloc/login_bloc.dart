@@ -29,24 +29,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     final user = await _getCurrentAccountUseCase.execute(null);
-    emit(state.copyWith(user: user));
+    if (user != null) {
+      emit(state.copyWith(user: user));
+    }
   }
 
   FutureOr<void> _onConfirmLogin(
     ConfirmLoginEvent event,
     Emitter<LoginState> emit,
   ) async {
-    // TODO: get user input to check login
     final result = await _loginUseCase.execute(_inputUserData);
     emit(state.copyWith(
         loginLoadState: result ? LoadState.success : LoadState.failure));
   }
 
   void onPasswordChanged(String value) {
-    _inputUserData = _inputUserData.copyWith(name: value);
+    _inputUserData = _inputUserData.copyWith(password: value);
   }
 
   void onNameChanged(String value) {
-    _inputUserData = _inputUserData.copyWith(password: value);
+    _inputUserData = _inputUserData.copyWith(name: value);
   }
 }
