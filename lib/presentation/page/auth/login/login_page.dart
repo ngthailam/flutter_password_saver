@@ -6,7 +6,12 @@ import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_e
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -54,17 +59,33 @@ class _LoginPageState extends State<LoginPage> {
               _loginBloc.onNameChanged(userName);
             }
           }),
-          child: Column(
+          child: Stack(
             children: [
-              TextField(
-                controller: _nameTextEdtCtrl,
-                onChanged: _loginBloc.onNameChanged,
+              Positioned(
+                top: 100,
+                right: -50,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: AppColors.blue400,
+                  ),
+                ),
               ),
-              TextField(
-                controller: _passwordTextEdtCtrl,
-                onChanged: _loginBloc.onPasswordChanged,
+              Positioned(
+                top: -50,
+                left: -50,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: AppColors.blue400,
+                  ),
+                ),
               ),
-              _loginBtn(),
+              _body(),
             ],
           ),
         ),
@@ -72,11 +93,80 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _body() {
+    return AnimatedOpacity(
+      opacity: 1,
+      duration: const Duration(milliseconds: 350),
+      child: Align(
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Welcome Back',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
+            const SizedBox(height: 32),
+            _mainIcon(),
+            const SizedBox(height: 16),
+            _nameTextField(),
+            _passwordTextField(),
+            const SizedBox(height: 32),
+            _loginBtn(),
+            const SizedBox(height: 12),
+            _forgotPasswordPrompt(),
+          ],
+        )),
+      ),
+    );
+  }
+
+  Widget _mainIcon() {
+    return SvgPicture.asset('assets/svg/login.svg');
+  }
+
+  Widget _nameTextField() {
+    return PrimaryTextInput(
+      icon: Icons.group,
+      hintText: 'Your name',
+      controller: _nameTextEdtCtrl,
+      onChanged: _loginBloc.onNameChanged,
+    );
+  }
+
+  Widget _passwordTextField() {
+    return PrimaryTextInput(
+      icon: Icons.lock,
+      hintText: 'Your password',
+      controller: _passwordTextEdtCtrl,
+      onChanged: _loginBloc.onPasswordChanged,
+    );
+  }
+
   Widget _loginBtn() {
-    return TextButton(
-        onPressed: () {
-          _loginBloc.add(ConfirmLoginEvent());
-        },
-        child: const Text('Login'));
+    return PrimaryButton(
+      onPressed: () {
+        _loginBloc.add(ConfirmLoginEvent());
+      },
+      text: 'Login',
+    );
+  }
+
+  Widget _forgotPasswordPrompt() {
+    return GestureDetector(
+      onTap: () {
+        // Handle
+        context.showSnackBar('Comming soon...');
+      },
+      child: const Text(
+        'I dont remember my password',
+        style: TextStyle(
+          color: AppColors.blue400,
+          fontSize: 14,
+        ),
+      ),
+    );
   }
 }
