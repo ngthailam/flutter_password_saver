@@ -6,6 +6,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
@@ -99,6 +100,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: FloatingActionButton(
+          backgroundColor: AppColors.blue500,
           child: const Icon(Icons.add),
           onPressed: () {
             Navigator.of(context).pushNamed(AppRouter.savePassword);

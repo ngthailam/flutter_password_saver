@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'main.config.dart';

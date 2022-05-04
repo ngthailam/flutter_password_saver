@@ -45,7 +45,6 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   AccountPreference? _accountPreference;
   AccountPreference? get accountPreference => _accountPreference;
 
-  // TODO: may need to check firstWhereOrNull
   bool get prefAlwaysShowPassword =>
       accountPreference?.items
           .firstWhereOrNull(

@@ -20,6 +20,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   User _user = User();
 
+  String get inputUserName => _user.name;
+
   FutureOr<void> _confirmName(
     ConfirmNameEvent event,
     Emitter<RegisterState> emit,

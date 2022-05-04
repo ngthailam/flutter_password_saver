@@ -7,7 +7,6 @@ import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_s
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
-import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
 import 'package:flutter_password_saver/util/app_router.dart';

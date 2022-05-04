@@ -8,6 +8,9 @@ class PrimaryButton extends StatelessWidget {
     this.onPressed,
     this.isLoading = false,
     this.margin = const EdgeInsets.symmetric(horizontal: 16),
+    this.height = 48,
+    this.fontSize = 16,
+    this.width,
     required this.text,
   }) : super(key: key);
 
@@ -15,6 +18,9 @@ class PrimaryButton extends StatelessWidget {
   final String text;
   final EdgeInsets margin;
   final bool isLoading;
+  final double height;
+  final double fontSize;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +33,17 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(32),
           color: AppColors.blue500,
         ),
-        height: 56,
+        height: height,
+        width: width,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         alignment: Alignment.center,
         child: isLoading
             ? const LoadingIndicator(color: AppColors.white500)
             : Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: fontSize,
                 ),
               ),
       ),

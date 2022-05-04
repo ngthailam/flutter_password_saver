@@ -3,7 +3,6 @@ import 'package:flutter_password_saver/common/type_ext.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/login_page.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/register_page.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
-import 'package:flutter_password_saver/presentation/page/intro/intro_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/password_page.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
@@ -13,7 +12,6 @@ class AppRouter {
   static const String savePassword = 'password/save';
   static const String password = 'password';
   static const String register = 'register';
-  static const String intro = 'intro';
   static const String login = 'login';
   static const String preferences = 'preferences';
 
@@ -34,9 +32,6 @@ class AppRouter {
       case register:
         return MaterialPageRoute(
             builder: (context) => const RegisterPage(), settings: settings);
-      case intro:
-        return MaterialPageRoute(
-            builder: (context) => const IntroPage(), settings: settings);
       case login:
         return MaterialPageRoute(
             builder: (context) => const LoginPage(), settings: settings);
