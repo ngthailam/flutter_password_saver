@@ -2,7 +2,7 @@ import 'package:flutter_password_saver/domain/model/password_settings.dart';
 
 abstract class PasswordEvent {}
 
-class GetAccountEvent extends PasswordEvent {}
+class InitializeEvent extends PasswordEvent {}
 
 class GetPasswordEvent extends PasswordEvent {}
 
@@ -29,3 +29,5 @@ class UpdateSettingsEvent extends PasswordEvent {
     this.value,
   });
 }
+
+class RefreshDataEvent extends PasswordEvent {}

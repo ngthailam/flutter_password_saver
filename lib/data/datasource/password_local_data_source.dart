@@ -41,9 +41,12 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
   @override
   Future<List<Password>> getAllPaswords() async {
     final settingsBox = await _getSettingsBox();
-    final box = await _getPasswordBox();
+    Box box = await _getPasswordBox();
 
     try {
+      if (!box.isOpen) {
+        box = await _getPasswordBox();
+      }
       final passwords =
           box.values.cast<PasswordEntity>().map((e) => e.toModel()).toList();
       return passwords;

@@ -8,17 +8,15 @@ class SearchBox extends StatelessWidget {
     this.onChanged,
     this.margin = const EdgeInsets.symmetric(),
     this.padding = const EdgeInsets.only(left: 16, right: 8),
-    this.onProfileTap,
-    this.accountNameInitials,
+    this.trailingWidget = const SizedBox.shrink(),
   }) : super(key: key);
 
   final Debouncer _debouncer = Debouncer(milliseconds: 350);
 
   final Function(String text)? onChanged;
-  final VoidCallback? onProfileTap;
   final EdgeInsets margin;
   final EdgeInsets padding;
-  final String? accountNameInitials;
+  final Widget trailingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class SearchBox extends StatelessWidget {
           const Icon(Icons.search, color: AppColors.blue500),
           const SizedBox(width: 8),
           _textField(),
-          _profileIcon(),
+          trailingWidget,
         ],
       ),
     );
@@ -51,25 +49,6 @@ class SearchBox extends StatelessWidget {
         onChanged: (text) => _debouncer.run(() {
           onChanged?.call(text);
         }),
-      ),
-    );
-  }
-
-  Widget _profileIcon() {
-    return GestureDetector(
-      onTap: () => onProfileTap?.call(),
-      child: Container(
-        height: 32,
-        width: 32,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.blue400,
-        ),
-        child: Center(
-            child: Text(
-          accountNameInitials ?? '',
-          style: const TextStyle(color: AppColors.white500),
-        )),
       ),
     );
   }

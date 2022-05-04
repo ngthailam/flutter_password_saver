@@ -6,9 +6,9 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
+import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
-import 'package:flutter_password_saver/presentation/modelext/user_ext.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   @override
   void didPopNext() {
     super.didPopNext();
-    _bloc.add(GetPasswordEvent());
+    _bloc.add(RefreshDataEvent());
   }
 
   @override
@@ -48,7 +48,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
     return Scaffold(
       body: BlocProvider(
         create: (context) => _bloc
-          ..add(GetAccountEvent())
+          ..add(InitializeEvent())
           ..add(GetPasswordEvent()),
         child: BlocConsumer<PasswordBloc, PasswordState>(
           listener: (BuildContext context, PasswordState state) {
@@ -82,7 +82,11 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         itemCount: _bloc.state.passwords.length,
         itemBuilder: (context, i) {
           final item = _bloc.state.passwords[i];
-          return PasswordListItem(key: ObjectKey(item), password: item);
+          return PasswordListItem(
+            key: ObjectKey(item),
+            password: item,
+            forceShow: _bloc.prefAlwaysShowPassword,
+          );
         },
       ),
     );
@@ -106,14 +110,14 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
 
   Widget _searchBox(User? user) {
     return SearchBox(
-      accountNameInitials: user?.getInitials() ?? '',
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      onProfileTap: () {
-        Navigator.of(context).pushNamed(AppRouter.setting);
-      },
       onChanged: (text) {
         _bloc.add(SearchPasswordEvent(keyword: text));
       },
+      trailingWidget: AccountIcon(
+        user: user,
+        onTap: () => Navigator.of(context).pushNamed(AppRouter.preferences),
+      ),
     );
   }
 }

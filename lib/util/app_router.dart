@@ -6,6 +6,7 @@ import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.da
 import 'package:flutter_password_saver/presentation/page/intro/intro_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/password_page.dart';
+import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 
 class AppRouter {
   static const String gateway = 'gateway';
@@ -14,7 +15,7 @@ class AppRouter {
   static const String register = 'register';
   static const String intro = 'intro';
   static const String login = 'login';
-  static const String setting = 'settings';
+  static const String preferences = 'preferences';
 
   static generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -39,9 +40,9 @@ class AppRouter {
       case login:
         return MaterialPageRoute(
             builder: (context) => const LoginPage(), settings: settings);
-      case setting:
+      case preferences:
         return MaterialPageRoute(
-            builder: (context) => Container(), settings: settings);
+            builder: (context) => const PreferencesPage(), settings: settings);
       default:
         throw Exception('Route not supported');
     }

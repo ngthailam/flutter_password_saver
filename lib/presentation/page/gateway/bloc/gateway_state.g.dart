@@ -7,7 +7,7 @@ part of 'gateway_state.dart';
 // **************************************************************************
 
 abstract class _$GatewayStateCWProxy {
-  GatewayState userStatus(UserStatus? userStatus);
+  GatewayState destinationRouteName(String? destinationRouteName);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `GatewayState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -16,7 +16,7 @@ abstract class _$GatewayStateCWProxy {
   /// GatewayState(...).copyWith(id: 12, name: "My name")
   /// ````
   GatewayState call({
-    UserStatus? userStatus,
+    String? destinationRouteName,
   });
 }
 
@@ -27,8 +27,8 @@ class _$GatewayStateCWProxyImpl implements _$GatewayStateCWProxy {
   const _$GatewayStateCWProxyImpl(this._value);
 
   @override
-  GatewayState userStatus(UserStatus? userStatus) =>
-      this(userStatus: userStatus);
+  GatewayState destinationRouteName(String? destinationRouteName) =>
+      this(destinationRouteName: destinationRouteName);
 
   @override
 
@@ -39,13 +39,13 @@ class _$GatewayStateCWProxyImpl implements _$GatewayStateCWProxy {
   /// GatewayState(...).copyWith(id: 12, name: "My name")
   /// ````
   GatewayState call({
-    Object? userStatus = const $CopyWithPlaceholder(),
+    Object? destinationRouteName = const $CopyWithPlaceholder(),
   }) {
     return GatewayState(
-      userStatus: userStatus == const $CopyWithPlaceholder()
-          ? _value.userStatus
+      destinationRouteName: destinationRouteName == const $CopyWithPlaceholder()
+          ? _value.destinationRouteName
           // ignore: cast_nullable_to_non_nullable
-          : userStatus as UserStatus?,
+          : destinationRouteName as String?,
     );
   }
 }

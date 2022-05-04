@@ -15,9 +15,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:collection/collection.dart';
 
 class PasswordListItem extends StatefulWidget {
-  const PasswordListItem({Key? key, required this.password}) : super(key: key);
+  const PasswordListItem({
+    Key? key,
+    required this.password,
+    this.forceShow = false,
+  }) : super(key: key);
 
   final Password password;
+  final bool forceShow;
 
   @override
   State<PasswordListItem> createState() => _PasswordListItemState();
@@ -29,12 +34,17 @@ class _PasswordListItemState extends State<PasswordListItem> {
 
   @override
   void initState() {
-    _alwaysShow = widget.password.settings
-            .firstWhereOrNull(
-                (element) => element.name == PasswordSettingsName.alwaysShow)
-            ?.value ??
-        false;
-    if (_alwaysShow) {
+    bool? passSettingAlwaysShow = widget.password.settings
+        .firstWhereOrNull(
+            (element) => element.name == PasswordSettingsName.alwaysShow)
+        ?.value;
+    if (passSettingAlwaysShow == true) {
+      _alwaysShow = true;
+      _contentVisible = true;
+    } else if (passSettingAlwaysShow == null && widget.forceShow) {
+      // Only check null, to respect individual's password preference 
+      // over universal settings
+      _alwaysShow = true;
       _contentVisible = true;
     }
     super.initState();
