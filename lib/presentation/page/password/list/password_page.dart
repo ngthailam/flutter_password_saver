@@ -9,8 +9,10 @@ import 'package:flutter_password_saver/presentation/page/password/list/widget/pa
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({Key? key}) : super(key: key);
@@ -70,11 +72,17 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         children: [
           const SizedBox(height: 16),
           _searchBox(state.user),
-          _passwordList(),
+          _resolveMainContent(state),
           _createPassFab(),
         ],
       ),
     );
+  }
+
+  Widget _resolveMainContent(PasswordState state) {
+    return state.passwords.isEmpty
+        ? (_bloc.isSearching ? _noSearchResultState() : _emptyState())
+        : _passwordList();
   }
 
   Widget _passwordList() {
@@ -125,6 +133,51 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
           ),
         );
       },
+    );
+  }
+
+  Widget _emptyState() {
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/login.svg',
+            height: 160,
+            width: 160,
+          ),
+          const SizedBox(height: 32),
+          PrimaryButton(
+            margin: const EdgeInsets.symmetric(horizontal: 48),
+            text: 'Save your first password',
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRouter.savePassword);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _noSearchResultState() {
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/login.svg',
+            height: 160,
+            width: 160,
+          ),
+          const SizedBox(height: 32),
+          const Text(
+            'No results found',
+            style: TextStyle(fontSize: 16),
+          )
+        ],
+      ),
     );
   }
 }

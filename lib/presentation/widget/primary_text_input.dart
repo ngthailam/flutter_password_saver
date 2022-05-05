@@ -8,18 +8,24 @@ class PrimaryTextInput extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.icon,
+    this.obscureText = false,
+    this.margin = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding = const EdgeInsets.symmetric(horizontal: 8),
   }) : super(key: key);
 
   final String hintText;
   final TextEditingController? controller;
   final Function(String text)? onChanged;
   final IconData? icon;
+  final bool obscureText;
+  final EdgeInsets margin;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      margin: margin,
+      padding: padding,
       height: 48,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
@@ -28,6 +34,7 @@ class PrimaryTextInput extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerLeft,
         child: TextField(
+          obscureText: obscureText,
           controller: controller,
           onChanged: onChanged,
           cursorColor: AppColors.blue500,

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 extension SnackbarExtension on BuildContext {
   void showSnackBar(String message) {
-    ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(this).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 1),
+    ));
   }
 }
