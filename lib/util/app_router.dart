@@ -13,7 +13,6 @@ class AppRouter {
   static const String password = 'password';
   static const String register = 'register';
   static const String login = 'login';
-  static const String preferences = 'preferences';
 
   static generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -35,9 +34,6 @@ class AppRouter {
       case login:
         return MaterialPageRoute(
             builder: (context) => const LoginPage(), settings: settings);
-      case preferences:
-        return MaterialPageRoute(
-            builder: (context) => const PreferencesPage(), settings: settings);
       default:
         throw Exception('Route not supported');
     }

@@ -6,6 +6,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
+import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
@@ -111,15 +112,19 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   }
 
   Widget _searchBox(User? user) {
-    return SearchBox(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      onChanged: (text) {
-        _bloc.add(SearchPasswordEvent(keyword: text));
+    return Builder(
+      builder: (BuildContext context) {
+        return SearchBox(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          onChanged: (text) {
+            _bloc.add(SearchPasswordEvent(keyword: text));
+          },
+          trailingWidget: AccountIcon(
+            user: user,
+            onTap: () => showPreferencePage(context),
+          ),
+        );
       },
-      trailingWidget: AccountIcon(
-        user: user,
-        onTap: () => Navigator.of(context).pushNamed(AppRouter.preferences),
-      ),
     );
   }
 }
