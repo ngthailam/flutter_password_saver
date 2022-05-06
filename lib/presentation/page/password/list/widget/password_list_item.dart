@@ -19,10 +19,12 @@ class PasswordListItem extends StatefulWidget {
     Key? key,
     required this.password,
     this.forceShow = false,
+    this.onChangeSetting,
   }) : super(key: key);
 
   final Password password;
   final bool forceShow;
+  final Function(PasswordSettings passwordSettings)? onChangeSetting;
 
   @override
   State<PasswordListItem> createState() => _PasswordListItemState();
@@ -87,13 +89,8 @@ class _PasswordListItemState extends State<PasswordListItem> {
             onChanged: (name, value) {
               switch (name) {
                 case PasswordSettingsName.alwaysShow:
-                  context.read<PasswordBloc>().add(
-                        UpdateSettingsEvent(
-                          passwordId: widget.password.id,
-                          name: name,
-                          value: value,
-                        ),
-                      );
+                  widget.onChangeSetting
+                      ?.call(PasswordSettings(name: name, value: value));
                   break;
                 default:
                   break;
@@ -107,9 +104,13 @@ class _PasswordListItemState extends State<PasswordListItem> {
         label: 'Settings',
       ),
       SlidableAction(
-        onPressed: (ctx) {
-          Navigator.of(context).pushNamed(AppRouter.savePassword,
+        onPressed: (ctx) async {
+          final result = await Navigator.of(context).pushNamed(
+              AppRouter.savePassword,
               arguments: SavePasswordPageArg(id: widget.password.id));
+          if (result == true) {
+            context.showSuccessSnackBar('Edit successfully!');
+          }
         },
         backgroundColor: AppColors.blue400,
         foregroundColor: Colors.white,

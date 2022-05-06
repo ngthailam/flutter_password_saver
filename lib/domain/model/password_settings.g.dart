@@ -74,6 +74,6 @@ class _$PasswordSettingsCWProxyImpl implements _$PasswordSettingsCWProxy {
 }
 
 extension $PasswordSettingsCopyWith on PasswordSettings {
-  /// Returns a callable class that can be used as follows: `instanceOfclass PasswordSettings.name.copyWith(...)` or like so:`instanceOfclass PasswordSettings.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfclass PasswordSettings extends Equatable.name.copyWith(...)` or like so:`instanceOfclass PasswordSettings extends Equatable.name.copyWith.fieldName(...)`.
   _$PasswordSettingsCWProxy get copyWith => _$PasswordSettingsCWProxyImpl(this);
 }

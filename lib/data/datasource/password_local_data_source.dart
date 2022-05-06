@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:flutter_password_saver/data/entity/password_settings_entity.dart';
@@ -9,11 +11,11 @@ import 'package:injectable/injectable.dart';
 abstract class PasswordLocalDataSource {
   Future<List<Password>> getAllPaswords();
 
-  Future<void> savePassword(PasswordEntity password);
+  Future<void> savePassword(Password password);
 
   Future<void> deletePassword(String passwordId);
 
-  Future<Password> getPasswordById(String passwordId);
+  Future<Password?> getPasswordById(String passwordId);
 
   Future<List<Password>> searchPassword(String keyword);
 
@@ -44,11 +46,14 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
     Box box = await _getPasswordBox();
 
     try {
-      if (!box.isOpen) {
-        box = await _getPasswordBox();
-      }
-      final passwords =
-          box.values.cast<PasswordEntity>().map((e) => e.toModel()).toList();
+      final passwords = box.values.cast<PasswordEntity>().map((e) {
+        final settings = e.settings
+                ?.castHiveList<PasswordSettingsEntity>()
+                .map((e) => e.toModel())
+                .toList() ??
+            [];
+        return e.toModel(settings);
+      }).toList();
       return passwords;
     } catch (e) {
       return Future.error(e);
@@ -59,11 +64,24 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
   }
 
   @override
-  Future<void> savePassword(PasswordEntity password) async {
+  Future<void> savePassword(Password password) async {
     final settingsBox = await _getSettingsBox();
     final box = await _getPasswordBox();
     try {
-      await box.put(password.key, password);
+      final settingEntities = password.settings
+          .map((e) => PasswordSettingsEntity.fromPasswordSettings(e))
+          .toList();
+      ;
+      settingsBox.putAll(
+        {for (var e in settingEntities) e.key: e},
+      );
+
+      final passEntity = PasswordEntity.fromPassword(
+        password: password,
+        settings: HiveList(settingsBox, objects: settingEntities),
+      );
+
+      await box.put(passEntity.key, passEntity);
       return;
     } catch (e) {
       // Handle errors here
@@ -88,15 +106,20 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
   }
 
   @override
-  Future<Password> getPasswordById(String passwordId) async {
+  Future<Password?> getPasswordById(String passwordId) async {
     final settingsBox = await _getSettingsBox();
 
     final box = await _getPasswordBox();
     try {
-      final result = box.get(passwordId);
-      return result!.toModel();
+      final PasswordEntity result = box.get(passwordId)!;
+      final settings = result.settings
+              ?.castHiveList<PasswordSettingsEntity>()
+              .map((e) => e.toModel())
+              .toList() ??
+          [];
+      return result.toModel(settings);
     } catch (e) {
-      return Future.error(e);
+      return null;
     } finally {
       await settingsBox.close();
       await box.close();

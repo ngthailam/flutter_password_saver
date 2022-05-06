@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/data/util/id_generator.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:flutter_password_saver/domain/usecase/password/get_password_by_id_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/save_password_use_case.dart';
@@ -15,12 +16,22 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
       : super(PasswordSaveState()) {
     on<PasswordSaveConfirmEvent>(_createPassword);
     on<PasswordSavePrefetchEvent>(_prefetchPassword);
+    final randomId = generateRandomUuid();
+    _inputPassword = Password(
+      id: randomId,
+      settings: Password.defaultSettings(
+        passwordId: randomId,
+      ),
+    );
   }
 
   final SavePasswordUsecase _savePasswordUsecase;
   final GetPasswordByIdUseCase _getPasswordByIdUseCase;
 
-  Password _inputPassword = Password();
+  Password? _preFetchPassword;
+  late Password _inputPassword;
+
+  bool get isDataChanged => _preFetchPassword != _inputPassword;
 
   FutureOr<void> _prefetchPassword(
     PasswordSavePrefetchEvent event,
@@ -32,8 +43,11 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
 
     try {
       final password = await _getPasswordByIdUseCase.execute(event.passwordId!);
-      _inputPassword = password;
-      emit(state.copyWith(password: password));
+      if (password != null) {
+        _inputPassword = password;
+        _preFetchPassword = password;
+      }
+      emit(state.copyWith(password: password ?? _inputPassword));
     } catch (e) {
       // Do nothing
     }

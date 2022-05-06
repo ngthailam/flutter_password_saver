@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.0.13
   flutter_svg: ^1.0.3
   top_snackbar_flutter: ^1.0.2
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

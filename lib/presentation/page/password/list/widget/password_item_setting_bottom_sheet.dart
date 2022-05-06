@@ -23,7 +23,7 @@ Future<void> showPasswordSettingsBottomSheet(
 }
 
 final List<PasswordSettings> defaultSettings = [
-  PasswordSettings(name: PasswordSettingsName.alwaysShow, value: false),
+  const PasswordSettings(name: PasswordSettingsName.alwaysShow, value: false),
 ];
 
 class PasswordSettingsBottomSheet extends StatefulWidget {

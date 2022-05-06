@@ -53,9 +53,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => _bloc
-          ..add(InitializeEvent())
-          ..add(GetPasswordEvent()),
+        create: (context) => _bloc..add(InitializeEvent()),
         child: BlocConsumer<PasswordBloc, PasswordState>(
           listener: (BuildContext context, PasswordState state) {
             // TODO
@@ -98,6 +96,15 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
             key: ObjectKey(item),
             password: item,
             forceShow: _bloc.prefAlwaysShowPassword,
+            onChangeSetting: (settings) {
+              _bloc.add(
+                UpdateSettingsEvent(
+                  passwordId:item.id,
+                  name: settings.name,
+                  value: settings.value,
+                ),
+              );
+            },
           );
         },
       ),
@@ -183,10 +190,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
     final result =
         await Navigator.of(context).pushNamed(AppRouter.savePassword);
     if (result == true) {
-      context.showSnackBar(
-        'Password saved successfully',
-        SnackBarType.success
-      );
+      context.showSnackBar('Password saved successfully', SnackBarType.success);
     }
   }
 }
