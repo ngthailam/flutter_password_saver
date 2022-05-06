@@ -7,10 +7,12 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/snack_bar.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -111,9 +113,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         child: FloatingActionButton(
           backgroundColor: AppColors.blue500,
           child: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context).pushNamed(AppRouter.savePassword);
-          },
+          onPressed: _goToSavePassword,
         ),
       ),
     );
@@ -151,9 +151,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
           PrimaryButton(
             margin: const EdgeInsets.symmetric(horizontal: 48),
             text: 'Save your first password',
-            onPressed: () {
-              Navigator.of(context).pushNamed(AppRouter.savePassword);
-            },
+            onPressed: _goToSavePassword,
           ),
         ],
       ),
@@ -179,5 +177,16 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         ],
       ),
     );
+  }
+
+  Future<void> _goToSavePassword() async {
+    final result =
+        await Navigator.of(context).pushNamed(AppRouter.savePassword);
+    if (result == true) {
+      context.showSnackBar(
+        'Password saved successfully',
+        SnackBarType.success
+      );
+    }
   }
 }

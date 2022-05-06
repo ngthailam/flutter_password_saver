@@ -42,7 +42,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
       _alwaysShow = true;
       _contentVisible = true;
     } else if (passSettingAlwaysShow == null && widget.forceShow) {
-      // Only check null, to respect individual's password preference 
+      // Only check null, to respect individual's password preference
       // over universal settings
       _alwaysShow = true;
       _contentVisible = true;
@@ -121,6 +121,8 @@ class _PasswordListItemState extends State<PasswordListItem> {
           context
               .read<PasswordBloc>()
               .add(DeletePasswordEvent(id: widget.password.id));
+          context.showSuccessSnackBar(
+              'Deleted password for [${widget.password.name}]');
         },
         backgroundColor: AppColors.red400,
         foregroundColor: Colors.white,
@@ -160,6 +162,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.password.name),
+        const SizedBox(height: 4),
         _textWithCopy(widget.password.accName),
         _textWithCopy(widget.password.password),
       ],
@@ -177,9 +180,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
           onTap: () {
             if (_contentVisible) {
               Clipboard.setData(ClipboardData(text: text));
-              context.showSnackBar('Coppied: $text');
+              context.showToast('Coppied: $text');
             } else {
-              context.showSnackBar(
+              context.showToast(
                 'Must press eye icon to toggle visibility before copying',
               );
             }

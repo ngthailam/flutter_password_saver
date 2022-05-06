@@ -66,7 +66,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
         child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
           listener: (context, state) {
             if (state.loadState == LoadState.success) {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
             }
 
             final password = state.password;

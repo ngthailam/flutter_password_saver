@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             if (state.loginLoadState == LoadState.success) {
               Navigator.of(context).popAndPushNamed(AppRouter.password);
             } else if (state.loginLoadState == LoadState.failure) {
-              context.showSnackBar('Username or password incorect');
+              context.showErrorSnackBar('Username or password incorect');
             }
 
             if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () {
         // Handle
-        context.showSnackBar('Comming soon...');
+        context.showInfoSnackBar('Comming soon...');
       },
       child: const Text(
         'I dont remember my password',

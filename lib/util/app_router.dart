@@ -5,7 +5,6 @@ import 'package:flutter_password_saver/presentation/page/auth/register/register_
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/password_page.dart';
-import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 
 class AppRouter {
   static const String gateway = 'gateway';
