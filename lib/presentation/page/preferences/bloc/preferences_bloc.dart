@@ -17,6 +17,7 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
     on<PreferenceInitEvent>(_initialize);
     on<PreferenceSaveRequireLoginEvent>(_saveRequirePassword);
     on<PreferenceSaveAlwaysShowPasswordEvent>(_saveAlwaysShowPasswords);
+    on<DeleteAccountEvent>(_deleteAccount);
   }
 
   final AccountPreferenceUseCase _accountPreferenceUseCase;
@@ -68,6 +69,19 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
       ));
     } catch (e) {
       emit(state.copyWith(loadState: LoadState.failure));
+    }
+  }
+
+  FutureOr<void> _deleteAccount(
+    DeleteAccountEvent event,
+    Emitter<PreferenceState> emit,
+  ) async {
+    emit(state.copyWith(deleteLoadState: LoadState.loading));
+    try {
+      await _accountPreferenceUseCase.deleteAccount();
+      emit(state.copyWith(deleteLoadState: LoadState.success));
+    } catch (e) {
+      emit(state.copyWith(deleteLoadState: LoadState.failure));
     }
   }
 }

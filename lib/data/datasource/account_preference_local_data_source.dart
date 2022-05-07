@@ -8,6 +8,8 @@ abstract class AccountPreferenceLocalDataSource {
   Future<void> saveRequireLogin(bool require);
 
   Future<void> saveAlwaysShowPassword(bool alwaysShow);
+
+  Future<void> deleteAll();
 }
 
 @Injectable(as: AccountPreferenceLocalDataSource)
@@ -38,5 +40,11 @@ class AccountPreferenceLocalDataSourceImpl
     final sharedPrefs = await _prefs;
     sharedPrefs.setBool(
         AccountPreferenceEntity.keyAlwaysShowPasswords, alwaysShow);
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.clear();
   }
 }

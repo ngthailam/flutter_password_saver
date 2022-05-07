@@ -8,6 +8,8 @@ abstract class SecureStorage {
   Future<Uint8List?> getDbEncryptionKey();
 
   Future<void> saveDbEncryptionKey(String keyStr);
+
+  Future<void> deleteKey();
 }
 
 @Singleton(as: SecureStorage)
@@ -35,5 +37,13 @@ class SecureStorageImpl extends SecureStorage {
     const secureStorage = FlutterSecureStorage();
 
     return secureStorage.write(key: dbKey, value: keyStr);
+  }
+
+  @override
+  Future<void> deleteKey() {
+    _dbEncryptionKey = null;
+    const secureStorage = FlutterSecureStorage();
+
+    return secureStorage.delete(key: dbKey);
   }
 }

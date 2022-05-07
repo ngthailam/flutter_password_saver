@@ -7,9 +7,13 @@ import 'package:flutter_password_saver/presentation/page/preferences/bloc/prefer
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_event.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.dart';
 
 Future<void> showPreferencePage(BuildContext context) {
   return showDialog(
@@ -51,16 +55,38 @@ class _PreferencesPageState extends State<PreferencesPage> {
           create: (context) => _bloc..add(PreferenceInitEvent()),
           child: BlocConsumer<PreferencesBloc, PreferenceState>(
             listener: ((context, state) {
-              // Do something here
+              if (state.deleteLoadState != LoadState.none) {
+                if (state.deleteLoadState == LoadState.success) {
+                  context.showErrorSnackBar('Delete success');
+                  HotRestart.of(context).hotRestart();
+                }
+
+                if (state.deleteLoadState == LoadState.failure) {
+                  context.showErrorSnackBar('Delete failed');
+                }
+              }
             }),
             builder: (context, state) {
               switch (state.loadState) {
                 case LoadState.loading:
-                  return const Center(child: Text('Loading'));
+                  return const Center(child: LoadingIndicator());
                 case LoadState.failure:
                   return const Center(child: Text('Error'));
                 case LoadState.success:
-                  return _primary(state);
+                  if (state.deleteLoadState == LoadState.none) {
+                    return _primary(state);
+                  } else {
+                    return Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          LoadingIndicator(),
+                          SizedBox(height: 8),
+                          Text('Deleting account ...')
+                        ],
+                      ),
+                    );
+                  }
                 default:
                   return const SizedBox.shrink();
               }
@@ -78,6 +104,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
         _appBar(),
         const SizedBox(height: 16),
         _accountDetails(state.user),
+        const SizedBox(height: 16),
+        _deleteAccount(),
         const Padding(
           padding: EdgeInsets.only(top: 16, bottom: 8),
           child: Divider(
@@ -86,6 +114,48 @@ class _PreferencesPageState extends State<PreferencesPage> {
         ),
         _preferences(state.preference),
       ],
+    );
+  }
+
+  Widget _deleteAccount() {
+    return GestureDetector(
+      onTap: () => _showDeleteAccountDialog(),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: AppColors.red500,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Icon(
+                Icons.delete,
+                color: AppColors.white500,
+                size: 16,
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Delete account',
+                style: TextStyle(
+                    color: AppColors.white500, fontWeight: FontWeight.w500),
+              ),
+            ]),
+      ),
+    );
+  }
+
+  void _showDeleteAccountDialog() {
+    showAlertDialog(
+      content:
+          'Are you sure you want to delet your account? All passwords will be lost forever.',
+      context: context,
+      defaultActionText: 'Yes',
+      cancelActionText: 'No',
+      onDefaultAction: () {
+        _bloc.add(DeleteAccountEvent());
+      },
     );
   }
 

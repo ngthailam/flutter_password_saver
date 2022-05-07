@@ -18,6 +18,8 @@ abstract class PasswordLocalDataSource {
   Future<List<Password>> searchPassword(String keyword);
 
   Future<void> updateSettings(PasswordSettings settings);
+
+  Future<void> deleteAll();
 }
 
 @Injectable(as: PasswordLocalDataSource)
@@ -105,7 +107,6 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
   @override
   Future<Password?> getPasswordById(String passwordId) async {
     final settingsBox = await _getSettingsBox();
-
     final box = await _getPasswordBox();
     try {
       final PasswordEntity result = box.get(passwordId)!;
@@ -158,5 +159,14 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
     } finally {
       await settingsBox.close();
     }
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    final settingsBox = await _getSettingsBox();
+    final box = await _getPasswordBox();
+    await settingsBox.clear();
+    await box.clear();
+    return;
   }
 }

@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
             listener: (context, state) async {
               if (state.loadState == LoadState.success) {
                 _animateToNextPage();
-                await Future.delayed(const Duration(seconds: 3));
+                await Future.delayed(const Duration(seconds: 2));
                 Navigator.of(context).popAndPushNamed(AppRouter.password);
               }
             },
@@ -178,7 +178,7 @@ class _PageIndicator extends StatelessWidget {
 }
 
 class _BenefitPage extends StatefulWidget {
-  _BenefitPage({Key? key, required this.onPressed}) : super(key: key);
+  const _BenefitPage({Key? key, required this.onPressed}) : super(key: key);
 
   final VoidCallback onPressed;
 
@@ -218,7 +218,7 @@ class _BenefitPageState extends State<_BenefitPage> {
           ),
           const SizedBox(height: 8),
           const SlideUp(
-            delay: Duration(milliseconds: 500),
+            delay: Duration(milliseconds: 200),
             child: Text(
               'PASS-SAVER',
               textAlign: TextAlign.center,
@@ -262,8 +262,7 @@ class _BenefitPageState extends State<_BenefitPage> {
 
   Widget _benefit1Text() {
     return SlideUp(
-      delay:
-          const Duration(milliseconds: 1300), // After password saver appeared
+      delay: const Duration(milliseconds: 1400),
       child: RichText(
         text: TextSpan(
           text: 'A place to remember all of your Passwords for you ',
@@ -381,8 +380,8 @@ class __NameInputPageState extends State<_NameInputPage> {
   }
 
   Widget _title() {
-    return SlideUp(
-      child: const Text(
+    return const SlideUp(
+      child: Text(
         'What is your name?',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),

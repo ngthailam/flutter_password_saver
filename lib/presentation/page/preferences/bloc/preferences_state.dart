@@ -11,9 +11,11 @@ class PreferenceState {
     this.user,
     this.preference,
     this.loadState = LoadState.none,
+    this.deleteLoadState = LoadState.none,
   });
 
   final LoadState loadState;
   final User? user;
   final AccountPreference? preference;
+  final LoadState deleteLoadState;
 }

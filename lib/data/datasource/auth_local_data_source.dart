@@ -10,6 +10,8 @@ abstract class AuthLocalDataSource {
   Future<UserEntity?> getCurrentUser();
 
   Future<bool> login(User user);
+
+  Future<void> deleteAll();
 }
 
 @Injectable(as: AuthLocalDataSource)
@@ -61,5 +63,12 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
       userBox,
       encryptionCipher: HiveAesCipher(encryptionKey!),
     );
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    final box = await _getUserBox();
+    await box.clear();
+    return;
   }
 }

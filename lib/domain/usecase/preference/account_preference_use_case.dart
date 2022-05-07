@@ -19,4 +19,8 @@ class AccountPreferenceUseCase {
   Future<void> saveAlwaysShowPassword(bool alwaysShow) {
     return _accountPrefRepo.saveAlwaysShowPassword(alwaysShow);
   }
+
+  Future<void> deleteAccount() {
+    return _accountPrefRepo.deleteAccount();
+  }
 }

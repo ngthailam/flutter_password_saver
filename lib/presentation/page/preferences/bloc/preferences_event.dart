@@ -13,3 +13,5 @@ class PreferenceSaveAlwaysShowPasswordEvent extends PreferenceEvent {
 
   final bool alwaysShowPasswords;
 }
+
+class DeleteAccountEvent extends PreferenceEvent {}

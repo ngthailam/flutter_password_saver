@@ -7,6 +7,8 @@ part of 'preferences_state.dart';
 // **************************************************************************
 
 abstract class _$PreferenceStateCWProxy {
+  PreferenceState deleteLoadState(LoadState deleteLoadState);
+
   PreferenceState loadState(LoadState loadState);
 
   PreferenceState preference(AccountPreference? preference);
@@ -20,6 +22,7 @@ abstract class _$PreferenceStateCWProxy {
   /// PreferenceState(...).copyWith(id: 12, name: "My name")
   /// ````
   PreferenceState call({
+    LoadState? deleteLoadState,
     LoadState? loadState,
     AccountPreference? preference,
     User? user,
@@ -31,6 +34,10 @@ class _$PreferenceStateCWProxyImpl implements _$PreferenceStateCWProxy {
   final PreferenceState _value;
 
   const _$PreferenceStateCWProxyImpl(this._value);
+
+  @override
+  PreferenceState deleteLoadState(LoadState deleteLoadState) =>
+      this(deleteLoadState: deleteLoadState);
 
   @override
   PreferenceState loadState(LoadState loadState) => this(loadState: loadState);
@@ -51,11 +58,17 @@ class _$PreferenceStateCWProxyImpl implements _$PreferenceStateCWProxy {
   /// PreferenceState(...).copyWith(id: 12, name: "My name")
   /// ````
   PreferenceState call({
+    Object? deleteLoadState = const $CopyWithPlaceholder(),
     Object? loadState = const $CopyWithPlaceholder(),
     Object? preference = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
   }) {
     return PreferenceState(
+      deleteLoadState: deleteLoadState == const $CopyWithPlaceholder() ||
+              deleteLoadState == null
+          ? _value.deleteLoadState
+          // ignore: cast_nullable_to_non_nullable
+          : deleteLoadState as LoadState,
       loadState: loadState == const $CopyWithPlaceholder() || loadState == null
           ? _value.loadState
           // ignore: cast_nullable_to_non_nullable

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
+import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
+import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -24,21 +26,25 @@ void main() async {
 
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Title of Application',
-      navigatorObservers: [routeObserver],
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return HotRestart(
+      child: MaterialApp(
+        title: 'Title of Application',
+        navigatorObservers: [routeObserver],
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        onGenerateRoute: (RouteSettings settings) =>
+            AppRouter.generateRoute(settings),
+        initialRoute: getInitialRoute(),
+        home: const GatewayPage(),
       ),
-      onGenerateRoute: (RouteSettings settings) =>
-          AppRouter.generateRoute(settings),
-      initialRoute: getInitialRoute(),
     );
   }
 
