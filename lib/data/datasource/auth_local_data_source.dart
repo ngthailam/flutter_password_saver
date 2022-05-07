@@ -1,3 +1,4 @@
+import 'package:flutter_password_saver/data/datasource/auth_login_lock_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
@@ -18,9 +19,13 @@ abstract class AuthLocalDataSource {
 
 @Injectable(as: AuthLocalDataSource)
 class AuthLocalDataSourceImpl extends AuthLocalDataSource {
-  AuthLocalDataSourceImpl(this._secureStorage);
+  AuthLocalDataSourceImpl(
+    this._secureStorage,
+    this._authLoginLockDataSource,
+  );
 
   final SecureStorage _secureStorage;
+  final AuthLoginLockDataSource _authLoginLockDataSource;
 
   @override
   Future<UserEntity?> getCurrentUser() async {
@@ -54,8 +59,11 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
     if (currentUser == null) return false;
     if (user.name == currentUser.name &&
         user.password == currentUser.password) {
+      _authLoginLockDataSource.onLoginSuccess();
       return true;
     }
+
+    await _authLoginLockDataSource.onLoginFailed();
     return false;
   }
 
@@ -71,6 +79,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   Future<void> deleteAll() async {
     final box = await _getUserBox();
     await box.clear();
+    await _authLoginLockDataSource.deleteAll();
     return;
   }
 

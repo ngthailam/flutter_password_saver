@@ -45,7 +45,6 @@ class _PasswordSettingsBottomSheetState
     extends State<PasswordSettingsBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    print('[PasswordSettingsBottomSheet] Building ...');
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Column(

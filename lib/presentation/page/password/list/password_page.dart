@@ -12,7 +12,7 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
-import 'package:flutter_password_saver/presentation/widget/snack_bar.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_snack_bar.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -38,7 +38,6 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   @override
   void dispose() {
     super.dispose();
-    print('[PasswordPage] disposed');
     _bloc.close();
     routeObserver.unsubscribe(this);
   }

@@ -33,7 +33,6 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   @override
   void initState() {
     super.initState();
-    print('[PasswordSavePage] id=${widget.arg?.id}');
     _nameTextEdtCtrl = TextEditingController()
       ..addListener(() {
         _bloc.onNameChanged(_nameTextEdtCtrl.text);

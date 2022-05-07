@@ -196,6 +196,6 @@ class _$FpRenewPassStateCWProxyImpl implements _$FpRenewPassStateCWProxy {
 }
 
 extension $FpRenewPassStateCopyWith on FpRenewPassState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass FpRenewPassState extends ForgetPasswordState.name.copyWith(...)` or like so:`instanceOfclass FpRenewPassState extends ForgetPasswordState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfclass FpRenewPassState extends ForgetPasswordState with EquatableMixin.name.copyWith(...)` or like so:`instanceOfclass FpRenewPassState extends ForgetPasswordState with EquatableMixin.name.copyWith.fieldName(...)`.
   _$FpRenewPassStateCWProxy get copyWith => _$FpRenewPassStateCWProxyImpl(this);
 }

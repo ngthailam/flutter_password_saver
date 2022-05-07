@@ -7,6 +7,8 @@ part of 'login_state.dart';
 // **************************************************************************
 
 abstract class _$LoginStateCWProxy {
+  LoginState lockTimeRemaining(int lockTimeRemaining);
+
   LoginState loginLoadState(LoadState loginLoadState);
 
   LoginState user(User? user);
@@ -18,6 +20,7 @@ abstract class _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    int? lockTimeRemaining,
     LoadState? loginLoadState,
     User? user,
   });
@@ -28,6 +31,10 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   final LoginState _value;
 
   const _$LoginStateCWProxyImpl(this._value);
+
+  @override
+  LoginState lockTimeRemaining(int lockTimeRemaining) =>
+      this(lockTimeRemaining: lockTimeRemaining);
 
   @override
   LoginState loginLoadState(LoadState loginLoadState) =>
@@ -45,10 +52,16 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    Object? lockTimeRemaining = const $CopyWithPlaceholder(),
     Object? loginLoadState = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
   }) {
     return LoginState(
+      lockTimeRemaining: lockTimeRemaining == const $CopyWithPlaceholder() ||
+              lockTimeRemaining == null
+          ? _value.lockTimeRemaining
+          // ignore: cast_nullable_to_non_nullable
+          : lockTimeRemaining as int,
       loginLoadState: loginLoadState == const $CopyWithPlaceholder() ||
               loginLoadState == null
           ? _value.loginLoadState

@@ -10,4 +10,6 @@ abstract class AuthRepository {
   Future<void> deleteAccount();
 
   Future<void> updatePassword(String password);
+
+  Future<int> getLockRemainingTime();
 }

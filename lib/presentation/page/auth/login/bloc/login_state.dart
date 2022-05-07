@@ -9,8 +9,10 @@ class LoginState {
   LoginState({
     required this.loginLoadState,
     this.user,
+    this.lockTimeRemaining = 0,
   });
 
   final LoadState loginLoadState;
   final User? user;
+  final int lockTimeRemaining;
 }

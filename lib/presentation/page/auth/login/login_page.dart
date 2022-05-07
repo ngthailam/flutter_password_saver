@@ -6,6 +6,7 @@ import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_e
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
+import 'package:flutter_password_saver/presentation/utils/time_util.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
@@ -51,7 +52,12 @@ class _LoginPageState extends State<LoginPage> {
               if (state.loginLoadState == LoadState.success) {
                 Navigator.of(context).popAndPushNamed(AppRouter.password);
               } else if (state.loginLoadState == LoadState.failure) {
-                context.showErrorSnackBar('Username or password incorect');
+                if (state.lockTimeRemaining == 0) {
+                  context.showErrorSnackBar('Username or password incorect');
+                } else {
+                  context.showErrorSnackBar(
+                      'Too many attempts, try again in ${millisToReadableTime(state.lockTimeRemaining)}');
+                }
               }
 
               if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {
@@ -167,8 +173,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget _forgotPasswordPrompt() {
     return GestureDetector(
       onTap: () {
-        // Handle
-        // context.showInfoSnackBar('Comming soon...');
         Navigator.of(context).pushNamed(AppRouter.forgetPassword);
       },
       child: const Text(

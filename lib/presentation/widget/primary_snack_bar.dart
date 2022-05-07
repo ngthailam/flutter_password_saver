@@ -59,11 +59,15 @@ class PrimarySnackBar extends StatelessWidget {
                 color: AppColors.white500,
               ),
               const SizedBox(width: 16),
-              Text(
-                message,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: AppColors.white500,
+              Expanded(
+                child: Text(
+                  message,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: AppColors.white500,
+                  ),
                 ),
               ),
             ],

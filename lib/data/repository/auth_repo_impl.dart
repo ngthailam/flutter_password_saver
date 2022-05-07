@@ -1,5 +1,6 @@
 import 'package:flutter_password_saver/data/datasource/account_preference_local_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/auth_local_data_source.dart';
+import 'package:flutter_password_saver/data/datasource/auth_login_lock_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/password_local_data_source.dart';
 import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
@@ -12,11 +13,13 @@ class AuthRepoitoryImpl extends AuthRepository {
     this._authLocalDataSource,
     this._passwordLocalDataSource,
     this._accountPreferenceLocalDataSource,
+    this._authLoginLockDataSource,
   );
 
   final AuthLocalDataSource _authLocalDataSource;
   final PasswordLocalDataSource _passwordLocalDataSource;
   final AccountPreferenceLocalDataSource _accountPreferenceLocalDataSource;
+  final AuthLoginLockDataSource _authLoginLockDataSource;
 
   @override
   Future<bool> createAccount(User user) {
@@ -46,5 +49,10 @@ class AuthRepoitoryImpl extends AuthRepository {
   @override
   Future<void> updatePassword(String password) {
     return _authLocalDataSource.updatePassword(password);
+  }
+
+  @override
+  Future<int> getLockRemainingTime() {
+    return _authLoginLockDataSource.getRemainingLockTime();
   }
 }

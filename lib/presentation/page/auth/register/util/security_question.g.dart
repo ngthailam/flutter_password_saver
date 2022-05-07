@@ -72,6 +72,6 @@ class _$SecurityQuestionCWProxyImpl implements _$SecurityQuestionCWProxy {
 }
 
 extension $SecurityQuestionCopyWith on SecurityQuestion {
-  /// Returns a callable class that can be used as follows: `instanceOfclass SecurityQuestion.name.copyWith(...)` or like so:`instanceOfclass SecurityQuestion.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfclass SecurityQuestion extends Equatable.name.copyWith(...)` or like so:`instanceOfclass SecurityQuestion extends Equatable.name.copyWith.fieldName(...)`.
   _$SecurityQuestionCWProxy get copyWith => _$SecurityQuestionCWProxyImpl(this);
 }
