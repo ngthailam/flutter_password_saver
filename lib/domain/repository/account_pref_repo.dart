@@ -6,6 +6,4 @@ abstract class AccountPrefRepo {
   Future<void> saveRequireLogin(bool require);
 
   Future<void> saveAlwaysShowPassword(bool alwaysShow);
-
-  Future<void> deleteAccount();
 }

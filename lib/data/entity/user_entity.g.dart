@@ -7,9 +7,15 @@ part of 'user_entity.dart';
 // **************************************************************************
 
 abstract class _$UserEntityCWProxy {
+  UserEntity email(String email);
+
   UserEntity name(String name);
 
   UserEntity password(String password);
+
+  UserEntity securityQuestionAnswer(String? securityQuestionAnswer);
+
+  UserEntity securityQuestionId(int? securityQuestionId);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -18,8 +24,11 @@ abstract class _$UserEntityCWProxy {
   /// UserEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   UserEntity call({
+    String? email,
     String? name,
     String? password,
+    String? securityQuestionAnswer,
+    int? securityQuestionId,
   });
 }
 
@@ -30,10 +39,21 @@ class _$UserEntityCWProxyImpl implements _$UserEntityCWProxy {
   const _$UserEntityCWProxyImpl(this._value);
 
   @override
+  UserEntity email(String email) => this(email: email);
+
+  @override
   UserEntity name(String name) => this(name: name);
 
   @override
   UserEntity password(String password) => this(password: password);
+
+  @override
+  UserEntity securityQuestionAnswer(String? securityQuestionAnswer) =>
+      this(securityQuestionAnswer: securityQuestionAnswer);
+
+  @override
+  UserEntity securityQuestionId(int? securityQuestionId) =>
+      this(securityQuestionId: securityQuestionId);
 
   @override
 
@@ -44,10 +64,17 @@ class _$UserEntityCWProxyImpl implements _$UserEntityCWProxy {
   /// UserEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   UserEntity call({
+    Object? email = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
+    Object? securityQuestionAnswer = const $CopyWithPlaceholder(),
+    Object? securityQuestionId = const $CopyWithPlaceholder(),
   }) {
     return UserEntity(
+      email: email == const $CopyWithPlaceholder() || email == null
+          ? _value.email
+          // ignore: cast_nullable_to_non_nullable
+          : email as String,
       name: name == const $CopyWithPlaceholder() || name == null
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
@@ -56,6 +83,15 @@ class _$UserEntityCWProxyImpl implements _$UserEntityCWProxy {
           ? _value.password
           // ignore: cast_nullable_to_non_nullable
           : password as String,
+      securityQuestionAnswer:
+          securityQuestionAnswer == const $CopyWithPlaceholder()
+              ? _value.securityQuestionAnswer
+              // ignore: cast_nullable_to_non_nullable
+              : securityQuestionAnswer as String?,
+      securityQuestionId: securityQuestionId == const $CopyWithPlaceholder()
+          ? _value.securityQuestionId
+          // ignore: cast_nullable_to_non_nullable
+          : securityQuestionId as int?,
     );
   }
 }
@@ -82,17 +118,26 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
     return UserEntity(
       name: fields[0] as String,
       password: fields[1] as String,
+      email: fields[2] as String,
+      securityQuestionId: fields[3] as int?,
+      securityQuestionAnswer: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserEntity obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.password);
+      ..write(obj.password)
+      ..writeByte(2)
+      ..write(obj.email)
+      ..writeByte(3)
+      ..write(obj.securityQuestionId)
+      ..writeByte(4)
+      ..write(obj.securityQuestionAnswer);
   }
 
   @override

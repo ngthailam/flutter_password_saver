@@ -12,6 +12,8 @@ abstract class AuthLocalDataSource {
   Future<bool> login(User user);
 
   Future<void> deleteAll();
+
+  Future<void> updatePassword(String password);
 }
 
 @Injectable(as: AuthLocalDataSource)
@@ -70,5 +72,19 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
     final box = await _getUserBox();
     await box.clear();
     return;
+  }
+
+  @override
+  Future<void> updatePassword(String password) async {
+    final box = await _getUserBox();
+    try {
+      final user = await box.values.cast().first as UserEntity;
+      await box.put(user.key, user.copyWith(password: password));
+      return;
+    } catch (e) {
+      return Future.error(e);
+    } finally {
+      await box.close();
+    }
   }
 }

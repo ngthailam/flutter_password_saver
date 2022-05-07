@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/domain/usecase/auth/delete_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_event.dart';
@@ -12,8 +13,10 @@ import 'package:injectable/injectable.dart';
 @injectable
 class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
   PreferencesBloc(
-      this._accountPreferenceUseCase, this._getCurrentAccountUseCase)
-      : super(PreferenceState()) {
+    this._accountPreferenceUseCase,
+    this._getCurrentAccountUseCase,
+    this._deleteAccountUseCase,
+  ) : super(PreferenceState()) {
     on<PreferenceInitEvent>(_initialize);
     on<PreferenceSaveRequireLoginEvent>(_saveRequirePassword);
     on<PreferenceSaveAlwaysShowPasswordEvent>(_saveAlwaysShowPasswords);
@@ -22,6 +25,7 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
 
   final AccountPreferenceUseCase _accountPreferenceUseCase;
   final GetCurrentAccountUseCase _getCurrentAccountUseCase;
+  final DeleteAccountUseCase _deleteAccountUseCase;
 
   FutureOr<void> _saveRequirePassword(
     PreferenceSaveRequireLoginEvent event,
@@ -78,7 +82,7 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
   ) async {
     emit(state.copyWith(deleteLoadState: LoadState.loading));
     try {
-      await _accountPreferenceUseCase.deleteAccount();
+      await _deleteAccountUseCase.execute(null);
       emit(state.copyWith(deleteLoadState: LoadState.success));
     } catch (e) {
       emit(state.copyWith(deleteLoadState: LoadState.failure));

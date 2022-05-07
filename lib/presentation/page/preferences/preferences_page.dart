@@ -10,6 +10,7 @@ import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/delete_account_button_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
@@ -105,7 +106,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
         const SizedBox(height: 16),
         _accountDetails(state.user),
         const SizedBox(height: 16),
-        _deleteAccount(),
+        DeleteAccountButton(
+          onPressed: () => _bloc.add(DeleteAccountEvent()),
+        ),
         const Padding(
           padding: EdgeInsets.only(top: 16, bottom: 8),
           child: Divider(
@@ -114,48 +117,6 @@ class _PreferencesPageState extends State<PreferencesPage> {
         ),
         _preferences(state.preference),
       ],
-    );
-  }
-
-  Widget _deleteAccount() {
-    return GestureDetector(
-      onTap: () => _showDeleteAccountDialog(),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: AppColors.red500,
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Icon(
-                Icons.delete,
-                color: AppColors.white500,
-                size: 16,
-              ),
-              SizedBox(width: 8),
-              Text(
-                'Delete account',
-                style: TextStyle(
-                    color: AppColors.white500, fontWeight: FontWeight.w500),
-              ),
-            ]),
-      ),
-    );
-  }
-
-  void _showDeleteAccountDialog() {
-    showAlertDialog(
-      content:
-          'Are you sure you want to delet your account? All passwords will be lost forever.',
-      context: context,
-      defaultActionText: 'Yes',
-      cancelActionText: 'No',
-      onDefaultAction: () {
-        _bloc.add(DeleteAccountEvent());
-      },
     );
   }
 

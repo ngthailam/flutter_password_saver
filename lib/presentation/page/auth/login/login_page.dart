@@ -168,7 +168,8 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       onTap: () {
         // Handle
-        context.showInfoSnackBar('Comming soon...');
+        // context.showInfoSnackBar('Comming soon...');
+        Navigator.of(context).pushNamed(AppRouter.forgetPassword);
       },
       child: const Text(
         'I dont remember my password',

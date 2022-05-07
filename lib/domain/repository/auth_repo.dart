@@ -6,4 +6,8 @@ abstract class AuthRepository {
   Future<User?> getCurrentAccount();
 
   Future<bool> login(User user);
+
+  Future<void> deleteAccount();
+
+  Future<void> updatePassword(String password);
 }

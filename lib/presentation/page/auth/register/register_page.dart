@@ -6,10 +6,11 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_event.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_state.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_checker.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_indicator_widget.dart';
+import 'package:flutter_password_saver/presentation/page/auth/register/util/security_question.dart';
+import 'package:flutter_password_saver/presentation/page/auth/register/widget/password_input_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
@@ -90,17 +91,28 @@ class _RegisterPageState extends State<RegisterPage> {
           });
         },
         children: [
-          _BenefitPage(onPressed: () => _animateToNextPage()),
+          _BenefitPage(onPressed: _animateToNextPage),
           _NameInputPage(onContinue: (name) {
             _animateToNextPage();
             _registerBloc.add(ConfirmNameEvent(name: name));
           }),
-          _PasswordInputPage(
+          PasswordInputPage(
             userName: _registerBloc.inputUserName,
-            onBackPressed: () => _animateToPrevPage(),
+            onBackPressed: _animateToPrevPage,
             onConfirm: (password) {
+              _animateToNextPage();
               _registerBloc.add(ConfirmPasswordEvent(password: password));
             },
+            btnWidth: MediaQuery.of(context).size.width - 96,
+            btnMargin: const EdgeInsets.symmetric(horizontal: 48),
+          ),
+          _SecurityQuestionPage(
+            onBackPressed: _animateToPrevPage,
+            onSkip: () {
+              _registerBloc.add(ConfirmSecurityQuestionEvent());
+            },
+            onAnswer: (question) => _registerBloc
+                .add(ConfirmSecurityQuestionEvent(question: question)),
           ),
           const _CongratulatePage(),
         ],
@@ -131,6 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
             _PageIndicator(isActive: _selectedIndex == 1),
             _PageIndicator(isActive: _selectedIndex == 2),
             _PageIndicator(isActive: _selectedIndex == 3),
+            _PageIndicator(isActive: _selectedIndex == 4),
           ],
         ),
       ),
@@ -439,211 +452,6 @@ class __NameInputPageState extends State<_NameInputPage> {
   }
 }
 
-class _PasswordInputPage extends StatefulWidget {
-  const _PasswordInputPage(
-      {Key? key,
-      required this.onConfirm,
-      required this.onBackPressed,
-      this.userName = ''})
-      : super(key: key);
-
-  final Function(String password) onConfirm;
-  final VoidCallback onBackPressed;
-  final String userName;
-
-  @override
-  State<_PasswordInputPage> createState() => _PasswordInputPageState();
-}
-
-class _PasswordInputPageState extends State<_PasswordInputPage> {
-  late TextEditingController _passwordTextEdtCtrl;
-  late TextEditingController _confirmPasswordTextEdtCtrl;
-
-  bool _showNotMatchedError = false;
-  int _passwordStrengthIndex = 0;
-  bool _visiblePassword = false;
-
-  final TextStyle _titleStyle = const TextStyle(
-    color: AppColors.black500,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordTextEdtCtrl = TextEditingController();
-    _confirmPasswordTextEdtCtrl = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _passwordTextEdtCtrl.dispose();
-    _confirmPasswordTextEdtCtrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _backButton(),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 48),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _title(),
-                const SizedBox(height: 32),
-                _inputPasswordTextField(),
-                _confirmPasswordTextField(),
-                const SizedBox(height: 8),
-                _passStrengthIndicator(),
-                const SizedBox(height: 8),
-                _errorText(),
-                const SizedBox(height: 64),
-              ],
-            ),
-          ),
-        ),
-        _confirmBtn(),
-      ],
-    );
-  }
-
-  Widget _backButton() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: widget.onBackPressed,
-        child: const Padding(
-            padding: EdgeInsets.all(16), child: Icon(Icons.arrow_back)),
-      ),
-    );
-  }
-
-  Widget _title() {
-    return SlideUp(
-      child: RichText(
-        text: TextSpan(
-          text: 'Hi ',
-          style: _titleStyle,
-          children: [
-            TextSpan(
-              text: widget.userName,
-              style: _titleStyle.copyWith(
-                color: AppColors.blue500,
-              ),
-            ),
-            const TextSpan(
-              text: ', please choose your password',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _errorText() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: AnimatedOpacity(
-        opacity: _showNotMatchedError ? 1 : 0,
-        duration: const Duration(milliseconds: 250),
-        child: const Text(
-          'Passwords do no matched',
-          style: TextStyle(color: AppColors.red500),
-        ),
-      ),
-    );
-  }
-
-  Widget _inputPasswordTextField() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 200),
-      child: TextField(
-        cursorColor: AppColors.blue500,
-        decoration: InputDecoration(
-          hintText: 'Enter your Password',
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                _visiblePassword = !_visiblePassword;
-              });
-            },
-            child: Icon(
-              _visiblePassword ? Icons.visibility_off : Icons.visibility,
-              color: AppColors.blue500,
-            ),
-          ),
-        ),
-        controller: _passwordTextEdtCtrl,
-        obscureText: !_visiblePassword,
-        onChanged: _onPasswordChanged,
-      ),
-    );
-  }
-
-  void _onPasswordChanged(String password) {
-    final newStrengthIndex = PasswordStrengthChecker.check(password);
-    if (_passwordStrengthIndex != newStrengthIndex || _showNotMatchedError) {
-      setState(() {
-        _passwordStrengthIndex = newStrengthIndex;
-        _showNotMatchedError = false;
-      });
-    }
-  }
-
-  Widget _confirmPasswordTextField() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 200),
-      child: TextField(
-        cursorColor: AppColors.blue500,
-        decoration: const InputDecoration(hintText: 'Confirm your Password'),
-        controller: _confirmPasswordTextEdtCtrl,
-        obscureText: !_visiblePassword,
-        onChanged: (text) {
-          setState(() {
-            _showNotMatchedError = false;
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _confirmBtn() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 400),
-      child: _Button(
-        onPressed: () {
-          if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
-            widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
-          } else {
-            setState(() {
-              _showNotMatchedError = true;
-            });
-          }
-        },
-        text: 'Confirm',
-      ),
-    );
-  }
-
-  Widget _passStrengthIndicator() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 200),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: PasswordStrengthIndicator(
-          strengthIndex: _passwordStrengthIndex,
-        ),
-      ),
-    );
-  }
-}
-
 class _CongratulatePage extends StatelessWidget {
   const _CongratulatePage({Key? key}) : super(key: key);
 
@@ -693,6 +501,189 @@ class _Button extends StatelessWidget {
       fontSize: 16,
       width: MediaQuery.of(context).size.width - 96,
       margin: const EdgeInsets.symmetric(horizontal: 48),
+    );
+  }
+}
+
+class _SecurityQuestionPage extends StatefulWidget {
+  const _SecurityQuestionPage({
+    Key? key,
+    required this.onBackPressed,
+    required this.onSkip,
+    required this.onAnswer,
+  }) : super(key: key);
+
+  final VoidCallback onBackPressed;
+  final VoidCallback onSkip;
+  final Function(SecurityQuestion question) onAnswer;
+
+  @override
+  State<_SecurityQuestionPage> createState() => __SecurityQuestionPageState();
+}
+
+class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
+  TextEditingController? _textEditingController;
+  SecurityQuestion? _chosenQuestion;
+  bool _showError = false;
+
+  List<SecurityQuestion> questions = SecurityQuestion.questionList();
+
+  @override
+  void initState() {
+    _textEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textEditingController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _backButton(context),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _title(),
+                const SizedBox(height: 32),
+                _questionPicker(),
+                _answerTextField(),
+                const SizedBox(height: 8),
+                _errorText(),
+              ],
+            ),
+          ),
+        ),
+        _confirmBtn(),
+      ],
+    );
+  }
+
+  Widget _backButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: widget.onBackPressed,
+          child: const Padding(
+              padding: EdgeInsets.all(16), child: Icon(Icons.arrow_back)),
+        ),
+        TextButton(
+          onPressed: () async {
+            await showAlertDialog(
+              context: context,
+              content:
+                  'If you dont answer, you cannot use forget password function',
+              defaultActionText: 'Confirm',
+              cancelActionText: 'Cancel',
+              onDefaultAction: () {
+                Navigator.of(context).pop();
+                widget.onSkip();
+              },
+            );
+          },
+          child: const Text('Skip'),
+        ),
+      ],
+    );
+  }
+
+  Widget _title() {
+    return const SlideUp(
+      child: Text(
+        '(Optional) Answer a question to retrieve your password when you forget it.',
+        style: TextStyle(
+          color: AppColors.black500,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _questionPicker() {
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: DropdownButton<SecurityQuestion>(
+        value: _chosenQuestion,
+        items: questions.map((e) {
+          return DropdownMenuItem(
+            child: Text(e.question),
+            value: e,
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _showError = false;
+            _chosenQuestion = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _answerTextField() {
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 36),
+        child: TextField(
+          cursorColor: AppColors.blue500,
+          decoration: const InputDecoration(hintText: 'Answer'),
+          controller: _textEditingController,
+          onChanged: (text) {
+            if (_showError) {
+              setState(() {
+                _showError = false;
+              });
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _confirmBtn() {
+    return SlideUp(
+      delay: const Duration(milliseconds: 400),
+      child: _Button(
+        onPressed: () {
+          if (_textEditingController!.text.isEmpty) {
+            setState(() {
+              _showError = true;
+            });
+          } else {
+            widget.onAnswer(_chosenQuestion!
+                .copyWith(answer: _textEditingController!.text));
+          }
+        },
+        text: 'Answer',
+      ),
+    );
+  }
+
+  Widget _errorText() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: AnimatedOpacity(
+          opacity: _showError ? 1 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: const Text(
+            'Answer must not be empty',
+            style: TextStyle(color: AppColors.red500),
+          ),
+        ),
+      ),
     );
   }
 }

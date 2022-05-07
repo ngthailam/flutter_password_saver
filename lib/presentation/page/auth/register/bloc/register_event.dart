@@ -1,3 +1,5 @@
+import 'package:flutter_password_saver/presentation/page/auth/register/util/security_question.dart';
+
 abstract class RegisterEvent {}
 
 class ConfirmNameEvent extends RegisterEvent {
@@ -7,7 +9,13 @@ class ConfirmNameEvent extends RegisterEvent {
 }
 
 class ConfirmPasswordEvent extends RegisterEvent {
-    ConfirmPasswordEvent({required this.password});
+  ConfirmPasswordEvent({required this.password});
 
   final String password;
+}
+
+class ConfirmSecurityQuestionEvent extends RegisterEvent {
+  ConfirmSecurityQuestionEvent({this.question});
+
+  final SecurityQuestion? question;
 }
