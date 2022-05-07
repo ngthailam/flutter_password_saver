@@ -24,6 +24,7 @@ class AuthLoginLockDataSourceImpl extends AuthLoginLockDataSource {
   Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
   static Map<int, int> lockTimeByAttemptCount = {
+    0: 0,
     1: 0,
     2: 0,
     3: 5 * 1000, // 5 seconds
