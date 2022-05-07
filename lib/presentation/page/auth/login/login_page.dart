@@ -42,51 +42,62 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _loginBloc..add(LoginInitializeEvent()),
-        child: BlocListener<LoginBloc, LoginState>(
-          listener: ((context, state) {
-            if (state.loginLoadState == LoadState.success) {
-              Navigator.of(context).popAndPushNamed(AppRouter.password);
-            } else if (state.loginLoadState == LoadState.failure) {
-              context.showErrorSnackBar('Username or password incorect');
-            }
+      body: SafeArea(
+        top: false,
+        child: BlocProvider(
+          create: (context) => _loginBloc..add(LoginInitializeEvent()),
+          child: BlocListener<LoginBloc, LoginState>(
+            listener: ((context, state) {
+              if (state.loginLoadState == LoadState.success) {
+                Navigator.of(context).popAndPushNamed(AppRouter.password);
+              } else if (state.loginLoadState == LoadState.failure) {
+                context.showErrorSnackBar('Username or password incorect');
+              }
 
-            if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {
-              final userName = state.user!.name;
-              _nameTextEdtCtrl.text = userName;
-              _loginBloc.onNameChanged(userName);
-            }
-          }),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 100,
-                right: -50,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: AppColors.blue400,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: -50,
-                left: -50,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: AppColors.blue400,
-                  ),
-                ),
-              ),
-              _body(),
-            ],
+              if (state.user != null && _nameTextEdtCtrl.text.isEmpty) {
+                final userName = state.user!.name;
+                _nameTextEdtCtrl.text = userName;
+                _loginBloc.onNameChanged(userName);
+              }
+            }),
+            child: Stack(
+              children: [
+                _rightCenterBubble(),
+                _topLeftBubble(),
+                _body(),
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _rightCenterBubble() {
+    return Positioned(
+      top: 100,
+      right: -50,
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: AppColors.blue400,
+        ),
+      ),
+    );
+  }
+
+  Widget _topLeftBubble() {
+    return Positioned(
+      top: -50,
+      left: -50,
+      child: Container(
+        width: 200,
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: AppColors.blue400,
         ),
       ),
     );

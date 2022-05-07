@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+// ignore_for_file: use_full_hex_values_for_flutter_colors
 class AppColors {
   static const blue500 = Color(0xff2f6bff);
   static const blue400 = Color(0xffcc2f6bff);

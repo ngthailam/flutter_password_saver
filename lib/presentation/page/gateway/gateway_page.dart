@@ -4,6 +4,8 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_event.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_state.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 
 class GatewayPage extends StatefulWidget {
   const GatewayPage({Key? key}) : super(key: key);
@@ -31,18 +33,17 @@ class _GatewayPageState extends State<GatewayPage> {
   }
 
   Widget _body() {
-    return BlocConsumer<GatewayBloc, GatewayState>(listener: ((context, state) {
-      if (state.destinationRouteName != null) {
-        Navigator.of(context).popAndPushNamed(state.destinationRouteName!);
-      }
-    }), builder: (context, state) {
-      if (state.destinationRouteName == null) {
+    return BlocConsumer<GatewayBloc, GatewayState>(
+      listener: (context, state) {
+        if (state.destinationRouteName != null) {
+          Navigator.of(context).popAndPushNamed(state.destinationRouteName!);
+        }
+      },
+      builder: (context, state) {
         return const Center(
-          child: Text('Loading...'),
+          child: LoadingIndicator(color: AppColors.black500),
         );
-      }
-
-      return const SizedBox.shrink();
-    });
+      },
+    );
   }
 }

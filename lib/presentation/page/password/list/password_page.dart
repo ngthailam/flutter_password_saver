@@ -52,15 +52,17 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _bloc..add(InitializeEvent()),
-        child: BlocConsumer<PasswordBloc, PasswordState>(
-          listener: (BuildContext context, PasswordState state) {
-            // TODO
-          },
-          builder: (BuildContext context, PasswordState state) {
-            return _body(state);
-          },
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) => _bloc..add(InitializeEvent()),
+          child: BlocConsumer<PasswordBloc, PasswordState>(
+            listener: (BuildContext context, PasswordState state) {
+              // TODO
+            },
+            builder: (BuildContext context, PasswordState state) {
+              return _body(state);
+            },
+          ),
         ),
       ),
     );

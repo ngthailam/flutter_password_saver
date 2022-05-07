@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:flutter_password_saver/data/entity/password_settings_entity.dart';
@@ -71,7 +69,6 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
       final settingEntities = password.settings
           .map((e) => PasswordSettingsEntity.fromPasswordSettings(e))
           .toList();
-      ;
       settingsBox.putAll(
         {for (var e in settingEntities) e.key: e},
       );

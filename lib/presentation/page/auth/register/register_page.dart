@@ -11,6 +11,7 @@ import 'package:flutter_password_saver/presentation/page/auth/register/util/pass
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
+import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -52,22 +53,25 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _registerBloc,
-        child: BlocListener<RegisterBloc, RegisterState>(
-          listener: (context, state) async {
-            if (state.loadState == LoadState.success) {
-              _animateToNextPage();
-              await Future.delayed(const Duration(seconds: 3));
-              Navigator.of(context).popAndPushNamed(AppRouter.password);
-            }
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              _pages(),
-              _indicators(),
-            ],
+      body: SafeArea(
+        top: false,
+        child: BlocProvider(
+          create: (context) => _registerBloc,
+          child: BlocListener<RegisterBloc, RegisterState>(
+            listener: (context, state) async {
+              if (state.loadState == LoadState.success) {
+                _animateToNextPage();
+                await Future.delayed(const Duration(seconds: 3));
+                Navigator.of(context).popAndPushNamed(AppRouter.password);
+              }
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _pages(),
+                _indicators(),
+              ],
+            ),
           ),
         ),
       ),
@@ -173,11 +177,16 @@ class _PageIndicator extends StatelessWidget {
   }
 }
 
-class _BenefitPage extends StatelessWidget {
-  const _BenefitPage({Key? key, required this.onPressed}) : super(key: key);
+class _BenefitPage extends StatefulWidget {
+  _BenefitPage({Key? key, required this.onPressed}) : super(key: key);
 
   final VoidCallback onPressed;
 
+  @override
+  State<_BenefitPage> createState() => _BenefitPageState();
+}
+
+class _BenefitPageState extends State<_BenefitPage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -200,19 +209,24 @@ class _BenefitPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 32),
-          const Text(
-            'Welcome to',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          const SlideUp(
+            child: Text(
+              'Welcome to',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'PASS-SAVER',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 42,
-                color: AppColors.blue500),
+          const SlideUp(
+            delay: Duration(milliseconds: 500),
+            child: Text(
+              'PASS-SAVER',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 42,
+                  color: AppColors.blue500),
+            ),
           ),
           const SizedBox(height: 32),
           SingleChildScrollView(
@@ -226,11 +240,7 @@ class _BenefitPage extends StatelessWidget {
   Widget _scrollableContent() {
     return Column(
       children: [
-        SvgPicture.asset(
-          'assets/svg/login.svg',
-          height: 180,
-          width: 180,
-        ),
+        _mainImg(),
         const SizedBox(height: 48),
         _benefit1Text(),
         const SizedBox(height: 16),
@@ -239,52 +249,73 @@ class _BenefitPage extends StatelessWidget {
     );
   }
 
-  RichText _benefit1Text() {
-    return RichText(
-      text: TextSpan(
-        text: 'A place to remember all of your Passwords for you ',
-        style: const TextStyle(color: AppColors.black500, fontSize: 14),
-        children: [
-          const TextSpan(
-            text: 'SECURELY',
-            style: TextStyle(
-              color: AppColors.blue500,
-              fontWeight: FontWeight.bold,
+  Widget _mainImg() {
+    return SlideUp(
+      delay: const Duration(milliseconds: 1200),
+      child: SvgPicture.asset(
+        'assets/svg/login.svg',
+        height: 180,
+        width: 180,
+      ),
+    );
+  }
+
+  Widget _benefit1Text() {
+    return SlideUp(
+      delay:
+          const Duration(milliseconds: 1300), // After password saver appeared
+      child: RichText(
+        text: TextSpan(
+          text: 'A place to remember all of your Passwords for you ',
+          style: const TextStyle(color: AppColors.black500, fontSize: 14),
+          children: [
+            const TextSpan(
+              text: 'SECURELY',
+              style: TextStyle(
+                color: AppColors.blue500,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          TextSpan(
-            text: ' using your device ${_getDeviceSecureKeyStorage()}',
-          ),
-        ],
+            TextSpan(
+              text: ' using your device ${_getDeviceSecureKeyStorage()}',
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _benefit2Text() {
-    return RichText(
-      text: const TextSpan(
-        text: 'Internet connection is',
-        style: TextStyle(color: AppColors.black500, fontSize: 14),
-        children: [
-          TextSpan(
-            text: ' NOT USED',
-            style: TextStyle(
-              color: AppColors.blue500,
-              fontWeight: FontWeight.bold,
+    return SlideUp(
+      delay: const Duration(milliseconds: 1600),
+      child: RichText(
+        text: const TextSpan(
+          text: 'Internet connection is',
+          style: TextStyle(color: AppColors.black500, fontSize: 14),
+          children: [
+            TextSpan(
+              text: ' NOT USED',
+              style: TextStyle(
+                color: AppColors.blue500,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          TextSpan(
-            text:
-                ' so you can assure that your passwords are not sent anywhere',
-          ),
-        ],
+            TextSpan(
+              text:
+                  ' so you can assure that your passwords are not sent anywhere',
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _continueBtn(BuildContext context) => _Button(
-        text: 'Get started',
-        onPressed: onPressed,
+  Widget _continueBtn(BuildContext context) => SlideUp(
+        delay: const Duration(milliseconds: 1800),
+        child: _Button(
+          text: 'Get started',
+          onPressed: widget.onPressed,
+        ),
       );
 
   String _getDeviceSecureKeyStorage() {
@@ -333,6 +364,7 @@ class __NameInputPageState extends State<_NameInputPage> {
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _title(),
                 const SizedBox(height: 48),
@@ -349,32 +381,38 @@ class __NameInputPageState extends State<_NameInputPage> {
   }
 
   Widget _title() {
-    return const Text(
-      'What is your name?',
-      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return SlideUp(
+      child: const Text(
+        'What is your name?',
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
   Widget _inputTextField() {
-    return TextField(
-      cursorColor: AppColors.blue500,
-      decoration: const InputDecoration(hintText: 'Enter your name'),
-      controller: _textEditingController,
-      onChanged: (text) {
-        if (_showError) {
-          setState(() {
-            _showError = false;
-          });
-        }
-      },
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: TextField(
+        cursorColor: AppColors.blue500,
+        decoration: const InputDecoration(hintText: 'Enter your name'),
+        controller: _textEditingController,
+        onChanged: (text) {
+          if (_showError) {
+            setState(() {
+              _showError = false;
+            });
+          }
+        },
+      ),
     );
   }
 
   Widget _errorText() {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Offstage(
-        offstage: !_showError,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 350),
+        opacity: _showError ? 1 : 0,
         child: const Text(
           'User name must not be empty',
           style: TextStyle(color: AppColors.red500),
@@ -384,17 +422,20 @@ class __NameInputPageState extends State<_NameInputPage> {
   }
 
   Widget _continueBtn() {
-    return _Button(
-      onPressed: () {
-        if (_textEditingController.text.isEmpty) {
-          setState(() {
-            _showError = true;
-          });
-        } else {
-          widget.onContinue(_textEditingController.text);
-        }
-      },
-      text: 'Continue',
+    return SlideUp(
+      delay: const Duration(milliseconds: 400),
+      child: _Button(
+        onPressed: () {
+          if (_textEditingController.text.isEmpty) {
+            setState(() {
+              _showError = true;
+            });
+          } else {
+            widget.onContinue(_textEditingController.text);
+          }
+        },
+        text: 'Continue',
+      ),
     );
   }
 }
@@ -485,21 +526,23 @@ class _PasswordInputPageState extends State<_PasswordInputPage> {
   }
 
   Widget _title() {
-    return RichText(
-      text: TextSpan(
-        text: 'Hi ',
-        style: _titleStyle,
-        children: [
-          TextSpan(
-            text: widget.userName,
-            style: _titleStyle.copyWith(
-              color: AppColors.blue500,
+    return SlideUp(
+      child: RichText(
+        text: TextSpan(
+          text: 'Hi ',
+          style: _titleStyle,
+          children: [
+            TextSpan(
+              text: widget.userName,
+              style: _titleStyle.copyWith(
+                color: AppColors.blue500,
+              ),
             ),
-          ),
-          const TextSpan(
-            text: ', please choose your password',
-          ),
-        ],
+            const TextSpan(
+              text: ', please choose your password',
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -519,25 +562,28 @@ class _PasswordInputPageState extends State<_PasswordInputPage> {
   }
 
   Widget _inputPasswordTextField() {
-    return TextField(
-      cursorColor: AppColors.blue500,
-      decoration: InputDecoration(
-        hintText: 'Enter your Password',
-        suffixIcon: GestureDetector(
-          onTap: () {
-            setState(() {
-              _visiblePassword = !_visiblePassword;
-            });
-          },
-          child: Icon(
-            _visiblePassword ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.blue500,
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: TextField(
+        cursorColor: AppColors.blue500,
+        decoration: InputDecoration(
+          hintText: 'Enter your Password',
+          suffixIcon: GestureDetector(
+            onTap: () {
+              setState(() {
+                _visiblePassword = !_visiblePassword;
+              });
+            },
+            child: Icon(
+              _visiblePassword ? Icons.visibility_off : Icons.visibility,
+              color: AppColors.blue500,
+            ),
           ),
         ),
+        controller: _passwordTextEdtCtrl,
+        obscureText: !_visiblePassword,
+        onChanged: _onPasswordChanged,
       ),
-      controller: _passwordTextEdtCtrl,
-      obscureText: !_visiblePassword,
-      onChanged: _onPasswordChanged,
     );
   }
 
@@ -552,39 +598,48 @@ class _PasswordInputPageState extends State<_PasswordInputPage> {
   }
 
   Widget _confirmPasswordTextField() {
-    return TextField(
-      cursorColor: AppColors.blue500,
-      decoration: const InputDecoration(hintText: 'Confirm your Password'),
-      controller: _confirmPasswordTextEdtCtrl,
-      obscureText: !_visiblePassword,
-      onChanged: (text) {
-        setState(() {
-          _showNotMatchedError = false;
-        });
-      },
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: TextField(
+        cursorColor: AppColors.blue500,
+        decoration: const InputDecoration(hintText: 'Confirm your Password'),
+        controller: _confirmPasswordTextEdtCtrl,
+        obscureText: !_visiblePassword,
+        onChanged: (text) {
+          setState(() {
+            _showNotMatchedError = false;
+          });
+        },
+      ),
     );
   }
 
   Widget _confirmBtn() {
-    return _Button(
-      onPressed: () {
-        if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
-          widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
-        } else {
-          setState(() {
-            _showNotMatchedError = true;
-          });
-        }
-      },
-      text: 'Confirm',
+    return SlideUp(
+      delay: const Duration(milliseconds: 400),
+      child: _Button(
+        onPressed: () {
+          if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
+            widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
+          } else {
+            setState(() {
+              _showNotMatchedError = true;
+            });
+          }
+        },
+        text: 'Confirm',
+      ),
     );
   }
 
   Widget _passStrengthIndicator() {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: PasswordStrengthIndicator(
-        strengthIndex: _passwordStrengthIndex,
+    return SlideUp(
+      delay: const Duration(milliseconds: 200),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: PasswordStrengthIndicator(
+          strengthIndex: _passwordStrengthIndex,
+        ),
       ),
     );
   }

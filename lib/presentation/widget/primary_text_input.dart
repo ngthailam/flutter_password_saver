@@ -31,8 +31,8 @@ class PrimaryTextInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         color: AppColors.blue400.withAlpha(40),
       ),
-      child: Align(
-        alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 2), // to make text more centralized
         child: TextField(
           obscureText: obscureText,
           controller: controller,

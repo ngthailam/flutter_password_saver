@@ -60,23 +60,26 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white500,
-      body: BlocProvider(
-        create: (ctx) =>
-            _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
-        child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
-          listener: (context, state) {
-            if (state.loadState == LoadState.success) {
-              Navigator.of(context).pop(_bloc.isDataChanged);
-            }
+      body: SafeArea(
+        top: false,
+        child: BlocProvider(
+          create: (ctx) =>
+              _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
+          child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
+            listener: (context, state) {
+              if (state.loadState == LoadState.success) {
+                Navigator.of(context).pop(_bloc.isDataChanged);
+              }
 
-            final password = state.password;
-            if (password != null) {
-              _nameTextEdtCtrl.text = state.password!.name;
-              _accNameTextEdtCtrl.text = state.password!.accName;
-              _passwordTextEdtCtrl.text = state.password!.password;
-            }
-          },
-          child: _primary(),
+              final password = state.password;
+              if (password != null) {
+                _nameTextEdtCtrl.text = state.password!.name;
+                _accNameTextEdtCtrl.text = state.password!.accName;
+                _passwordTextEdtCtrl.text = state.password!.password;
+              }
+            },
+            child: _primary(),
+          ),
         ),
       ),
     );
@@ -118,12 +121,8 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(
-            left: 16,
-            top: 80,
-            right: 16,
-            bottom: 8
-          ),
+          padding:
+              const EdgeInsets.only(left: 16, top: 80, right: 16, bottom: 8),
           child: ListView(
             children: [
               _title(),
