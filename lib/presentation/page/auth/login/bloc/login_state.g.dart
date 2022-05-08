@@ -7,6 +7,8 @@ part of 'login_state.dart';
 // **************************************************************************
 
 abstract class _$LoginStateCWProxy {
+  LoginState canUseBiometrics(bool canUseBiometrics);
+
   LoginState lockTimeRemaining(int lockTimeRemaining);
 
   LoginState loginLoadState(LoadState loginLoadState);
@@ -20,6 +22,7 @@ abstract class _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    bool? canUseBiometrics,
     int? lockTimeRemaining,
     LoadState? loginLoadState,
     User? user,
@@ -31,6 +34,10 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   final LoginState _value;
 
   const _$LoginStateCWProxyImpl(this._value);
+
+  @override
+  LoginState canUseBiometrics(bool canUseBiometrics) =>
+      this(canUseBiometrics: canUseBiometrics);
 
   @override
   LoginState lockTimeRemaining(int lockTimeRemaining) =>
@@ -52,11 +59,17 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    Object? canUseBiometrics = const $CopyWithPlaceholder(),
     Object? lockTimeRemaining = const $CopyWithPlaceholder(),
     Object? loginLoadState = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
   }) {
     return LoginState(
+      canUseBiometrics: canUseBiometrics == const $CopyWithPlaceholder() ||
+              canUseBiometrics == null
+          ? _value.canUseBiometrics
+          // ignore: cast_nullable_to_non_nullable
+          : canUseBiometrics as bool,
       lockTimeRemaining: lockTimeRemaining == const $CopyWithPlaceholder() ||
               lockTimeRemaining == null
           ? _value.lockTimeRemaining

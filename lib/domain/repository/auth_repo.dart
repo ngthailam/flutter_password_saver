@@ -1,4 +1,5 @@
 import 'package:flutter_password_saver/domain/model/user.dart';
+import 'package:local_auth/local_auth.dart';
 
 abstract class AuthRepository {
   Future<bool> createAccount(User user);
@@ -12,4 +13,10 @@ abstract class AuthRepository {
   Future<void> updatePassword(String password);
 
   Future<int> getLockRemainingTime();
+
+  Future<bool> canUseBiometrics();
+
+  Future<bool> authenticate({required String reason});
+
+  Future<List<BiometricType>> getAvailableBiometrics();
 }

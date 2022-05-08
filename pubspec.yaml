@@ -47,6 +47,7 @@ dependencies:
   flutter_svg: ^1.0.3
   top_snackbar_flutter: ^1.0.2
   equatable: ^2.0.3
+  local_auth: ^2.0.1
 
 dev_dependencies:
   flutter_test:

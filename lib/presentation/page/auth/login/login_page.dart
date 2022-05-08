@@ -47,10 +47,10 @@ class _LoginPageState extends State<LoginPage> {
         top: false,
         child: BlocProvider(
           create: (context) => _loginBloc..add(LoginInitializeEvent()),
-          child: BlocListener<LoginBloc, LoginState>(
+          child: BlocConsumer<LoginBloc, LoginState>(
             listener: ((context, state) {
               if (state.loginLoadState == LoadState.success) {
-                Navigator.of(context).popAndPushNamed(AppRouter.password);
+                _navigateToPasswordPage(context);
               } else if (state.loginLoadState == LoadState.failure) {
                 if (state.lockTimeRemaining == 0) {
                   context.showErrorSnackBar('Username or password incorect');
@@ -66,13 +66,15 @@ class _LoginPageState extends State<LoginPage> {
                 _loginBloc.onNameChanged(userName);
               }
             }),
-            child: Stack(
-              children: [
-                _rightCenterBubble(),
-                _topLeftBubble(),
-                _body(),
-              ],
-            ),
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  _rightCenterBubble(),
+                  _topLeftBubble(),
+                  _body(),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -124,12 +126,14 @@ class _LoginPageState extends State<LoginPage> {
               'Welcome Back',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             _mainIcon(),
             const SizedBox(height: 16),
             _nameTextField(),
             _passwordTextField(),
-            const SizedBox(height: 32),
+            const SizedBox(height: 8),
+            _biometricsIcon(),
+            const SizedBox(height: 24),
             _loginBtn(),
             const SizedBox(height: 12),
             _forgotPasswordPrompt(),
@@ -162,6 +166,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _biometricsIcon() {
+    final enable = _loginBloc.state.canUseBiometrics;
+    if (!enable) return const SizedBox.shrink();
+    return GestureDetector(
+      onTap: () {
+        _loginBloc.add(LoginBiometricsEvent());
+      },
+      child: const Icon(
+        Icons.fingerprint,
+        size: 48,
+        color: AppColors.blue500,
+      ),
+    );
+  }
+
   Widget _loginBtn() {
     return PrimaryButton(
       onPressed: () {
@@ -184,5 +203,9 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _navigateToPasswordPage(BuildContext context) {
+    Navigator.of(context).popAndPushNamed(AppRouter.password);
   }
 }
