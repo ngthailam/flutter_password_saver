@@ -30,6 +30,8 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   late TextEditingController _accNameTextEdtCtrl;
   late TextEditingController _passwordTextEdtCtrl;
 
+  bool _showError = false;
+
   @override
   void initState() {
     super.initState();
@@ -131,12 +133,30 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
               _nameTextField(),
               _accNameTextField(),
               _passTextField(),
+              _errorText(),
               const SizedBox(height: 56), // Avoid bottom button
             ],
           ),
         ),
         Positioned(bottom: 8, child: _confirmBtn()),
       ],
+    );
+  }
+
+  Widget _errorText() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: AnimatedOpacity(
+          opacity: _showError ? 1 : 0,
+          duration: const Duration(milliseconds: 250),
+          child: const Text(
+            'Some fields are empty',
+            style: TextStyle(color: AppColors.red500),
+          ),
+        ),
+      ),
     );
   }
 
@@ -161,6 +181,9 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
       controller: _nameTextEdtCtrl,
       hintText: 'Name (Netflix account)',
       margin: const EdgeInsets.symmetric(vertical: 8),
+      onChanged: (text) {
+        _hideError();
+      },
     );
   }
 
@@ -170,6 +193,9 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
       controller: _accNameTextEdtCtrl,
       hintText: 'Account (abc@gmail.com)',
       margin: const EdgeInsets.symmetric(vertical: 8),
+      onChanged: (text) {
+        _hideError();
+      },
     );
   }
 
@@ -180,7 +206,18 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
       hintText: 'Password (123456)',
       obscureText: true,
       margin: const EdgeInsets.symmetric(vertical: 8),
+      onChanged: (text) {
+        _hideError();
+      },
     );
+  }
+
+  void _hideError() {
+    if (_showError) {
+      setState(() {
+        _showError = false;
+      });
+    }
   }
 
   Widget _confirmBtn() {
@@ -190,7 +227,15 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
       child: PrimaryButton(
         margin: EdgeInsets.zero,
         onPressed: () {
-          _bloc.add(PasswordSaveConfirmEvent());
+          if (_nameTextEdtCtrl.text.isEmpty ||
+              _accNameTextEdtCtrl.text.isEmpty ||
+              _passwordTextEdtCtrl.text.isEmpty) {
+            setState(() {
+              _showError = true;
+            });
+          } else {
+            _bloc.add(PasswordSaveConfirmEvent());
+          }
         },
         text: 'Save',
       ),

@@ -548,17 +548,19 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _title(),
-                const SizedBox(height: 32),
-                _questionPicker(),
-                _answerTextField(),
-                const SizedBox(height: 8),
-                _errorText(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _title(),
+                  const SizedBox(height: 32),
+                  _questionPicker(),
+                  _answerTextField(),
+                  const SizedBox(height: 8),
+                  _errorText(),
+                ],
+              ),
             ),
           ),
         ),

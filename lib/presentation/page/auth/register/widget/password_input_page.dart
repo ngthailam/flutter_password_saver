@@ -63,20 +63,22 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 48),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _title(),
-                const SizedBox(height: 32),
-                _inputPasswordTextField(),
-                _confirmPasswordTextField(),
-                const SizedBox(height: 8),
-                _passStrengthIndicator(),
-                const SizedBox(height: 8),
-                _errorText(),
-                const SizedBox(height: 64),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _title(),
+                  const SizedBox(height: 32),
+                  _inputPasswordTextField(),
+                  _confirmPasswordTextField(),
+                  const SizedBox(height: 8),
+                  _passStrengthIndicator(),
+                  const SizedBox(height: 8),
+                  _errorText(),
+                  const SizedBox(height: 64),
+                ],
+              ),
             ),
           ),
         ),
