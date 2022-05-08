@@ -158,6 +158,7 @@ class _LoginPageState extends State<LoginPage> {
       hintText: 'Your password',
       controller: _passwordTextEdtCtrl,
       onChanged: _loginBloc.onPasswordChanged,
+      obscureText: true,
     );
   }
 

@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return HotRestart(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Title of Application',
         navigatorObservers: [routeObserver],
         theme: ThemeData(

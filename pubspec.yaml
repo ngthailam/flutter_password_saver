@@ -47,7 +47,6 @@ dependencies:
   flutter_svg: ^1.0.3
   top_snackbar_flutter: ^1.0.2
   equatable: ^2.0.3
-  flutter_email_sender: ^5.1.0
 
 dev_dependencies:
   flutter_test:

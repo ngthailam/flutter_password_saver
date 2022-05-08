@@ -14,7 +14,6 @@ import 'package:flutter_password_saver/presentation/widget/delete_account_button
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
-import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.dart';
 
 Future<void> showPreferencePage(BuildContext context) {
   return showDialog(

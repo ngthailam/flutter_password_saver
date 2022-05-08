@@ -36,16 +36,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
-  void didChangeDependencies() async {
-    // TODO: maybe change to precache in main
-    await precachePicture(
-      SvgPicture.asset('assets/svg/login.svg').pictureProvider,
-      context,
-    );
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();

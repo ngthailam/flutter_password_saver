@@ -19,7 +19,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   final CreateAccountUseCase _createAccountUseCase;
 
-  User _user = User();
+  User _user = const User();
 
   String get inputUserName => _user.name;
 

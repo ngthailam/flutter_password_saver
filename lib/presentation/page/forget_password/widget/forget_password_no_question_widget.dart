@@ -17,8 +17,8 @@ class ForgetPasswordNoQuestion extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Notice(
-            text: 'You did not set up a security question when you register your account.' +
-                'You can choose to delete current account (all passwords will be deleted)',
+            text:
+                'You did not set up a security question when you register your account. You can choose to delete current account (all passwords will be deleted)',
             backgroundColor: AppColors.orange500,
           ),
           const SizedBox(height: 16),

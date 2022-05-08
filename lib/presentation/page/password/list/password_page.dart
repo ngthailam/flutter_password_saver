@@ -56,7 +56,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
           create: (context) => _bloc..add(InitializeEvent()),
           child: BlocConsumer<PasswordBloc, PasswordState>(
             listener: (BuildContext context, PasswordState state) {
-              // TODO
+              // Fill if needed
             },
             builder: (BuildContext context, PasswordState state) {
               return _body(state);
