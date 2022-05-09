@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 
 class PasswordStrengthIndicator extends StatelessWidget {
   PasswordStrengthIndicator({
@@ -7,13 +8,14 @@ class PasswordStrengthIndicator extends StatelessWidget {
     required this.strengthIndex,
   }) : super(key: key);
 
-  static const Color _defaultColor = AppColors.ink200;
-
   final int strengthIndex;
-  Color _color = _defaultColor;
+  Color _defaultColor = AppColors.ink200;
+  Color _color = AppColors.ink200;
 
   @override
   Widget build(BuildContext context) {
+    _defaultColor = isDarkMode() ? AppColors.white200 : AppColors.ink200;
+    _color = _defaultColor;
     _color = _resolveColor();
     return Row(
       mainAxisSize: MainAxisSize.min,

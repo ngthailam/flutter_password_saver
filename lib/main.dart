@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,6 +32,9 @@ void main() async {
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.dark);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -48,18 +52,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return HotRestart(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Title of Application',
-        navigatorObservers: [routeObserver],
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        onGenerateRoute: (RouteSettings settings) =>
-            AppRouter.generateRoute(settings),
-        initialRoute: getInitialRoute(),
-        home: const GatewayPage(),
+      child: ValueListenableBuilder<ThemeMode>(
+        valueListenable: MyApp.themeNotifier,
+        builder: (_, currentMode, __) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Password Saver',
+            navigatorObservers: [routeObserver],
+            theme: ThemeData(
+              primaryColor: AppColors.blue500,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              scaffoldBackgroundColor: AppColors.white500,
+              brightness: Brightness.light,
+            ),
+            darkTheme: ThemeData.dark().copyWith(),
+            themeMode: currentMode,
+            onGenerateRoute: (RouteSettings settings) =>
+                AppRouter.generateRoute(settings),
+            initialRoute: getInitialRoute(),
+            home: const GatewayPage(),
+          );
+        },
       ),
     );
   }

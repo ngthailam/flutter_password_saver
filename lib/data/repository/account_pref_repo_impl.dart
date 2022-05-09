@@ -19,12 +19,19 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
   }
 
   @override
-  Future<void> saveAlwaysShowPassword(bool alwaysShow) {
-    return _accountPreferenceLocalDataSource.saveAlwaysShowPassword(alwaysShow);
-  }
-
-  @override
-  Future<void> saveRequireLogin(bool require) {
-    return _accountPreferenceLocalDataSource.saveRequireLogin(require);
+  Future<void> saveAccountPreference(
+      {required PreferenceName name, required value}) {
+    switch (name) {
+      case PreferenceName.requirePass:
+        return _accountPreferenceLocalDataSource
+            .saveRequireLogin(value as bool);
+      case PreferenceName.alwaysShowPass:
+        return _accountPreferenceLocalDataSource
+            .saveAlwaysShowPassword(value as bool);
+      case PreferenceName.enableDarkMode:
+        return _accountPreferenceLocalDataSource.enableDarkMode(value as bool);
+      default:
+        return Future.error(Exception('Not implemented'));
+    }
   }
 }

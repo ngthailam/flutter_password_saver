@@ -60,7 +60,6 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white500,
       body: SafeArea(
         top: false,
         child: BlocProvider(
@@ -170,8 +169,10 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   Widget _notice() {
     return Text(
       'Your password is only saved locally, you can use network activity to check no Internet connection is establish',
-      style:
-          TextStyle(fontSize: 16, color: AppColors.black500.withOpacity(0.6)),
+      style: TextStyle(
+        fontSize: 16,
+        color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.6),
+      ),
     );
   }
 

@@ -35,12 +35,6 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   int _passwordStrengthIndex = 0;
   bool _visiblePassword = false;
 
-  final TextStyle _titleStyle = const TextStyle(
-    color: AppColors.black500,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-  );
-
   @override
   void initState() {
     super.initState();
@@ -104,11 +98,16 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
       child: RichText(
         text: TextSpan(
           text: 'Hi ',
-          style: _titleStyle,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
           children: [
             TextSpan(
               text: widget.userName,
-              style: _titleStyle.copyWith(
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
                 color: AppColors.blue500,
               ),
             ),

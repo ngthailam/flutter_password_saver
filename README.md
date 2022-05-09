@@ -10,11 +10,12 @@ An app that help you remember your passwords offline securely.
 [x] Add bio-metrics authentication
 [] Beautify transition animations
 [] Share password
-[] Dark theme
+[x] Dark theme
 [] Re-order passwords
-[] (Android)App short cut create password
+[] App short cut create password
 [] Impl Onboarding new user
-
 ### Technical
 [] Add symbol file for Android releases
 [] Deploy to AppStore
+[] Add Unit test
+[] Add CI/CD

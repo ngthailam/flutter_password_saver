@@ -12,11 +12,13 @@ class AccountPreferenceUseCase {
     return _accountPrefRepo.getAccountPrefs();
   }
 
-  Future<void> saveRequireLogin(bool require) {
-    return _accountPrefRepo.saveRequireLogin(require);
-  }
-
-  Future<void> saveAlwaysShowPassword(bool alwaysShow) {
-    return _accountPrefRepo.saveAlwaysShowPassword(alwaysShow);
+  Future<void> saveAccountPreference({
+    required PreferenceName name,
+    required dynamic value,
+  }) {
+    return _accountPrefRepo.saveAccountPreference(
+      name: name,
+      value: value,
+    );
   }
 }

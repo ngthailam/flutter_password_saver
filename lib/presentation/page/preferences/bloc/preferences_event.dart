@@ -1,17 +1,14 @@
+import 'package:flutter_password_saver/domain/model/account_preference.dart';
+
 abstract class PreferenceEvent {}
 
 class PreferenceInitEvent extends PreferenceEvent {}
 
-class PreferenceSaveRequireLoginEvent extends PreferenceEvent {
-  PreferenceSaveRequireLoginEvent(this.requirePassOnLogin);
+class SavePreferenceEvent extends PreferenceEvent {
+  SavePreferenceEvent({required this.name, required this.value});
 
-  final bool requirePassOnLogin;
-}
-
-class PreferenceSaveAlwaysShowPasswordEvent extends PreferenceEvent {
-  PreferenceSaveAlwaysShowPasswordEvent(this.alwaysShowPasswords);
-
-  final bool alwaysShowPasswords;
+  final PreferenceName name;
+  final dynamic value;
 }
 
 class DeleteAccountEvent extends PreferenceEvent {}

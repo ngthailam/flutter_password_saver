@@ -1,11 +1,13 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:equatable/equatable.dart';
 
 part 'account_preference.g.dart';
 
 @CopyWith()
-class AccountPreference {
+class AccountPreference extends Equatable {
   static const requireLoginDefault = true;
   static const alwaysShowPasswordsDefault = false;
+  static const enableDarkModeDefault = false;
 
   AccountPreference({this.items = defaultPrefItems});
 
@@ -19,6 +21,10 @@ class AccountPreference {
     AccountPreferenceItem(
       name: PreferenceName.alwaysShowPass,
       value: alwaysShowPasswordsDefault,
+    ),
+    AccountPreferenceItem(
+      name: PreferenceName.enableDarkMode,
+      value: enableDarkModeDefault,
     ),
   ];
 
@@ -39,17 +45,27 @@ class AccountPreference {
     final matchingItems = items.where((element) => element.name == name);
     return matchingItems.isEmpty ? null : matchingItems.first;
   }
+
+  @override
+  List<Object?> get props => [items];
 }
 
 enum PreferenceName {
   requirePass,
   alwaysShowPass,
+  enableDarkMode,
 }
 
 @CopyWith()
-class AccountPreferenceItem {
+class AccountPreferenceItem extends Equatable {
   const AccountPreferenceItem({required this.name, this.value});
 
   final PreferenceName name;
   final dynamic value;
+
+  @override
+  List<Object?> get props => [
+    name,
+    value,
+  ];
 }

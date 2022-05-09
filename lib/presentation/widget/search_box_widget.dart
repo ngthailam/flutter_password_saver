@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/util/debouncer.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 
 class SearchBox extends StatelessWidget {
   SearchBox({
@@ -22,7 +23,7 @@ class SearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.ink100,
+        color: isDarkMode() ? AppColors.ink500 : AppColors.ink100,
         borderRadius: BorderRadius.circular(16),
       ),
       margin: margin,

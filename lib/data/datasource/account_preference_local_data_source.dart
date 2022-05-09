@@ -10,6 +10,8 @@ abstract class AccountPreferenceLocalDataSource {
   Future<void> saveAlwaysShowPassword(bool alwaysShow);
 
   Future<void> deleteAll();
+
+  Future<void> enableDarkMode(bool enable);
 }
 
 @Injectable(as: AccountPreferenceLocalDataSource)
@@ -25,6 +27,9 @@ class AccountPreferenceLocalDataSourceImpl
           sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ?? true,
       alwaysShowPasswords:
           sharedPrefs.getBool(AccountPreferenceEntity.keyAlwaysShowPasswords) ??
+              false,
+      enableDarkMode:
+          sharedPrefs.getBool(AccountPreferenceEntity.keyEnableDarkMode) ??
               false,
     );
   }
@@ -46,5 +51,12 @@ class AccountPreferenceLocalDataSourceImpl
   Future<void> deleteAll() async {
     final sharedPrefs = await _prefs;
     sharedPrefs.clear();
+  }
+
+  @override
+  Future<void> enableDarkMode(bool enable) async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.setBool(
+        AccountPreferenceEntity.keyEnableDarkMode, enable);
   }
 }

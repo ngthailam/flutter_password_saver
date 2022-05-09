@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 
 class PrimaryTextInput extends StatelessWidget {
   const PrimaryTextInput({
@@ -42,7 +43,9 @@ class PrimaryTextInput extends StatelessWidget {
             prefixIcon: Icon(icon, color: AppColors.blue400),
             hintText: hintText,
             border: InputBorder.none,
-            hintStyle: const TextStyle(color: AppColors.ink300),
+            hintStyle: TextStyle(
+              color: isDarkMode() ? AppColors.white300 : AppColors.ink300,
+            ),
           ),
         ),
       ),

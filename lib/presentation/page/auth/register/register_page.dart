@@ -269,7 +269,7 @@ class _BenefitPageState extends State<_BenefitPage> {
       child: RichText(
         text: TextSpan(
           text: 'A place to remember all of your Passwords for you ',
-          style: const TextStyle(color: AppColors.black500, fontSize: 14),
+          style: const TextStyle(fontSize: 14),
           children: [
             const TextSpan(
               text: 'SECURELY',
@@ -293,7 +293,7 @@ class _BenefitPageState extends State<_BenefitPage> {
       child: RichText(
         text: const TextSpan(
           text: 'Internet connection is',
-          style: TextStyle(color: AppColors.black500, fontSize: 14),
+          style: TextStyle(fontSize: 14),
           children: [
             TextSpan(
               text: ' NOT USED',
@@ -543,8 +543,9 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 48),
                   _title(),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 48),
                   _questionPicker(),
                   _answerTextField(),
                   const SizedBox(height: 8),
@@ -593,7 +594,6 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
       child: Text(
         '(Optional) Answer a question to retrieve your password when you forget it.',
         style: TextStyle(
-          color: AppColors.black500,
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -604,20 +604,26 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   Widget _questionPicker() {
     return SlideUp(
       delay: const Duration(milliseconds: 200),
-      child: DropdownButton<SecurityQuestion>(
-        value: _chosenQuestion,
-        items: questions.map((e) {
-          return DropdownMenuItem(
-            child: Text(e.question),
-            value: e,
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            _showError = false;
-            _chosenQuestion = value;
-          });
-        },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: DropdownButton<SecurityQuestion>(
+          elevation: 0,
+          enableFeedback: true,
+          isExpanded: true,
+          value: _chosenQuestion,
+          items: questions.map((e) {
+            return DropdownMenuItem(
+              child: Text(e.question),
+              value: e,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _showError = false;
+              _chosenQuestion = value;
+            });
+          },
+        ),
       ),
     );
   }
@@ -626,7 +632,7 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
     return SlideUp(
       delay: const Duration(milliseconds: 200),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: TextField(
           cursorColor: AppColors.blue500,
           decoration: const InputDecoration(hintText: 'Answer'),

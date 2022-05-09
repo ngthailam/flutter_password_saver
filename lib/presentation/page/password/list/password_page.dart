@@ -120,6 +120,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         padding: const EdgeInsets.all(16),
         child: FloatingActionButton(
           backgroundColor: AppColors.blue500,
+          foregroundColor: AppColors.white500,
           child: const Icon(Icons.add),
           onPressed: _goToSavePassword,
         ),

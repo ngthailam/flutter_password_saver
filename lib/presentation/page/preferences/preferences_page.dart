@@ -14,13 +14,16 @@ import 'package:flutter_password_saver/presentation/widget/delete_account_button
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 
 Future<void> showPreferencePage(BuildContext context) {
   return showDialog(
     context: context,
     barrierDismissible: true,
+    barrierColor: AppColors.ink300,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: const PreferencesPage(),
       );
@@ -46,52 +49,58 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: MediaQuery.of(context).size.height * 0.9,
-        color: AppColors.white500,
-        child: BlocProvider(
-          create: (context) => _bloc..add(PreferenceInitEvent()),
-          child: BlocConsumer<PreferencesBloc, PreferenceState>(
-            listener: ((context, state) {
-              if (state.deleteLoadState != LoadState.none) {
-                if (state.deleteLoadState == LoadState.success) {
-                  context.showErrorSnackBar('Delete success');
-                  HotRestart.of(context).hotRestart();
-                }
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
+      width: MediaQuery.of(context).size.height * 0.9,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: BlocProvider(
+        create: (context) => _bloc..add(PreferenceInitEvent()),
+        child: BlocConsumer<PreferencesBloc, PreferenceState>(
+          listener: ((context, state) {
+            if (state.deleteLoadState != LoadState.none) {
+              if (state.deleteLoadState == LoadState.success) {
+                context.showErrorSnackBar('Delete success');
+                HotRestart.of(context).hotRestart();
+              }
 
-                if (state.deleteLoadState == LoadState.failure) {
-                  context.showErrorSnackBar('Delete failed');
+              if (state.deleteLoadState == LoadState.failure) {
+                context.showErrorSnackBar('Delete failed');
+              }
+            }
+
+            final isEnableDarkMode = state.preference?.items
+                .firstWhere(
+                    (element) => element.name == PreferenceName.enableDarkMode)
+                .value as bool;
+            if (isEnableDarkMode != isDarkMode()) {
+              changeThemeMode();
+            }
+          }),
+          builder: (context, state) {
+            switch (state.loadState) {
+              case LoadState.loading:
+                return const Center(child: LoadingIndicator());
+              case LoadState.failure:
+                return const Center(child: Text('Error'));
+              case LoadState.success:
+                if (state.deleteLoadState == LoadState.none) {
+                  return _primary(state);
+                } else {
+                  return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        LoadingIndicator(),
+                        SizedBox(height: 8),
+                        Text('Deleting account ...')
+                      ],
+                    ),
+                  );
                 }
-              }
-            }),
-            builder: (context, state) {
-              switch (state.loadState) {
-                case LoadState.loading:
-                  return const Center(child: LoadingIndicator());
-                case LoadState.failure:
-                  return const Center(child: Text('Error'));
-                case LoadState.success:
-                  if (state.deleteLoadState == LoadState.none) {
-                    return _primary(state);
-                  } else {
-                    return Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          LoadingIndicator(),
-                          SizedBox(height: 8),
-                          Text('Deleting account ...')
-                        ],
-                      ),
-                    );
-                  }
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          ),
+              default:
+                return const SizedBox.shrink();
+            }
+          },
         ),
       ),
     );
@@ -189,6 +198,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
         return const Text('Require login on open app');
       case PreferenceName.alwaysShowPass:
         return const Text('Always show account names and passwords');
+      case PreferenceName.enableDarkMode:
+        return const Text('Enable Dark mode');
       default:
         return const SizedBox.shrink();
     }
@@ -216,16 +227,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
               child: PlatformSwitch(
                 value: prefItem.value as bool,
                 onChanged: (value) {
-                  switch (prefItem.name) {
-                    case PreferenceName.requirePass:
-                      _bloc.add(PreferenceSaveRequireLoginEvent(value));
-                      break;
-                    case PreferenceName.alwaysShowPass:
-                      _bloc.add(PreferenceSaveAlwaysShowPasswordEvent(value));
-                      break;
-                    default:
-                      break;
-                  }
+                  _bloc.add(
+                    SavePreferenceEvent(name: prefItem.name, value: value),
+                  );
                 },
               ),
             ),
