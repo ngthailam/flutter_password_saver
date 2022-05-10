@@ -22,7 +22,7 @@ abstract class _$PasswordSettingsCWProxy {
   PasswordSettings call({
     PasswordSettingsName? name,
     String? passwordId,
-    dynamic? value,
+    dynamic value,
   });
 }
 

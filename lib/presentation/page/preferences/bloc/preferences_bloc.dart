@@ -7,7 +7,6 @@ import 'package:flutter_password_saver/domain/usecase/preference/account_prefere
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_event.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
-import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

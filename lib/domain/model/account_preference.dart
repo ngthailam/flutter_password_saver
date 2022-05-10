@@ -9,7 +9,7 @@ class AccountPreference extends Equatable {
   static const alwaysShowPasswordsDefault = false;
   static const enableDarkModeDefault = false;
 
-  AccountPreference({this.items = defaultPrefItems});
+  const AccountPreference({this.items = defaultPrefItems});
 
   final List<AccountPreferenceItem> items;
 
@@ -65,7 +65,7 @@ class AccountPreferenceItem extends Equatable {
 
   @override
   List<Object?> get props => [
-    name,
-    value,
-  ];
+        name,
+        value,
+      ];
 }

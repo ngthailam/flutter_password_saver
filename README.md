@@ -18,4 +18,4 @@ An app that help you remember your passwords offline securely.
 [] Add symbol file for Android releases
 [] Deploy to AppStore
 [] Add Unit test
-[] Add CI/CD
+[x] Add CI/CD

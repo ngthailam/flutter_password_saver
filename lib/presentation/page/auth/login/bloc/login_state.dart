@@ -7,7 +7,7 @@ part 'login_state.g.dart';
 
 @CopyWith()
 class LoginState extends Equatable {
-  LoginState({
+  const LoginState({
     required this.loginLoadState,
     this.user,
     this.lockTimeRemaining = 0,
@@ -21,9 +21,9 @@ class LoginState extends Equatable {
 
   @override
   List<Object?> get props => [
-    loginLoadState,
-    user,
-    lockTimeRemaining,
-    canUseBiometrics,
-  ];
+        loginLoadState,
+        user,
+        lockTimeRemaining,
+        canUseBiometrics,
+      ];
 }

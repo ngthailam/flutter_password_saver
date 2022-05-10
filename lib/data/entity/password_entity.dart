@@ -51,11 +51,9 @@ class PasswordEntity extends HiveObject {
       );
 
   Password toModel(List<PasswordSettings> settings) => Password(
-        id: id,
-        name: name,
-        accName: accName,
-        password: password,
-        settings: settings
-                
-      );
+      id: id,
+      name: name,
+      accName: accName,
+      password: password,
+      settings: settings);
 }

@@ -45,8 +45,8 @@ class FpRenewPassState extends ForgetPasswordState with EquatableMixin {
 
   @override
   List<Object?> get props => [
-    newPassword,
-    loadState,
-    userName,
-  ];
+        newPassword,
+        loadState,
+        userName,
+      ];
 }
