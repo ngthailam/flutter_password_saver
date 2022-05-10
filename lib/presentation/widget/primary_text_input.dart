@@ -12,6 +12,8 @@ class PrimaryTextInput extends StatelessWidget {
     this.obscureText = false,
     this.margin = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
+    this.textInputAction,
+    this.onSubmitted,
   }) : super(key: key);
 
   final String hintText;
@@ -21,7 +23,9 @@ class PrimaryTextInput extends StatelessWidget {
   final bool obscureText;
   final EdgeInsets margin;
   final EdgeInsets padding;
-
+  final TextInputAction? textInputAction;
+  final Function(String)? onSubmitted;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,6 +39,8 @@ class PrimaryTextInput extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 2), // to make text more centralized
         child: TextField(
+          textInputAction: textInputAction,
+          onSubmitted: onSubmitted,
           obscureText: obscureText,
           controller: controller,
           onChanged: onChanged,
