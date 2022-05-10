@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     this._loginUseCase,
     this._authLockUseCase,
     this._biometricsUseCase,
-  ) : super(LoginState(loginLoadState: LoadState.none)) {
+  ) : super(const LoginState(loginLoadState: LoadState.none)) {
     on<LoginInitializeEvent>(_initialize);
     on<ConfirmLoginEvent>(_onConfirmLogin);
     on<LoginBiometricsEvent>(_loginBiometrics);

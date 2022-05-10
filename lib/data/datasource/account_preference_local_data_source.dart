@@ -56,7 +56,6 @@ class AccountPreferenceLocalDataSourceImpl
   @override
   Future<void> enableDarkMode(bool enable) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setBool(
-        AccountPreferenceEntity.keyEnableDarkMode, enable);
+    sharedPrefs.setBool(AccountPreferenceEntity.keyEnableDarkMode, enable);
   }
 }

@@ -42,8 +42,8 @@ class SecurityQuestion extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    question,
-    answer,
-  ];
+        id,
+        question,
+        answer,
+      ];
 }

@@ -100,7 +100,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
             onChangeSetting: (settings) {
               _bloc.add(
                 UpdateSettingsEvent(
-                  passwordId:item.id,
+                  passwordId: item.id,
                   name: settings.name,
                   value: settings.value,
                 ),
