@@ -4,7 +4,6 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_event.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_state.dart';
-import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 
 class GatewayPage extends StatefulWidget {
@@ -35,8 +34,8 @@ class _GatewayPageState extends State<GatewayPage> {
         }
       },
       builder: (context, state) {
-        return const Center(
-          child: LoadingIndicator(color: AppColors.black500),
+        return Center(
+          child: LoadingIndicator(color: LoadingIndicator.defaultColor),
         );
       },
     );

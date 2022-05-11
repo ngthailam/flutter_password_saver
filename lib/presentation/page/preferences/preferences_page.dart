@@ -79,7 +79,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
           builder: (context, state) {
             switch (state.loadState) {
               case LoadState.loading:
-                return const Center(child: LoadingIndicator());
+                return Center(child: LoadingIndicator(
+                  color: LoadingIndicator.defaultColor,
+                ));
               case LoadState.failure:
                 return const Center(child: Text('Error'));
               case LoadState.success:
