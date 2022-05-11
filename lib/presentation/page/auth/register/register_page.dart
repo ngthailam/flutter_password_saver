@@ -339,7 +339,8 @@ class _NameInputPage extends StatefulWidget {
   State<_NameInputPage> createState() => __NameInputPageState();
 }
 
-class __NameInputPageState extends State<_NameInputPage> {
+class __NameInputPageState extends State<_NameInputPage>
+    with AutomaticKeepAliveClientMixin {
   late TextEditingController _textEditingController;
   late FocusNode _textFocusNode;
 
@@ -361,6 +362,7 @@ class __NameInputPageState extends State<_NameInputPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -448,6 +450,9 @@ class __NameInputPageState extends State<_NameInputPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _CongratulatePage extends StatelessWidget {
