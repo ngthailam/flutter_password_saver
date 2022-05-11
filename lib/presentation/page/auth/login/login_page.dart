@@ -112,34 +112,50 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _body() {
-    return AnimatedOpacity(
-      opacity: 1,
-      duration: const Duration(milliseconds: 350),
-      child: Align(
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Welcome Back',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 86),
+          child: ListView(
+            children: [
+              const SizedBox(height: 32),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  'Welcome Back',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+              ),
+              const SizedBox(height: 24),
+              _mainIcon(),
+              const SizedBox(height: 16),
+              _nameTextField(),
+              _passwordTextField(),
+              const SizedBox(height: 8),
+              _biometricsIcon(),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: SafeArea(
+            top: false,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _loginBtn(),
+                  const SizedBox(height: 12),
+                  _forgotPasswordPrompt(),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-            const SizedBox(height: 24),
-            _mainIcon(),
-            const SizedBox(height: 16),
-            _nameTextField(),
-            _passwordTextField(),
-            const SizedBox(height: 8),
-            _biometricsIcon(),
-            const SizedBox(height: 24),
-            _loginBtn(),
-            const SizedBox(height: 12),
-            _forgotPasswordPrompt(),
-          ],
-        )),
-      ),
+          ),
+        )
+      ],
     );
   }
 
@@ -163,6 +179,8 @@ class _LoginPageState extends State<LoginPage> {
       controller: _passwordTextEdtCtrl,
       onChanged: _loginBloc.onPasswordChanged,
       obscureText: true,
+      textInputAction: TextInputAction.done,
+      onSubmitted: (value) => _loginBloc.add(ConfirmLoginEvent()),
     );
   }
 
