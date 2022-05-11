@@ -30,6 +30,8 @@ class PasswordInputPage extends StatefulWidget {
 class _PasswordInputPageState extends State<PasswordInputPage> {
   late TextEditingController _passwordTextEdtCtrl;
   late TextEditingController _confirmPasswordTextEdtCtrl;
+  late FocusNode _passwordFocusNode;
+  late FocusNode _confirmPasswordFocusNode;
 
   bool _showNotMatchedError = false;
   int _passwordStrengthIndex = 0;
@@ -40,40 +42,38 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
     super.initState();
     _passwordTextEdtCtrl = TextEditingController();
     _confirmPasswordTextEdtCtrl = TextEditingController();
+    _passwordFocusNode = FocusNode();
+    _confirmPasswordFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _passwordTextEdtCtrl.dispose();
     _confirmPasswordTextEdtCtrl.dispose();
+    _passwordFocusNode.dispose();
+    _confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         _backButton(),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 48),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _title(),
-                  const SizedBox(height: 32),
-                  _inputPasswordTextField(),
-                  _confirmPasswordTextField(),
-                  const SizedBox(height: 8),
-                  _passStrengthIndicator(),
-                  const SizedBox(height: 8),
-                  _errorText(),
-                  const SizedBox(height: 64),
-                ],
-              ),
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 64),
+          child: ListView(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height / 8),
+              _title(),
+              const SizedBox(height: 32),
+              _inputPasswordTextField(),
+              _confirmPasswordTextField(),
+              const SizedBox(height: 8),
+              _passStrengthIndicator(),
+              const SizedBox(height: 8),
+              _errorText(),
+            ],
           ),
         ),
         _confirmBtn(),
@@ -83,10 +83,14 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
 
   Widget _backButton() {
     if (!widget.enableBackBtn) return const SizedBox.shrink();
-    return Align(
-      alignment: Alignment.centerLeft,
+    return Positioned(
+      top: 0,
+      left: 0,
       child: GestureDetector(
-        onTap: widget.onBackPressed,
+        onTap: () {
+          _unfocusAll();
+          widget.onBackPressed?.call();
+        },
         child: const Padding(
             padding: EdgeInsets.all(16), child: Icon(Icons.arrow_back)),
       ),
@@ -136,8 +140,11 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
 
   Widget _inputPasswordTextField() {
     return SlideUp(
+      onComplete: _passwordFocusNode.requestFocus,
       delay: const Duration(milliseconds: 200),
       child: TextField(
+        onSubmitted: (text) => _confirmPasswordFocusNode.requestFocus(),
+        focusNode: _passwordFocusNode,
         cursorColor: AppColors.blue500,
         decoration: InputDecoration(
           hintText: 'Enter your Password',
@@ -174,6 +181,8 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
     return SlideUp(
       delay: const Duration(milliseconds: 200),
       child: TextField(
+        onSubmitted: (text) => _onConfirm(),
+        focusNode: _confirmPasswordFocusNode,
         cursorColor: AppColors.blue500,
         decoration: const InputDecoration(hintText: 'Confirm your Password'),
         controller: _confirmPasswordTextEdtCtrl,
@@ -188,28 +197,39 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   }
 
   Widget _confirmBtn() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 400),
-      child: PrimaryButton(
-        onPressed: () {
-          if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
-            widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
-          } else {
-            setState(() {
-              _showNotMatchedError = true;
-            });
-          }
-        },
-        text: 'Confirm',
-        margin: widget.btnMargin,
-        width: widget.btnWidth,
+    return Positioned(
+      bottom: 0,
+      child: SlideUp(
+        delay: const Duration(milliseconds: 400),
+        child: PrimaryButton(
+          onPressed: _onConfirm,
+          text: 'Confirm',
+          margin: widget.btnMargin,
+          width: widget.btnWidth,
+        ),
       ),
     );
   }
 
+  void _onConfirm() {
+    _unfocusAll();
+    if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
+      widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
+    } else {
+      setState(() {
+        _showNotMatchedError = true;
+      });
+    }
+  }
+
+  void _unfocusAll() {
+    _passwordFocusNode.unfocus();
+    _confirmPasswordFocusNode.unfocus();
+  }
+
   Widget _passStrengthIndicator() {
     return SlideUp(
-      delay: const Duration(milliseconds: 200),
+      delay: const Duration(milliseconds: 400),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: PasswordStrengthIndicator(

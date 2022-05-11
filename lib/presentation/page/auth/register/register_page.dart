@@ -341,18 +341,21 @@ class _NameInputPage extends StatefulWidget {
 
 class __NameInputPageState extends State<_NameInputPage> {
   late TextEditingController _textEditingController;
+  late FocusNode _textFocusNode;
 
   bool _showError = false;
 
   @override
   void initState() {
     super.initState();
+    _textFocusNode = FocusNode();
     _textEditingController = TextEditingController(text: widget.name ?? '');
   }
 
   @override
   void dispose() {
     _textEditingController.dispose();
+    _textFocusNode.dispose();
     super.dispose();
   }
 
@@ -369,7 +372,7 @@ class __NameInputPageState extends State<_NameInputPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _title(),
-                const SizedBox(height: 48),
+                const SizedBox(height: 36),
                 _inputTextField(),
                 const SizedBox(height: 8),
                 _errorText(),
@@ -393,8 +396,12 @@ class __NameInputPageState extends State<_NameInputPage> {
 
   Widget _inputTextField() {
     return SlideUp(
+      onComplete: () {
+        _textFocusNode.requestFocus();
+      },
       delay: const Duration(milliseconds: 200),
       child: TextField(
+        focusNode: _textFocusNode,
         cursorColor: AppColors.blue500,
         decoration: const InputDecoration(hintText: 'Enter your name'),
         controller: _textEditingController,
@@ -428,6 +435,7 @@ class __NameInputPageState extends State<_NameInputPage> {
       delay: const Duration(milliseconds: 400),
       child: _Button(
         onPressed: () {
+          _textFocusNode.unfocus();
           if (_textEditingController.text.isEmpty) {
             setState(() {
               _showError = true;
@@ -512,7 +520,8 @@ class _SecurityQuestionPage extends StatefulWidget {
 }
 
 class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
-  TextEditingController? _textEditingController;
+  late TextEditingController _textEditingController;
+  late FocusNode _answerFocusNode;
   SecurityQuestion? _chosenQuestion;
   bool _showError = false;
 
@@ -521,38 +530,35 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   @override
   void initState() {
     _textEditingController = TextEditingController();
+    _answerFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
-    _textEditingController?.dispose();
+    _textEditingController.dispose();
+    _answerFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         _backButton(context),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 48),
-                  _title(),
-                  const SizedBox(height: 48),
-                  _questionPicker(),
-                  _answerTextField(),
-                  const SizedBox(height: 8),
-                  _errorText(),
-                ],
-              ),
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
+          child: ListView(
+            children: [
+              SizedBox(height: (MediaQuery.of(context).size.height) / 8),
+              _title(),
+              const SizedBox(height: 48),
+              _questionPicker(),
+              const SizedBox(height: 8),
+              _answerTextField(),
+              const SizedBox(height: 8),
+              _errorText(),
+            ],
           ),
         ),
         _confirmBtn(),
@@ -561,31 +567,40 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   }
 
   Widget _backButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          onTap: widget.onBackPressed,
-          child: const Padding(
-              padding: EdgeInsets.all(16), child: Icon(Icons.arrow_back)),
-        ),
-        TextButton(
-          onPressed: () async {
-            await showAlertDialog(
-              context: context,
-              content:
-                  'If you dont answer, you cannot use forget password function',
-              defaultActionText: 'Confirm',
-              cancelActionText: 'Cancel',
-              onDefaultAction: () {
-                Navigator.of(context).pop();
-                widget.onSkip();
-              },
-            );
-          },
-          child: const Text('Skip'),
-        ),
-      ],
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              _unfocus();
+              widget.onBackPressed.call();
+            },
+            child: const Padding(
+                padding: EdgeInsets.all(16), child: Icon(Icons.arrow_back)),
+          ),
+          TextButton(
+            onPressed: () async {
+              _unfocus();
+              await showAlertDialog(
+                context: context,
+                content:
+                    'If you dont answer, you cannot use forget password function',
+                defaultActionText: 'Confirm',
+                cancelActionText: 'Cancel',
+                onDefaultAction: () {
+                  Navigator.of(context).pop();
+                  widget.onSkip();
+                },
+              );
+            },
+            child: const Text('Skip'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -618,10 +633,13 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
             );
           }).toList(),
           onChanged: (value) {
-            setState(() {
-              _showError = false;
-              _chosenQuestion = value;
-            });
+            if (value != _chosenQuestion) {
+              setState(() {
+                _showError = false;
+                _chosenQuestion = value;
+              });
+              _answerFocusNode.requestFocus();
+            }
           },
         ),
       ),
@@ -650,20 +668,24 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   }
 
   Widget _confirmBtn() {
-    return SlideUp(
-      delay: const Duration(milliseconds: 400),
-      child: _Button(
-        onPressed: () {
-          if (_textEditingController!.text.isEmpty) {
-            setState(() {
-              _showError = true;
-            });
-          } else {
-            widget.onAnswer(_chosenQuestion!
-                .copyWith(answer: _textEditingController!.text));
-          }
-        },
-        text: 'Answer',
+    return Positioned(
+      bottom: 0,
+      child: SlideUp(
+        delay: const Duration(milliseconds: 400),
+        child: _Button(
+          onPressed: () {
+            _unfocus();
+            if (_textEditingController.text.isEmpty) {
+              setState(() {
+                _showError = true;
+              });
+            } else {
+              widget.onAnswer(_chosenQuestion!
+                  .copyWith(answer: _textEditingController.text));
+            }
+          },
+          text: 'Answer',
+        ),
       ),
     );
   }
@@ -683,5 +705,9 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
         ),
       ),
     );
+  }
+
+  void _unfocus() {
+    _answerFocusNode.unfocus();
   }
 }

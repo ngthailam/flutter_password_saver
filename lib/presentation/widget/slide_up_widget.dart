@@ -2,16 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SlideUp extends StatefulWidget {
-  const SlideUp(
-      {Key? key,
-      required this.child,
-      this.delay = Duration.zero,
-      this.slideDuration = const Duration(seconds: 1)})
-      : super(key: key);
+  const SlideUp({
+    Key? key,
+    required this.child,
+    this.delay = Duration.zero,
+    this.slideDuration = const Duration(seconds: 1),
+    this.onComplete,
+  }) : super(key: key);
 
   final Widget child;
   final Duration delay;
   final Duration slideDuration;
+  final VoidCallback? onComplete;
 
   @override
   _SlideUpState createState() => _SlideUpState();
@@ -33,12 +35,16 @@ class _SlideUpState extends State<SlideUp> with TickerProviderStateMixin {
         .animate(curve);
 
     if (widget.delay.inMilliseconds == 0) {
-      _animController?.forward();
+      _startAnimation();
     } else {
       Timer(widget.delay, () {
-        _animController?.forward();
+        _startAnimation();
       });
     }
+  }
+
+  void _startAnimation() {
+    _animController?.forward().whenComplete(() => widget.onComplete?.call());
   }
 
   @override
