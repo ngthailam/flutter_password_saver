@@ -61,6 +61,11 @@ class AuthRepoitoryImpl extends AuthRepository {
   }
 
   @override
+  Future<int> getLoginAttemptCount() {
+    return _authLoginLockDataSource.getAttemptCount();
+  }
+
+  @override
   Future<bool> authenticate({required String reason}) {
     return _biometricsDataSource.authenticate(reason: reason);
   }

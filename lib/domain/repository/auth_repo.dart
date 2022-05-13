@@ -14,6 +14,8 @@ abstract class AuthRepository {
 
   Future<int> getLockRemainingTime();
 
+  Future<int> getLoginAttemptCount();
+
   Future<bool> canUseBiometrics();
 
   Future<bool> authenticate({required String reason});
