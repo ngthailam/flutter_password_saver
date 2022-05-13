@@ -52,6 +52,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   @override
   void dispose() {
     super.dispose();
+    _bloc.close();
     _nameTextEdtCtrl.dispose();
     _accNameTextEdtCtrl.dispose();
     _passwordTextEdtCtrl.dispose();

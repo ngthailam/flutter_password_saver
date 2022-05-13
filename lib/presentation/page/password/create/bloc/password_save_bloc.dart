@@ -31,6 +31,13 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
     Emitter<PasswordSaveState> emit,
   ) async {
     if (event.passwordId == null) {
+      final randomId = generateRandomUuid();
+      _inputPassword = Password(
+        id: randomId,
+        settings: Password.defaultSettings(
+          passwordId: randomId,
+        ),
+      );
       return;
     }
 
@@ -39,14 +46,6 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
       if (password != null) {
         _inputPassword = password;
         _preFetchPassword = password;
-      } else {
-        final randomId = generateRandomUuid();
-        _inputPassword = Password(
-          id: randomId,
-          settings: Password.defaultSettings(
-            passwordId: randomId,
-          ),
-        );
       }
       emit(state.copyWith(password: password ?? _inputPassword));
     } catch (e) {
