@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/widget/password_input_page.dart';
 import 'package:flutter_password_saver/presentation/page/update_password/bloc/update_password_bloc.dart';
@@ -36,22 +37,24 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
       body: SafeArea(
         child: BlocProvider(
           create: (context) => _bloc,
-          child: BlocListener<UpdatePasswordBloc, UpdatePasswordState>(
+          child: BlocConsumer<UpdatePasswordBloc, UpdatePasswordState>(
             listener: (context, state) {
               if (state.savePasswordLoadState == LoadState.success) {
-                context.showSuccessSnackBar('Account password updated');
+                context.showSuccessSnackBar(S().sbUpdateAccPassSuccess);
                 Navigator.of(context).pop();
                 return;
               }
             },
-            child: PasswordInputPage(
-              userName: 'name',
-              onBackPressed: () => Navigator.of(context).pop(),
-              onConfirm: (String password) {
-                _bloc.add(ConfirmNewPasswordEvent(password: password));
-              },
-              btnWidth: MediaQuery.of(context).size.width - 64,
-            ),
+            builder: (context, state) {
+              return PasswordInputPage(
+                userName: state.user?.name ?? '',
+                onBackPressed: () => Navigator.of(context).pop(),
+                onConfirm: (String password) {
+                  _bloc.add(ConfirmNewPasswordEvent(password: password));
+                },
+                btnWidth: MediaQuery.of(context).size.width - 64,
+              );
+            },
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_events.dart';
@@ -151,9 +152,9 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
         child: AnimatedOpacity(
           opacity: _showError ? 1 : 0,
           duration: const Duration(milliseconds: 250),
-          child: const Text(
-            'Some fields are empty',
-            style: TextStyle(color: AppColors.red500),
+          child: Text(
+            S().savePassError,
+            style: const TextStyle(color: AppColors.red500),
           ),
         ),
       ),
@@ -161,15 +162,15 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   }
 
   Widget _title() {
-    return const Text(
-      'Save your Account and Password',
-      style: TextStyle(fontSize: 24),
+    return Text(
+      S().savePassTitle,
+      style: const TextStyle(fontSize: 24),
     );
   }
 
   Widget _notice() {
     return Text(
-      'Your password is only saved locally, you can use network activity to check no Internet connection is establish',
+      S().savePassSubTitle,
       style: TextStyle(
         fontSize: 16,
         color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.6),
@@ -181,7 +182,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
     return PrimaryTextInput(
       icon: Icons.accessibility_sharp,
       controller: _nameTextEdtCtrl,
-      hintText: 'Name (Netflix account)',
+      hintText: S().savePassHintName,
       margin: const EdgeInsets.symmetric(vertical: 8),
       onChanged: (text) {
         _hideError();
@@ -193,7 +194,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
     return PrimaryTextInput(
       icon: Icons.group,
       controller: _accNameTextEdtCtrl,
-      hintText: 'Account (abc@gmail.com)',
+      hintText: S().savePassHintAccName,
       margin: const EdgeInsets.symmetric(vertical: 8),
       onChanged: (text) {
         _hideError();
@@ -205,7 +206,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
     return PrimaryTextInput(
       icon: Icons.lock,
       controller: _passwordTextEdtCtrl,
-      hintText: 'Password (123456)',
+      hintText: S().savePassHintPasswordName,
       obscureText: true,
       margin: const EdgeInsets.symmetric(vertical: 8),
       onChanged: (text) {
@@ -239,7 +240,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
             _bloc.add(PasswordSaveConfirmEvent());
           }
         },
-        text: 'Save',
+        text: S().save,
       ),
     );
   }

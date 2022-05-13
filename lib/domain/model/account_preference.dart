@@ -8,6 +8,7 @@ class AccountPreference extends Equatable {
   static const requireLoginDefault = true;
   static const alwaysShowPasswordsDefault = false;
   static const enableDarkModeDefault = false;
+  static const languageCodeDefault = 'en';
 
   const AccountPreference({this.items = defaultPrefItems});
 
@@ -25,6 +26,10 @@ class AccountPreference extends Equatable {
     AccountPreferenceItem(
       name: PreferenceName.enableDarkMode,
       value: enableDarkModeDefault,
+    ),
+    AccountPreferenceItem(
+      name: PreferenceName.languageCode,
+      value: languageCodeDefault,
     ),
   ];
 
@@ -54,6 +59,7 @@ enum PreferenceName {
   requirePass,
   alwaysShowPass,
   enableDarkMode,
+  languageCode,
 }
 
 @CopyWith()

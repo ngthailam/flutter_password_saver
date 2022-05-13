@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
-import 'package:flutter_password_saver/presentation/widget/primary_snack_bar.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -159,7 +159,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
           const SizedBox(height: 32),
           PrimaryButton(
             margin: const EdgeInsets.symmetric(horizontal: 48),
-            text: 'Save your first password',
+            text: S().emptyPasswordHint,
             onPressed: _goToSavePassword,
           ),
         ],
@@ -179,9 +179,9 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
             width: 160,
           ),
           const SizedBox(height: 32),
-          const Text(
-            'No results found',
-            style: TextStyle(fontSize: 16),
+          Text(
+            S().noResults,
+            style: const TextStyle(fontSize: 16),
           )
         ],
       ),
@@ -192,7 +192,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
     final result =
         await Navigator.of(context).pushNamed(AppRouter.savePassword);
     if (result == true) {
-      context.showSnackBar('Password saved successfully', SnackBarType.success);
+      context.showSuccessSnackBar(S().sbEditSuccess);
     }
   }
 }

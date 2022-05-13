@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:flutter_password_saver/domain/model/password_settings.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
@@ -101,7 +102,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
         backgroundColor: AppColors.green400,
         foregroundColor: Colors.white,
         icon: Icons.settings,
-        label: 'Settings',
+        label: S().settings,
       ),
       SlidableAction(
         onPressed: (ctx) async {
@@ -109,26 +110,26 @@ class _PasswordListItemState extends State<PasswordListItem> {
               AppRouter.savePassword,
               arguments: SavePasswordPageArg(id: widget.password.id));
           if (result == true) {
-            context.showSuccessSnackBar('Edit successfully!');
+            context.showSuccessSnackBar(S().sbEditSuccess);
           }
         },
         backgroundColor: AppColors.blue400,
         foregroundColor: Colors.white,
         icon: Icons.edit,
-        label: 'Edit',
+        label: S().edit,
       ),
       SlidableAction(
         onPressed: (ctx) {
           context
               .read<PasswordBloc>()
               .add(DeletePasswordEvent(id: widget.password.id));
-          context.showSuccessSnackBar(
-              'Deleted password for [${widget.password.name}]');
+          context
+              .showSuccessSnackBar(S().sbDeletePassword(widget.password.name));
         },
         backgroundColor: AppColors.red400,
         foregroundColor: Colors.white,
         icon: Icons.delete,
-        label: 'Delete',
+        label: S().delete,
       ),
     ];
   }
@@ -181,11 +182,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
           onTap: () {
             if (_contentVisible) {
               Clipboard.setData(ClipboardData(text: text));
-              context.showToast('Coppied: $text');
+              context.showToast(S().copied(text));
             } else {
-              context.showToast(
-                'Must press eye icon to toggle visibility before copying',
-              );
+              context.showToast(S().sbEye);
             }
           },
           child: const Icon(

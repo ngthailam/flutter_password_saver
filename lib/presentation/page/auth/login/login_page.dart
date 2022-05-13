@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_event.dart';
@@ -53,10 +54,12 @@ class _LoginPageState extends State<LoginPage> {
                 _navigateToPasswordPage(context);
               } else if (state.loginLoadState == LoadState.failure) {
                 if (state.lockTimeRemaining == 0) {
-                  context.showErrorSnackBar('Username or password incorect');
+                  context.showErrorSnackBar(S().sbLoginError);
                 } else {
                   context.showErrorSnackBar(
-                      'Too many attempts, try again in ${millisToReadableTime(state.lockTimeRemaining)}');
+                    S().sbLoginErrorAttempt(
+                        millisToReadableTime(state.lockTimeRemaining)),
+                  );
                 }
               }
 
@@ -119,11 +122,12 @@ class _LoginPageState extends State<LoginPage> {
           child: ListView(
             children: [
               const SizedBox(height: 32),
-              const Align(
+              Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  'Welcome Back',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  S().welcomeBack,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
               const SizedBox(height: 24),

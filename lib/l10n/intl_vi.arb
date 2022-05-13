@@ -1,0 +1,88 @@
+{
+    "@@locale": "vi",
+    "welcomeTo": "Chào mừng đến với",
+    "passSaverHyphen": "PASS-SAVER",
+    "benefit1Part1": "Nơi lưu trữ tất cả mật khẩu của bạn một cách ",
+    "benefit1Highlight1": "BẢO MẬT ",
+    "benefit1Part2": "qua sử dụng {deviceSecureStorage} của thiết bị",
+    "@benefit1Part2": {
+      "placeholders": {
+        "deviceSecureStorage": {}
+      }
+    },
+    "benefit2Part1": "Kết nối Internet ",
+    "benefit2Highlight1": "KHÔNG ĐƯỢC DÙNG ",
+    "benefit2Part2": "bạn có thể an tâm là mật khẩu không bị gửi đi bất cứ đâu",
+    "getStarted": "Bắt đầu",
+    "keyStore": "KeyStore",
+    "keyChain": "KeyChain",
+    "nameInputTitle": "Tên bạn là gì?",
+    "nameInputHint": "Nhập tên bạn",
+    "nameInputError": "Tên không được để trống",
+    "textContinue": "Tiếp tục",
+    "congratulation": "Chúc mừng",
+    "congratulationSubtitle": "Bạn đã đăng ký thành công!",
+    "secuQuesDialogTitle": "Nếu không trả lời, một số tính năng có thể bị khoá",
+    "confirm": "Xác nhận",
+    "cancel": "Bỏ",
+    "skip": "Bỏ qua",
+    "secuQuesTitle": "(Không bắt buộc) Trả lời câu hỏi bảo mật phòng khi bạn mất mật khẩu.",
+    "secuQuesHint": "Trả lời",
+    "answer": "Trả lời",
+    "secuQuesError": "Câu trả lời không được để trống",
+    "hi": "Xin chào ",
+    "choosePassword": ", xin vui lòng chọn mật khẩu",
+    "savePassError": "Mật khẩu không trùng khớp",
+    "savePassHint": "Nhập mật khẩu",
+    "savePassHintConfirm": "Xác nhận mật khẩu",
+    "search": "Tìm kiếm",
+    "emptyPasswordHint": "Tạo mật khẩu đầu tiên",
+    "noResults": "Không tìm thấy kết quả",
+    "preferences": "Cài đặt",
+    "deleteAccount": "Xoá tài khoản",
+    "prefRequireLogin": "Yêu cầu mật khẩu khi đăng nhập",
+    "prefAlwaysShow": "Luôn hiển thị tên tài khoản và mật khẩu",
+    "prefDarkMode": "Bật theme tối",
+    "savePassTitle": "Lưu tài khoản và mật khẩu",
+    "savePassSubTitle": "Mật khẩu của bạn chỉ được lưu trong máy, bạn có thể kiểm tra hoạt động Internet của máy để xác nhận",
+    "savePassHintName": "Tên (Tài khoản Netflix)",
+    "savePassHintAccName": "Tài khoản (abc@gmail.com)",
+    "savePassHintPasswordName": "Mật khẩu (123456)",
+    "savePassError": "Một số trường đang bị bỏ trống",
+    "save": "Lưu",
+    "sbSaveSuccess": "Lưu mật khẩu thành công",
+    "sbLoginError": "Tên hoặc mật khẩu không đúng",
+    "sbLoginErrorAttempt": "Đăng nhập quá nhiều lần, thử lại sau {timeLock}",
+    "@sbLoginErrorAttempt": {
+      "placeholders": {
+        "timeLock": {}
+      }
+    },
+    "sbAccountDeleted": "Tài khoản đã bị xoá",
+    "sbAnswerWrong": "Câu trả lời không đúng",
+    "sbUpdateSuccess": "Thay đổi mật khẩu thành công",
+    "sbEditSuccess": "Thay đổi mật khẩu thành công",
+    "sbDeletePassword": "Xoá mật khẩu cho [{accountName}]",
+    "@sbDeletePassword": {
+      "placeholders": {
+        "accountName": {}
+      }
+    },
+    "copied": "Sao chép {copiedText}",
+    "@copied": {
+      "placeholders": {
+        "copiedText": {}
+      }
+    },
+    "sbEye": "Bấm hình mắt để hiển thị mới có thể sao chép",
+    "sbDeleteSuccess": "Xoá thành công",
+    "sbDeleteError": "Đã có lỗi xảy ra",
+    "sbUpdateAccPassSuccess": "Mật khẩu đã được cập nhật",
+    "welcomeBack": "Chào mừng trở lại",
+    "delete": "Xoá",
+    "settings": "Cài đặt",
+    "edit": "Sửa",
+    "language": "Ngôn ngữ",
+    "langEn": "Tiếng Anh",
+    "langVn": "Tiếng Việt"
+}

@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_password_saver/presentation/values/colors.dart';
-import 'package:flutter_password_saver/util/theme_util.dart';
 
 class IconInkWell extends StatelessWidget {
   const IconInkWell({
@@ -27,7 +25,7 @@ class IconInkWell extends StatelessWidget {
 
     return Platform.isAndroid
         ? Material(
-            color: isDarkMode() ? AppColors.blue500 : AppColors.white500,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: widget,
           )
         : widget;

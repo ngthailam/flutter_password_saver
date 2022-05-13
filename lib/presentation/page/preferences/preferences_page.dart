@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_event.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_state.dart';
+import 'package:flutter_password_saver/presentation/page/preferences/widget/pref_item_widget_factory.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
@@ -14,8 +16,8 @@ import 'package:flutter_password_saver/presentation/widget/delete_account_button
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/icon_ink_well_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
-import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/language_util.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:collection/collection.dart';
 
@@ -62,12 +64,12 @@ class _PreferencesPageState extends State<PreferencesPage> {
           listener: ((context, state) {
             if (state.deleteLoadState != LoadState.none) {
               if (state.deleteLoadState == LoadState.success) {
-                context.showErrorSnackBar('Delete success');
+                context.showErrorSnackBar(S().sbDeleteSuccess);
                 HotRestart.of(context).hotRestart();
               }
 
               if (state.deleteLoadState == LoadState.failure) {
-                context.showErrorSnackBar('Delete failed');
+                context.showErrorSnackBar(S().sbDeleteError);
               }
             }
 
@@ -77,6 +79,14 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 ?.value;
             if (isEnableDarkMode != null && isEnableDarkMode != isDarkMode()) {
               changeThemeMode();
+            }
+
+            final isChangeLanguage = state.preference?.items
+                .firstWhereOrNull(
+                    (element) => element.name == PreferenceName.languageCode)
+                ?.value;
+            if (isChangeLanguage != null) {
+              setLanguage(isChangeLanguage);
             }
           }),
           builder: (context, state) {
@@ -97,8 +107,6 @@ class _PreferencesPageState extends State<PreferencesPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
                         LoadingIndicator(),
-                        SizedBox(height: 8),
-                        Text('Deleting account ...')
                       ],
                     ),
                   );
@@ -138,10 +146,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return Stack(
       children: [
         _closeBtn(),
-        const Center(
+        Center(
           child: Text(
-            'Preferences',
-            style: TextStyle(fontSize: 18),
+            S().preferences,
+            style: const TextStyle(fontSize: 18),
           ),
         ),
       ],
@@ -194,63 +202,20 @@ class _PreferencesPageState extends State<PreferencesPage> {
     if (items == null) {
       return const SizedBox.shrink();
     }
-
+    final factory = PrefItemWidgetFactory();
     return Expanded(
       child: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, i) {
-          return _preferenceItem(
-            left: _getPrefLeftWidget(items[i]),
-            prefItem: items[i],
+          return factory.create(
+            preferenceItem: items[i],
+            onUpdate: (AccountPreferenceItem pref) {
+              _bloc.add(
+                SavePreferenceEvent(name: pref.name, value: pref.value),
+              );
+            },
           );
         },
-      ),
-    );
-  }
-
-  Widget _getPrefLeftWidget(AccountPreferenceItem pref) {
-    switch (pref.name) {
-      case PreferenceName.requirePass:
-        return const Text('Require login on open app');
-      case PreferenceName.alwaysShowPass:
-        return const Text('Always show account names and passwords');
-      case PreferenceName.enableDarkMode:
-        return const Text('Enable Dark mode');
-      default:
-        return const SizedBox.shrink();
-    }
-  }
-
-  Widget _preferenceItem({
-    required Widget left,
-    required AccountPreferenceItem prefItem,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            flex: 2,
-            child: left,
-          ),
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: PlatformSwitch(
-                value: prefItem.value as bool,
-                onChanged: (value) {
-                  _bloc.add(
-                    SavePreferenceEvent(name: prefItem.name, value: value),
-                  );
-                },
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
