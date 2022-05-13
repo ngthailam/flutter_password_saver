@@ -47,6 +47,7 @@ class SearchBox extends StatelessWidget {
           hintText: 'Search',
         ),
         maxLines: 1,
+        autofocus: false,
         onChanged: (text) => _debouncer.run(() {
           onChanged?.call(text);
         }),

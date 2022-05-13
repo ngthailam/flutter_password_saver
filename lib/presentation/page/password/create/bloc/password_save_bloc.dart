@@ -16,13 +16,6 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
       : super(PasswordSaveState()) {
     on<PasswordSaveConfirmEvent>(_createPassword);
     on<PasswordSavePrefetchEvent>(_prefetchPassword);
-    final randomId = generateRandomUuid();
-    _inputPassword = Password(
-      id: randomId,
-      settings: Password.defaultSettings(
-        passwordId: randomId,
-      ),
-    );
   }
 
   final SavePasswordUsecase _savePasswordUsecase;
@@ -46,6 +39,14 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
       if (password != null) {
         _inputPassword = password;
         _preFetchPassword = password;
+      } else {
+        final randomId = generateRandomUuid();
+        _inputPassword = Password(
+          id: randomId,
+          settings: Password.defaultSettings(
+            passwordId: randomId,
+          ),
+        );
       }
       emit(state.copyWith(password: password ?? _inputPassword));
     } catch (e) {

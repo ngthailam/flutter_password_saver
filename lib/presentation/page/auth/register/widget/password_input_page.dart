@@ -4,6 +4,7 @@ import 'package:flutter_password_saver/presentation/page/auth/register/util/pass
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 
 class PasswordInputPage extends StatefulWidget {
   const PasswordInputPage({
@@ -32,6 +33,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   late TextEditingController _confirmPasswordTextEdtCtrl;
   late FocusNode _passwordFocusNode;
   late FocusNode _confirmPasswordFocusNode;
+  bool _isDarkMode = false;
 
   bool _showNotMatchedError = false;
   int _passwordStrengthIndex = 0;
@@ -44,6 +46,13 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
     _confirmPasswordTextEdtCtrl = TextEditingController();
     _passwordFocusNode = FocusNode();
     _confirmPasswordFocusNode = FocusNode();
+    _isDarkMode = isDarkMode();
+  }
+
+  @override
+  void didUpdateWidget(covariant PasswordInputPage oldWidget) {
+    _isDarkMode = isDarkMode();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -102,9 +111,10 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
       child: RichText(
         text: TextSpan(
           text: 'Hi ',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
+            color: _isDarkMode ? AppColors.white500 : AppColors.black500,
           ),
           children: [
             TextSpan(

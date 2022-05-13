@@ -14,6 +14,7 @@ import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -190,6 +191,20 @@ class _BenefitPage extends StatefulWidget {
 }
 
 class _BenefitPageState extends State<_BenefitPage> {
+  bool _isDarkMode = true;
+
+  @override
+  void initState() {
+    _isDarkMode = isDarkMode();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant _BenefitPage oldWidget) {
+    _isDarkMode = isDarkMode();
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -269,7 +284,10 @@ class _BenefitPageState extends State<_BenefitPage> {
       child: RichText(
         text: TextSpan(
           text: 'A place to remember all of your Passwords for you ',
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(
+            fontSize: 14,
+            color: _isDarkMode ? AppColors.white500 : AppColors.black500,
+          ),
           children: [
             const TextSpan(
               text: 'SECURELY',
@@ -291,10 +309,13 @@ class _BenefitPageState extends State<_BenefitPage> {
     return SlideUp(
       delay: const Duration(milliseconds: 1600),
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           text: 'Internet connection is',
-          style: TextStyle(fontSize: 14),
-          children: [
+          style: TextStyle(
+            fontSize: 14,
+            color: _isDarkMode ? AppColors.white500 : AppColors.black500,
+          ),
+          children: const [
             TextSpan(
               text: ' NOT USED',
               style: TextStyle(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -25,15 +27,28 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await initHive();
+  await initTheme();
 
   runApp(const MyApp());
+}
+
+Future<void> initTheme() async {
+  final isDarkModeEnabled =
+      await getIt<AccountPreferenceUseCase>().getIsDarkModeEnabled();
+  if (isDarkMode() != isDarkModeEnabled) {
+    changeThemeMode();
+  }
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static final ValueNotifier<ThemeMode> themeNotifier =
-      ValueNotifier(ThemeMode.dark);
+      ValueNotifier(ThemeMode.light);
+
+  static void resetDefaultTheme() {
+    themeNotifier.value = ThemeMode.light;
+  }
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -65,7 +80,7 @@ class _MyAppState extends State<MyApp> {
               scaffoldBackgroundColor: AppColors.white500,
               brightness: Brightness.light,
             ),
-            darkTheme: ThemeData.dark().copyWith(),
+            darkTheme: ThemeData.dark(),
             themeMode: currentMode,
             onGenerateRoute: (RouteSettings settings) =>
                 AppRouter.generateRoute(settings),
