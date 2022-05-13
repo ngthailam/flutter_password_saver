@@ -19,7 +19,7 @@ import 'data/repository/password_repo_impl.dart' as _i13;
 import 'domain/repository/account_pref_repo.dart' as _i7;
 import 'domain/repository/auth_repo.dart' as _i17;
 import 'domain/repository/password_repo.dart' as _i12;
-import 'domain/usecase/auth/auth_lock_use_case.dart' as _i32;
+import 'domain/usecase/auth/auth_lock_use_case.dart' as _i33;
 import 'domain/usecase/auth/biometric_use_case.dart' as _i19;
 import 'domain/usecase/auth/create_account_use_case.dart' as _i20;
 import 'domain/usecase/auth/delete_account_use_case.dart' as _i21;
@@ -33,15 +33,16 @@ import 'domain/usecase/password/save_password_use_case.dart' as _i14;
 import 'domain/usecase/password/search_password_use_case.dart' as _i15;
 import 'domain/usecase/password/update_password_settings_use_case.dart' as _i16;
 import 'domain/usecase/preference/account_preference_use_case.dart' as _i9;
-import 'presentation/page/auth/login/bloc/login_bloc.dart' as _i35;
+import 'presentation/page/auth/login/bloc/login_bloc.dart' as _i36;
 import 'presentation/page/auth/register/bloc/register_bloc.dart' as _i30;
 import 'presentation/page/forget_password/bloc/forget_password_bloc.dart'
-    as _i33;
-import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i34;
+    as _i34;
+import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i35;
 import 'presentation/page/password/create/bloc/password_save_bloc.dart' as _i28;
 import 'presentation/page/password/list/bloc/password_bloc.dart' as _i27;
-import 'presentation/page/preferences/bloc/preferences_bloc.dart'
-    as _i29; // ignore_for_file: unnecessary_lambdas
+import 'presentation/page/preferences/bloc/preferences_bloc.dart' as _i29;
+import 'presentation/page/update_password/bloc/update_password_bloc.dart'
+    as _i32; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -109,19 +110,22 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i30.RegisterBloc(get<_i20.CreateAccountUseCase>()));
   gh.factory<_i31.UpdateAccountPasswordUseCase>(
       () => _i31.UpdateAccountPasswordUseCase(get<_i17.AuthRepository>()));
-  gh.factory<_i32.AuthLockUseCase>(
-      () => _i32.AuthLockUseCase(get<_i17.AuthRepository>()));
-  gh.factory<_i33.ForgetPasswordBloc>(() => _i33.ForgetPasswordBloc(
+  gh.factory<_i32.UpdatePasswordBloc>(() => _i32.UpdatePasswordBloc(
+      get<_i24.GetCurrentAccountUseCase>(),
+      get<_i31.UpdateAccountPasswordUseCase>()));
+  gh.factory<_i33.AuthLockUseCase>(
+      () => _i33.AuthLockUseCase(get<_i17.AuthRepository>()));
+  gh.factory<_i34.ForgetPasswordBloc>(() => _i34.ForgetPasswordBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i21.DeleteAccountUseCase>(),
       get<_i31.UpdateAccountPasswordUseCase>()));
-  gh.factory<_i34.GatewayBloc>(() => _i34.GatewayBloc(
+  gh.factory<_i35.GatewayBloc>(() => _i35.GatewayBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i9.AccountPreferenceUseCase>()));
-  gh.factory<_i35.LoginBloc>(() => _i35.LoginBloc(
+  gh.factory<_i36.LoginBloc>(() => _i36.LoginBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i26.LoginUseCase>(),
-      get<_i32.AuthLockUseCase>(),
+      get<_i33.AuthLockUseCase>(),
       get<_i19.BiometricsUseCase>()));
   return get;
 }

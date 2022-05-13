@@ -12,8 +12,10 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/delete_account_button_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
+import 'package:flutter_password_saver/presentation/widget/icon_ink_well_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
+import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:collection/collection.dart';
 
@@ -166,13 +168,23 @@ class _PreferencesPageState extends State<PreferencesPage> {
         ),
         const SizedBox(width: 16),
         Expanded(
-            child: Text(
-          user?.name ?? '',
-          style: const TextStyle(
-            fontSize: 16,
+          child: Text(
+            user?.name ?? '',
+            style: const TextStyle(
+              fontSize: 16,
+            ),
           ),
-        )),
-        const SizedBox(width: 16),
+        ),
+        IconInkWell(
+          icon: Icon(
+            Icons.edit,
+            size: 20,
+            color: isDarkMode() ? AppColors.white400 : AppColors.ink400,
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed(AppRouter.updatePassword);
+          },
+        ),
       ],
     );
   }
