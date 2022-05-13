@@ -10,4 +10,8 @@ class AuthLockUseCase {
   Future<int> getLockRemainingTime() {
     return _authRepository.getLockRemainingTime();
   }
+
+    Future<int> getLoginAttemptCount() {
+    return _authRepository.getLoginAttemptCount();
+  }
 }

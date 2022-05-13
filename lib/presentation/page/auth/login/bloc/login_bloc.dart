@@ -57,6 +57,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     int lockTimeRemaining = await _authLockUseCase.getLockRemainingTime();
+    final attemptCount = await _authLockUseCase.getLoginAttemptCount();
     if (lockTimeRemaining > 0) {
       emit(state.copyWith(
         loginLoadState: LoadState.failure,
@@ -71,6 +72,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(state.copyWith(
           loginLoadState: LoadState.failure,
           lockTimeRemaining: lockTimeRemaining,
+          attemptCount: attemptCount, // Use this to avoid 1 + 2 first 2 errors have same state
         ));
       }
     }

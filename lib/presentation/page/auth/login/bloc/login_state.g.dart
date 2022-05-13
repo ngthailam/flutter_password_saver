@@ -7,6 +7,8 @@ part of 'login_state.dart';
 // **************************************************************************
 
 abstract class _$LoginStateCWProxy {
+  LoginState attemptCount(int attemptCount);
+
   LoginState canUseBiometrics(bool canUseBiometrics);
 
   LoginState lockTimeRemaining(int lockTimeRemaining);
@@ -22,6 +24,7 @@ abstract class _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    int? attemptCount,
     bool? canUseBiometrics,
     int? lockTimeRemaining,
     LoadState? loginLoadState,
@@ -34,6 +37,9 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   final LoginState _value;
 
   const _$LoginStateCWProxyImpl(this._value);
+
+  @override
+  LoginState attemptCount(int attemptCount) => this(attemptCount: attemptCount);
 
   @override
   LoginState canUseBiometrics(bool canUseBiometrics) =>
@@ -59,12 +65,18 @@ class _$LoginStateCWProxyImpl implements _$LoginStateCWProxy {
   /// LoginState(...).copyWith(id: 12, name: "My name")
   /// ````
   LoginState call({
+    Object? attemptCount = const $CopyWithPlaceholder(),
     Object? canUseBiometrics = const $CopyWithPlaceholder(),
     Object? lockTimeRemaining = const $CopyWithPlaceholder(),
     Object? loginLoadState = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
   }) {
     return LoginState(
+      attemptCount:
+          attemptCount == const $CopyWithPlaceholder() || attemptCount == null
+              ? _value.attemptCount
+              // ignore: cast_nullable_to_non_nullable
+              : attemptCount as int,
       canUseBiometrics: canUseBiometrics == const $CopyWithPlaceholder() ||
               canUseBiometrics == null
           ? _value.canUseBiometrics

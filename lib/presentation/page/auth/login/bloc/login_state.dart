@@ -12,12 +12,14 @@ class LoginState extends Equatable {
     this.user,
     this.lockTimeRemaining = 0,
     this.canUseBiometrics = false,
+    this.attemptCount = 0,
   });
 
   final LoadState loginLoadState;
   final User? user;
   final int lockTimeRemaining;
   final bool canUseBiometrics;
+  final int attemptCount;
 
   @override
   List<Object?> get props => [
@@ -25,5 +27,6 @@ class LoginState extends Equatable {
         user,
         lockTimeRemaining,
         canUseBiometrics,
+        attemptCount,
       ];
 }
