@@ -15,6 +15,7 @@ import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.da
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:collection/collection.dart';
 
 Future<void> showPreferencePage(BuildContext context) {
   return showDialog(
@@ -69,17 +70,18 @@ class _PreferencesPageState extends State<PreferencesPage> {
             }
 
             final isEnableDarkMode = state.preference?.items
-                .firstWhere(
+                .firstWhereOrNull(
                     (element) => element.name == PreferenceName.enableDarkMode)
-                .value as bool;
-            if (isEnableDarkMode != isDarkMode()) {
+                ?.value;
+            if (isEnableDarkMode != null && isEnableDarkMode != isDarkMode()) {
               changeThemeMode();
             }
           }),
           builder: (context, state) {
             switch (state.loadState) {
               case LoadState.loading:
-                return Center(child: LoadingIndicator(
+                return Center(
+                    child: LoadingIndicator(
                   color: LoadingIndicator.defaultColor,
                 ));
               case LoadState.failure:

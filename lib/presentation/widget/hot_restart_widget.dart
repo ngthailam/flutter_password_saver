@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_password_saver/main.dart';
 
 class HotRestart extends StatefulWidget {
   final Widget child;
@@ -17,6 +19,7 @@ class _HotRestartState extends State<HotRestart> {
   Key key = UniqueKey();
 
   void hotRestart() {
+    MyApp.resetDefaultTheme();
     setState(() {
       key = UniqueKey();
     });
