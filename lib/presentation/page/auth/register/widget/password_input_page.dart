@@ -209,13 +209,16 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   Widget _confirmBtn() {
     return Positioned(
       bottom: 0,
-      child: SlideUp(
-        delay: const Duration(milliseconds: 400),
-        child: PrimaryButton(
-          onPressed: _onConfirm,
-          text: 'Confirm',
-          margin: widget.btnMargin,
-          width: widget.btnWidth,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: SlideUp(
+          delay: const Duration(milliseconds: 400),
+          child: PrimaryButton(
+            onPressed: _onConfirm,
+            text: 'Confirm',
+            margin: widget.btnMargin,
+            width: widget.btnWidth,
+          ),
         ),
       ),
     );

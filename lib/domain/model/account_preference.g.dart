@@ -51,7 +51,7 @@ class _$AccountPreferenceCWProxyImpl implements _$AccountPreferenceCWProxy {
 }
 
 extension $AccountPreferenceCopyWith on AccountPreference {
-  /// Returns a callable class that can be used as follows: `instanceOfclass AccountPreference.name.copyWith(...)` or like so:`instanceOfclass AccountPreference.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfclass AccountPreference extends Equatable.name.copyWith(...)` or like so:`instanceOfclass AccountPreference extends Equatable.name.copyWith.fieldName(...)`.
   _$AccountPreferenceCWProxy get copyWith =>
       _$AccountPreferenceCWProxyImpl(this);
 }
@@ -112,7 +112,7 @@ class _$AccountPreferenceItemCWProxyImpl
 }
 
 extension $AccountPreferenceItemCopyWith on AccountPreferenceItem {
-  /// Returns a callable class that can be used as follows: `instanceOfclass AccountPreferenceItem.name.copyWith(...)` or like so:`instanceOfclass AccountPreferenceItem.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfclass AccountPreferenceItem extends Equatable.name.copyWith(...)` or like so:`instanceOfclass AccountPreferenceItem extends Equatable.name.copyWith.fieldName(...)`.
   _$AccountPreferenceItemCWProxy get copyWith =>
       _$AccountPreferenceItemCWProxyImpl(this);
 }

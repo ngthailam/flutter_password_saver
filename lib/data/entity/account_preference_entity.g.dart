@@ -9,6 +9,8 @@ part of 'account_preference_entity.dart';
 abstract class _$AccountPreferenceEntityCWProxy {
   AccountPreferenceEntity alwaysShowPasswords(bool alwaysShowPasswords);
 
+  AccountPreferenceEntity enableDarkMode(bool enableDarkMode);
+
   AccountPreferenceEntity requireLogin(bool requireLogin);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountPreferenceEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -19,6 +21,7 @@ abstract class _$AccountPreferenceEntityCWProxy {
   /// ````
   AccountPreferenceEntity call({
     bool? alwaysShowPasswords,
+    bool? enableDarkMode,
     bool? requireLogin,
   });
 }
@@ -35,6 +38,10 @@ class _$AccountPreferenceEntityCWProxyImpl
       this(alwaysShowPasswords: alwaysShowPasswords);
 
   @override
+  AccountPreferenceEntity enableDarkMode(bool enableDarkMode) =>
+      this(enableDarkMode: enableDarkMode);
+
+  @override
   AccountPreferenceEntity requireLogin(bool requireLogin) =>
       this(requireLogin: requireLogin);
 
@@ -48,6 +55,7 @@ class _$AccountPreferenceEntityCWProxyImpl
   /// ````
   AccountPreferenceEntity call({
     Object? alwaysShowPasswords = const $CopyWithPlaceholder(),
+    Object? enableDarkMode = const $CopyWithPlaceholder(),
     Object? requireLogin = const $CopyWithPlaceholder(),
   }) {
     return AccountPreferenceEntity(
@@ -57,6 +65,11 @@ class _$AccountPreferenceEntityCWProxyImpl
               ? _value.alwaysShowPasswords
               // ignore: cast_nullable_to_non_nullable
               : alwaysShowPasswords as bool,
+      enableDarkMode: enableDarkMode == const $CopyWithPlaceholder() ||
+              enableDarkMode == null
+          ? _value.enableDarkMode
+          // ignore: cast_nullable_to_non_nullable
+          : enableDarkMode as bool,
       requireLogin:
           requireLogin == const $CopyWithPlaceholder() || requireLogin == null
               ? _value.requireLogin
