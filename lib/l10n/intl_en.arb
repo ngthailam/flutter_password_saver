@@ -1,0 +1,88 @@
+{
+    "@@locale": "en",
+    "welcomeTo": "Welcome to",
+    "passSaverHyphen": "PASS-SAVER",
+    "benefit1Part1": "A place to remember all of your Passwords for you ",
+    "benefit1Highlight1": "SECURELY ",
+    "benefit1Part2": "using your device {deviceSecureStorage}",
+    "@benefit1Part2": {
+      "placeholders": {
+        "deviceSecureStorage": {}
+      }
+    },
+    "benefit2Part1": "Internet connection is ",
+    "benefit2Highlight1": "NOT USED ",
+    "benefit2Part2": "so you can assure that your passwords are not sent anywhere",
+    "getStarted": "Get started",
+    "keyStore": "KeyStore",
+    "keyChain": "KeyChain",
+    "nameInputTitle": "What is your name?",
+    "nameInputHint": "Enter your name",
+    "nameInputError": "User name must not be empty",
+    "textContinue": "Continue",
+    "congratulation": "Congratulation",
+    "congratulationSubtitle": "You are all set up!",
+    "secuQuesDialogTitle": "If you dont answer, you cannot use forget password function",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "skip": "Skip",
+    "secuQuesTitle": "(Optional) Answer a question to retrieve your password when you forget it.",
+    "secuQuesHint": "Answer",
+    "answer": "Answer",
+    "secuQuesError": "Answer must not be empty",
+    "hi": "Hi ",
+    "choosePassword": ", please choose your password",
+    "savePassError": "Passwords do no matched",
+    "savePassHint": "Enter your Password",
+    "savePassHintConfirm": "Confirm your Password",
+    "search": "Search",
+    "emptyPasswordHint": "Save your first password",
+    "noResults": "No results found",
+    "preferences": "Preferences",
+    "deleteAccount": "Delete Account",
+    "prefRequireLogin": "Require login on open app",
+    "prefAlwaysShow": "Always show account names and passwords",
+    "prefDarkMode": "Enable dark mode",
+    "savePassTitle": "Save your Account and Password",
+    "savePassSubTitle": "Your password is only saved locally, you can use network activity to check no Internet connection is establish",
+    "savePassHintName": "Name (Netflix account)",
+    "savePassHintAccName": "Account (abc@gmail.com)",
+    "savePassHintPasswordName": "Password (123456)",
+    "savePassError": "Some fields are empty",
+    "save": "Save",
+    "sbSaveSuccess": "Password saved successfully",
+    "sbLoginError": "Username or password incorect",
+    "sbLoginErrorAttempt": "Too many attempts, try again in {timeLock}",
+    "@sbLoginErrorAttempt": {
+      "placeholders": {
+        "timeLock": {}
+      }
+    },
+    "sbAccountDeleted": "Account deleted",
+    "sbAnswerWrong": "Answer not correct",
+    "sbUpdateSuccess": "Password changed successfully",
+    "sbEditSuccess": "Edit password successfully",
+    "sbDeletePassword": "Deleted password for [{accountName}]",
+    "@sbDeletePassword": {
+      "placeholders": {
+        "accountName": {}
+      }
+    },
+    "copied": "Copied {copiedText}",
+    "@copied": {
+      "placeholders": {
+        "copiedText": {}
+      }
+    },
+    "sbEye": "Must press eye icon to toggle visibility before copying",
+    "sbDeleteSuccess": "Delete successfully",
+    "sbDeleteError": "Delete Failed",
+    "sbUpdateAccPassSuccess": "Account password updated",
+    "welcomeBack": "Welcome back",
+    "delete": "Delete",
+    "settings": "Settings",
+    "edit": "Edit",
+    "language": "Language",
+    "langEn": "English",
+    "langVn": "Vietnamese"
+}

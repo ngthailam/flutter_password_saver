@@ -1,7 +1,6 @@
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/repository/account_pref_repo.dart';
 import 'package:injectable/injectable.dart';
-import 'package:collection/collection.dart';
 
 @injectable
 class AccountPreferenceUseCase {
@@ -15,10 +14,7 @@ class AccountPreferenceUseCase {
 
   Future<bool> getIsDarkModeEnabled() {
     return getAccountPrefs().then((value) {
-      return value.items
-              .firstWhereOrNull(
-                  (element) => element.name == PreferenceName.enableDarkMode)
-              ?.value ??
+      return value.getItemByName(PreferenceName.enableDarkMode)?.value ??
           AccountPreference.enableDarkModeDefault;
     });
   }
@@ -31,5 +27,12 @@ class AccountPreferenceUseCase {
       name: name,
       value: value,
     );
+  }
+
+  Future<String> getLanguageCode() {
+    return getAccountPrefs().then((value) {
+      final prefItemValue = value.getItemByName(PreferenceName.languageCode)?.value;
+      return prefItemValue ?? AccountPreference.languageCodeDefault;
+    });
   }
 }

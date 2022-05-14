@@ -9,16 +9,19 @@ class AccountPreferenceEntity {
   static const keyRequireLogin = 'requireLogin';
   static const keyAlwaysShowPasswords = 'alwaysShowPasswords';
   static const keyEnableDarkMode = 'enableDarkMode';
+  static const keyLanguageCode = 'languageCode';
 
   AccountPreferenceEntity({
     this.requireLogin = AccountPreference.requireLoginDefault,
     this.alwaysShowPasswords = AccountPreference.alwaysShowPasswordsDefault,
     this.enableDarkMode = AccountPreference.enableDarkModeDefault,
+    this.languageCode = AccountPreference.languageCodeDefault,
   });
 
   final bool requireLogin;
   final bool alwaysShowPasswords;
   final bool enableDarkMode;
+  final String languageCode;
 
   factory AccountPreferenceEntity.fromAccountPreference(
       AccountPreference preference) {
@@ -41,6 +44,12 @@ class AccountPreferenceEntity {
                   (element) => element.name == PreferenceName.enableDarkMode)
               ?.value ??
           AccountPreference.enableDarkModeDefault,
+      // Language code
+      languageCode: preference.items
+              .firstWhereOrNull(
+                  (element) => element.name == PreferenceName.languageCode)
+              ?.value ??
+          AccountPreference.languageCodeDefault,
     );
   }
 
@@ -57,6 +66,10 @@ class AccountPreferenceEntity {
           AccountPreferenceItem(
             name: PreferenceName.enableDarkMode,
             value: enableDarkMode,
+          ),
+          AccountPreferenceItem(
+            name: PreferenceName.languageCode,
+            value: languageCode,
           ),
         ],
       );

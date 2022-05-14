@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_event.dart';
@@ -227,20 +228,20 @@ class _BenefitPageState extends State<_BenefitPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 32),
-          const SlideUp(
+          SlideUp(
             child: Text(
-              'Welcome to',
+              S().welcomeTo,
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
           ),
           const SizedBox(height: 8),
-          const SlideUp(
-            delay: Duration(milliseconds: 200),
+          SlideUp(
+            delay: const Duration(milliseconds: 200),
             child: Text(
-              'PASS-SAVER',
+              S().passSaverHyphen,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 42,
                   color: AppColors.blue500),
@@ -283,21 +284,21 @@ class _BenefitPageState extends State<_BenefitPage> {
       delay: const Duration(milliseconds: 1400),
       child: RichText(
         text: TextSpan(
-          text: 'A place to remember all of your Passwords for you ',
+          text: S().benefit1Part1,
           style: TextStyle(
             fontSize: 14,
             color: _isDarkMode ? AppColors.white500 : AppColors.black500,
           ),
           children: [
-            const TextSpan(
-              text: 'SECURELY',
-              style: TextStyle(
+            TextSpan(
+              text: S().benefit1Highlight1.toUpperCase(),
+              style: const TextStyle(
                 color: AppColors.blue500,
                 fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(
-              text: ' using your device ${_getDeviceSecureKeyStorage()}',
+              text: S().benefit1Part2(_getDeviceSecureKeyStorage()),
             ),
           ],
         ),
@@ -310,22 +311,21 @@ class _BenefitPageState extends State<_BenefitPage> {
       delay: const Duration(milliseconds: 1600),
       child: RichText(
         text: TextSpan(
-          text: 'Internet connection is',
+          text: S().benefit2Part1,
           style: TextStyle(
             fontSize: 14,
             color: _isDarkMode ? AppColors.white500 : AppColors.black500,
           ),
-          children: const [
+          children: [
             TextSpan(
-              text: ' NOT USED',
-              style: TextStyle(
+              text: S().benefit2Highlight1,
+              style: const TextStyle(
                 color: AppColors.blue500,
                 fontWeight: FontWeight.bold,
               ),
             ),
             TextSpan(
-              text:
-                  ' so you can assure that your passwords are not sent anywhere',
+              text: S().benefit2Part2,
             ),
           ],
         ),
@@ -342,7 +342,7 @@ class _BenefitPageState extends State<_BenefitPage> {
       );
 
   String _getDeviceSecureKeyStorage() {
-    return Platform.isAndroid ? 'KeyStore' : 'KeyChain';
+    return Platform.isAndroid ? S().keyStore : S().keyChain;
   }
 }
 
@@ -409,10 +409,10 @@ class __NameInputPageState extends State<_NameInputPage>
   }
 
   Widget _title() {
-    return const SlideUp(
+    return SlideUp(
       child: Text(
-        'What is your name?',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        S().nameInputTitle,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -426,7 +426,7 @@ class __NameInputPageState extends State<_NameInputPage>
       child: TextField(
         focusNode: _textFocusNode,
         cursorColor: AppColors.blue500,
-        decoration: const InputDecoration(hintText: 'Enter your name'),
+        decoration: InputDecoration(hintText: S().nameInputHint),
         controller: _textEditingController,
         onChanged: (text) {
           if (_showError) {
@@ -445,9 +445,9 @@ class __NameInputPageState extends State<_NameInputPage>
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 350),
         opacity: _showError ? 1 : 0,
-        child: const Text(
-          'User name must not be empty',
-          style: TextStyle(color: AppColors.red500),
+        child: Text(
+          S().nameInputError,
+          style: const TextStyle(color: AppColors.red500),
         ),
       ),
     );
@@ -467,7 +467,7 @@ class __NameInputPageState extends State<_NameInputPage>
             widget.onContinue(_textEditingController.text);
           }
         },
-        text: 'Continue',
+        text: S().textContinue,
       ),
     );
   }
@@ -491,18 +491,18 @@ class _CongratulatePage extends StatelessWidget {
           width: 180,
         ),
         const SizedBox(height: 32),
-        const Text(
-          'Congratulation,',
-          style: TextStyle(
+        Text(
+          S().congratulation + ', ',
+          style: const TextStyle(
             fontSize: 36,
             color: AppColors.blue500,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          'You are all set up!',
-          style: TextStyle(fontSize: 20),
+        Text(
+          S().congratulationSubtitle,
+          style: const TextStyle(fontSize: 20),
         ),
       ],
     );
@@ -613,17 +613,16 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
               _unfocus();
               await showAlertDialog(
                 context: context,
-                content:
-                    'If you dont answer, you cannot use forget password function',
-                defaultActionText: 'Confirm',
-                cancelActionText: 'Cancel',
+                content: S().secuQuesDialogTitle,
+                defaultActionText: S().confirm,
+                cancelActionText: S().cancel,
                 onDefaultAction: () {
                   Navigator.of(context).pop();
                   widget.onSkip();
                 },
               );
             },
-            child: const Text('Skip'),
+            child: Text(S().skip),
           ),
         ],
       ),
@@ -631,10 +630,10 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   }
 
   Widget _title() {
-    return const SlideUp(
+    return SlideUp(
       child: Text(
-        '(Optional) Answer a question to retrieve your password when you forget it.',
-        style: TextStyle(
+        S().secuQuesTitle,
+        style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -679,7 +678,7 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
         padding: const EdgeInsets.symmetric(horizontal: 32),
         child: TextField(
           cursorColor: AppColors.blue500,
-          decoration: const InputDecoration(hintText: 'Answer'),
+          decoration: InputDecoration(hintText: S().answer),
           controller: _textEditingController,
           onChanged: (text) {
             if (_showError) {
@@ -710,7 +709,7 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
                   .copyWith(answer: _textEditingController.text));
             }
           },
-          text: 'Answer',
+          text: S().answer,
         ),
       ),
     );
@@ -724,9 +723,9 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
         child: AnimatedOpacity(
           opacity: _showError ? 1 : 0,
           duration: const Duration(milliseconds: 250),
-          child: const Text(
-            'Answer must not be empty',
-            style: TextStyle(color: AppColors.red500),
+          child: Text(
+            S().secuQuesError,
+            style: const TextStyle(color: AppColors.red500),
           ),
         ),
       ),

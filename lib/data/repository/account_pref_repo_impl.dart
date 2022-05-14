@@ -30,6 +30,9 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
             .saveAlwaysShowPassword(value as bool);
       case PreferenceName.enableDarkMode:
         return _accountPreferenceLocalDataSource.enableDarkMode(value as bool);
+      case PreferenceName.languageCode:
+        return _accountPreferenceLocalDataSource
+            .setLanguageCode(value as String);
       default:
         return Future.error(Exception('Not implemented'));
     }

@@ -1,4 +1,5 @@
 import 'package:flutter_password_saver/data/entity/account_preference_entity.dart';
+import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,8 @@ abstract class AccountPreferenceLocalDataSource {
   Future<void> deleteAll();
 
   Future<void> enableDarkMode(bool enable);
+
+  Future<void> setLanguageCode(String value);
 }
 
 @Injectable(as: AccountPreferenceLocalDataSource)
@@ -24,13 +27,17 @@ class AccountPreferenceLocalDataSourceImpl
     final sharedPrefs = await _prefs;
     return AccountPreferenceEntity(
       requireLogin:
-          sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ?? true,
+          sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ??
+              AccountPreference.requireLoginDefault,
       alwaysShowPasswords:
           sharedPrefs.getBool(AccountPreferenceEntity.keyAlwaysShowPasswords) ??
-              false,
+              AccountPreference.alwaysShowPasswordsDefault,
       enableDarkMode:
           sharedPrefs.getBool(AccountPreferenceEntity.keyEnableDarkMode) ??
-              false,
+              AccountPreference.enableDarkModeDefault,
+      languageCode:
+          sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
+              AccountPreference.languageCodeDefault,
     );
   }
 
@@ -57,5 +64,11 @@ class AccountPreferenceLocalDataSourceImpl
   Future<void> enableDarkMode(bool enable) async {
     final sharedPrefs = await _prefs;
     sharedPrefs.setBool(AccountPreferenceEntity.keyEnableDarkMode, enable);
+  }
+
+  @override
+  Future<void> setLanguageCode(String value) async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.setString(AccountPreferenceEntity.keyLanguageCode, value);
   }
 }

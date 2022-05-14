@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/language_util.dart';
+import 'package:flutter_password_saver/util/multi_value_listener_builder.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'generated/l10n.dart';
 import 'main.config.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
@@ -27,27 +33,42 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await initHive();
-  await initTheme();
+  await initPreferences();
 
   runApp(const MyApp());
 }
 
-Future<void> initTheme() async {
-  final isDarkModeEnabled =
-      await getIt<AccountPreferenceUseCase>().getIsDarkModeEnabled();
+Future<void> initPreferences() async {
+  final prefUseCase = getIt<AccountPreferenceUseCase>();
+  final isDarkModeEnabled = await prefUseCase.getIsDarkModeEnabled();
+  final language = await prefUseCase.getLanguageCode();
   if (isDarkMode() != isDarkModeEnabled) {
     changeThemeMode();
+  }
+  if (language != MyApp.languageCodeNotifier.value) {
+    setLanguage(language);
   }
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static final ValueNotifier<ThemeMode> themeNotifier =
-      ValueNotifier(ThemeMode.light);
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(
+      AccountPreference.enableDarkModeDefault
+          ? ThemeMode.dark
+          : ThemeMode.light);
+
+  static final ValueNotifier<String> languageCodeNotifier =
+      ValueNotifier(AccountPreference.languageCodeDefault);
 
   static void resetDefaultTheme() {
-    themeNotifier.value = ThemeMode.light;
+    themeNotifier.value = AccountPreference.enableDarkModeDefault
+        ? ThemeMode.dark
+        : ThemeMode.light;
+  }
+
+  static void resetDefaultLanguage() {
+    languageCodeNotifier.value = AccountPreference.languageCodeDefault;
   }
 
   @override
@@ -67,10 +88,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return HotRestart(
-      child: ValueListenableBuilder<ThemeMode>(
-        valueListenable: MyApp.themeNotifier,
-        builder: (_, currentMode, __) {
+      child: MultiValueListenableBuilder(
+        valueListenables: [
+          MyApp.themeNotifier,
+          MyApp.languageCodeNotifier,
+        ],
+        builder: (ctx, values, child) {
           return MaterialApp(
+            localizationsDelegates: const [
+              AppLocalizationDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('vi', 'VN'),
+            ],
             debugShowCheckedModeBanner: false,
             title: 'Password Saver',
             navigatorObservers: [routeObserver],
@@ -81,7 +115,8 @@ class _MyAppState extends State<MyApp> {
               brightness: Brightness.light,
             ),
             darkTheme: ThemeData.dark(),
-            themeMode: currentMode,
+            themeMode: values[0],
+            locale: Locale(values[1]),
             onGenerateRoute: (RouteSettings settings) =>
                 AppRouter.generateRoute(settings),
             initialRoute: getInitialRoute(),

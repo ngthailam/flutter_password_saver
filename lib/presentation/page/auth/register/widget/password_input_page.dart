@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_checker.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_indicator_widget.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
@@ -110,7 +111,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
     return SlideUp(
       child: RichText(
         text: TextSpan(
-          text: 'Hi ',
+          text: S().hi,
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -125,8 +126,8 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
                 color: AppColors.blue500,
               ),
             ),
-            const TextSpan(
-              text: ', please choose your password',
+            TextSpan(
+              text: S().choosePassword,
             ),
           ],
         ),
@@ -140,9 +141,9 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
       child: AnimatedOpacity(
         opacity: _showNotMatchedError ? 1 : 0,
         duration: const Duration(milliseconds: 250),
-        child: const Text(
-          'Passwords do no matched',
-          style: TextStyle(color: AppColors.red500),
+        child: Text(
+          S().savePassError,
+          style: const TextStyle(color: AppColors.red500),
         ),
       ),
     );
@@ -157,7 +158,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
         focusNode: _passwordFocusNode,
         cursorColor: AppColors.blue500,
         decoration: InputDecoration(
-          hintText: 'Enter your Password',
+          hintText: S().savePassHint,
           suffixIcon: GestureDetector(
             onTap: () {
               setState(() {
@@ -194,7 +195,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
         onSubmitted: (text) => _onConfirm(),
         focusNode: _confirmPasswordFocusNode,
         cursorColor: AppColors.blue500,
-        decoration: const InputDecoration(hintText: 'Confirm your Password'),
+        decoration: InputDecoration(hintText: S().savePassHintConfirm),
         controller: _confirmPasswordTextEdtCtrl,
         obscureText: !_visiblePassword,
         onChanged: (text) {
@@ -215,7 +216,7 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
           delay: const Duration(milliseconds: 400),
           child: PrimaryButton(
             onPressed: _onConfirm,
-            text: 'Confirm',
+            text: S().confirm,
             margin: widget.btnMargin,
             width: widget.btnWidth,
           ),

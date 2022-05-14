@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/auth/register/widget/password_input_page.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_bloc.dart';
@@ -58,20 +59,20 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           listener: (context, state) {
             if (state is FpNoQuestionState) {
               if (state.deleteLoadState == LoadState.success) {
-                context.showSuccessSnackBar('Account deleted');
+                context.showSuccessSnackBar(S().sbAccountDeleted);
                 HotRestart.of(context).hotRestart();
               }
             }
 
             if (state is FpQuestionState) {
               if (state.isAnswerCorrect == false) {
-                context.showErrorSnackBar('Answer not correct');
+                context.showErrorSnackBar(S().sbAnswerWrong);
               }
             }
 
             if (state is FpRenewPassState) {
               if (state.loadState == LoadState.success) {
-                context.showSuccessSnackBar('Password changed successfully');
+                context.showSuccessSnackBar(S().sbUpdateAccPassSuccess);
                 Navigator.of(context).pop();
               }
             }
