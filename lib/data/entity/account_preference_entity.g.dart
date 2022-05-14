@@ -11,6 +11,8 @@ abstract class _$AccountPreferenceEntityCWProxy {
 
   AccountPreferenceEntity enableDarkMode(bool enableDarkMode);
 
+  AccountPreferenceEntity languageCode(String languageCode);
+
   AccountPreferenceEntity requireLogin(bool requireLogin);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountPreferenceEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -22,6 +24,7 @@ abstract class _$AccountPreferenceEntityCWProxy {
   AccountPreferenceEntity call({
     bool? alwaysShowPasswords,
     bool? enableDarkMode,
+    String? languageCode,
     bool? requireLogin,
   });
 }
@@ -42,6 +45,10 @@ class _$AccountPreferenceEntityCWProxyImpl
       this(enableDarkMode: enableDarkMode);
 
   @override
+  AccountPreferenceEntity languageCode(String languageCode) =>
+      this(languageCode: languageCode);
+
+  @override
   AccountPreferenceEntity requireLogin(bool requireLogin) =>
       this(requireLogin: requireLogin);
 
@@ -56,6 +63,7 @@ class _$AccountPreferenceEntityCWProxyImpl
   AccountPreferenceEntity call({
     Object? alwaysShowPasswords = const $CopyWithPlaceholder(),
     Object? enableDarkMode = const $CopyWithPlaceholder(),
+    Object? languageCode = const $CopyWithPlaceholder(),
     Object? requireLogin = const $CopyWithPlaceholder(),
   }) {
     return AccountPreferenceEntity(
@@ -70,6 +78,11 @@ class _$AccountPreferenceEntityCWProxyImpl
           ? _value.enableDarkMode
           // ignore: cast_nullable_to_non_nullable
           : enableDarkMode as bool,
+      languageCode:
+          languageCode == const $CopyWithPlaceholder() || languageCode == null
+              ? _value.languageCode
+              // ignore: cast_nullable_to_non_nullable
+              : languageCode as String,
       requireLogin:
           requireLogin == const $CopyWithPlaceholder() || requireLogin == null
               ? _value.requireLogin

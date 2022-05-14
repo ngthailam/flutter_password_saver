@@ -2,8 +2,6 @@ name: Flutter CI
 
 on: 
   push:
-    tags:
-      - '*'
     branches:
       - 'main'
   pull_request:
@@ -12,33 +10,39 @@ on:
   
 jobs:
   build:
-    name: Build APK
+    name: Test, build debug
     runs-on: ubuntu-latest
     steps:
-    # Set up Java env to build Android app
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    # Setup Flutter env    
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '2.10.3'
-        
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.10.3'
+
+      # Get flutter dependencies.
+      - name: Download pub dependencies
+        run: flutter pub get
     
-    # Get flutter dependencies.
-    - run: flutter pub get
-  
-    # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
-    
-    # Run widget tests for our flutter project.
-    - run: flutter test
-    
-    # Build apk.
-    - run: flutter build apk --debug
-    
-    - uses: actions/upload-artifact@v1
-      with:
-        name: debug-apk
-        path: build/app/outputs/apk/debug/app-debug.apk
+      # Statically analyze the Dart code for any errors.
+      - name: Run analyzer
+        run: flutter analyze .
+
+      # Run widget tests for our flutter project.
+      - name: Run tests
+        run: flutter test
+
+      # Build apk.
+      - name: Build debug apk
+        run: flutter build apk --debug
+      
+      - uses: actions/upload-artifact@v1
+        with:
+          name: debug-apk
+          path: build/app/outputs/apk/debug/app-debug.apk

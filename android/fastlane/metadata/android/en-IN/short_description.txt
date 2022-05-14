@@ -1,0 +1,1 @@
+A place to securely store your passwords.
