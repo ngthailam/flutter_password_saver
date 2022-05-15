@@ -22,7 +22,7 @@ abstract class _$PasswordSettingsEntityCWProxy {
   PasswordSettingsEntity call({
     String? name,
     String? passwordId,
-    dynamic value,
+    dynamic? value,
   });
 }
 

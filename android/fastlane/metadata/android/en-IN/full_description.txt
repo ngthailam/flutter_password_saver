@@ -1,0 +1,1 @@
+An fully offline app to help you save your passwords, saving you the trouble of remembering what your passwords are.

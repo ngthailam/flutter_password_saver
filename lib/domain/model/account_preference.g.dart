@@ -69,7 +69,7 @@ abstract class _$AccountPreferenceItemCWProxy {
   /// ````
   AccountPreferenceItem call({
     PreferenceName? name,
-    dynamic value,
+    dynamic? value,
   });
 }
 

@@ -1,0 +1,4 @@
+First release of Password Saver, an app that helps you remember your password offline securely. The app includes the following functionalities:
+- Register/Login
+- Manage passwords
+- Manage user preferences
