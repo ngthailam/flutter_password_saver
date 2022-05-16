@@ -7,19 +7,16 @@ part 'account_preference_entity.g.dart';
 @CopyWith()
 class AccountPreferenceEntity {
   static const keyRequireLogin = 'requireLogin';
-  static const keyAlwaysShowPasswords = 'alwaysShowPasswords';
   static const keyEnableDarkMode = 'enableDarkMode';
   static const keyLanguageCode = 'languageCode';
 
   AccountPreferenceEntity({
     this.requireLogin = AccountPreference.requireLoginDefault,
-    this.alwaysShowPasswords = AccountPreference.alwaysShowPasswordsDefault,
     this.enableDarkMode = AccountPreference.enableDarkModeDefault,
     this.languageCode = AccountPreference.languageCodeDefault,
   });
 
   final bool requireLogin;
-  final bool alwaysShowPasswords;
   final bool enableDarkMode;
   final String languageCode;
 
@@ -32,12 +29,6 @@ class AccountPreferenceEntity {
                   (element) => element.name == PreferenceName.requirePass)
               ?.value ??
           AccountPreference.requireLoginDefault,
-      // Always show password
-      alwaysShowPasswords: preference.items
-              .firstWhereOrNull(
-                  (element) => element.name == PreferenceName.alwaysShowPass)
-              ?.value ??
-          AccountPreference.alwaysShowPasswordsDefault,
       // Dark mode
       enableDarkMode: preference.items
               .firstWhereOrNull(
@@ -58,10 +49,6 @@ class AccountPreferenceEntity {
           AccountPreferenceItem(
             name: PreferenceName.requirePass,
             value: requireLogin,
-          ),
-          AccountPreferenceItem(
-            name: PreferenceName.alwaysShowPass,
-            value: alwaysShowPasswords,
           ),
           AccountPreferenceItem(
             name: PreferenceName.enableDarkMode,

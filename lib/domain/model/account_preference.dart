@@ -6,7 +6,6 @@ part 'account_preference.g.dart';
 @CopyWith()
 class AccountPreference extends Equatable {
   static const requireLoginDefault = true;
-  static const alwaysShowPasswordsDefault = false;
   static const enableDarkModeDefault = false;
   static const languageCodeDefault = 'en';
 
@@ -18,10 +17,6 @@ class AccountPreference extends Equatable {
     AccountPreferenceItem(
       name: PreferenceName.requirePass,
       value: requireLoginDefault,
-    ),
-    AccountPreferenceItem(
-      name: PreferenceName.alwaysShowPass,
-      value: alwaysShowPasswordsDefault,
     ),
     AccountPreferenceItem(
       name: PreferenceName.enableDarkMode,
@@ -57,7 +52,6 @@ class AccountPreference extends Equatable {
 
 enum PreferenceName {
   requirePass,
-  alwaysShowPass,
   enableDarkMode,
   languageCode,
 }

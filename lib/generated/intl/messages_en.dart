@@ -72,8 +72,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("What is your name?"),
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
-        "prefAlwaysShow": MessageLookupByLibrary.simpleMessage(
-            "Always show account names and passwords"),
         "prefDarkMode":
             MessageLookupByLibrary.simpleMessage("Enable dark mode"),
         "prefRequireLogin":

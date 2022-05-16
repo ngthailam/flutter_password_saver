@@ -53,8 +53,6 @@ class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
     switch (widget.preferenceItem.name) {
       case PreferenceName.requirePass:
         return Text(S().prefRequireLogin);
-      case PreferenceName.alwaysShowPass:
-        return Text(S().prefAlwaysShow);
       case PreferenceName.enableDarkMode:
         return Text(S().prefDarkMode);
       default:

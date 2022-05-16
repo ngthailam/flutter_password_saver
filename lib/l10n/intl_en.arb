@@ -41,7 +41,6 @@
     "preferences": "Preferences",
     "deleteAccount": "Delete Account",
     "prefRequireLogin": "Require login on open app",
-    "prefAlwaysShow": "Always show account names and passwords",
     "prefDarkMode": "Enable dark mode",
     "savePassTitle": "Save your Account and Password",
     "savePassSubTitle": "Your password is only saved locally, you can use network activity to check no Internet connection is establish",
