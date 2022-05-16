@@ -13,7 +13,6 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:injectable/injectable.dart';
-import 'package:collection/collection.dart';
 
 @injectable
 class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
@@ -44,13 +43,6 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
 
   AccountPreference? _accountPreference;
   AccountPreference? get accountPreference => _accountPreference;
-
-  bool get prefAlwaysShowPassword =>
-      accountPreference?.items
-          .firstWhereOrNull(
-              (element) => element.name == PreferenceName.alwaysShowPass)
-          ?.value ??
-      AccountPreference.alwaysShowPasswordsDefault;
 
   FutureOr<void> _getPasswords(
     GetPasswordEvent event,

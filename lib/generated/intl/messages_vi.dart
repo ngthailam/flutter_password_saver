@@ -73,8 +73,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "noResults":
             MessageLookupByLibrary.simpleMessage("Không tìm thấy kết quả"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
-        "prefAlwaysShow": MessageLookupByLibrary.simpleMessage(
-            "Luôn hiển thị tên tài khoản và mật khẩu"),
         "prefDarkMode": MessageLookupByLibrary.simpleMessage("Bật theme tối"),
         "prefRequireLogin": MessageLookupByLibrary.simpleMessage(
             "Yêu cầu mật khẩu khi đăng nhập"),

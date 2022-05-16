@@ -410,16 +410,6 @@ class S {
     );
   }
 
-  /// `Always show account names and passwords`
-  String get prefAlwaysShow {
-    return Intl.message(
-      'Always show account names and passwords',
-      name: 'prefAlwaysShow',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Enable dark mode`
   String get prefDarkMode {
     return Intl.message(

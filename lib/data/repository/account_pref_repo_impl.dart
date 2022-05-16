@@ -25,9 +25,6 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
       case PreferenceName.requirePass:
         return _accountPreferenceLocalDataSource
             .saveRequireLogin(value as bool);
-      case PreferenceName.alwaysShowPass:
-        return _accountPreferenceLocalDataSource
-            .saveAlwaysShowPassword(value as bool);
       case PreferenceName.enableDarkMode:
         return _accountPreferenceLocalDataSource.enableDarkMode(value as bool);
       case PreferenceName.languageCode:

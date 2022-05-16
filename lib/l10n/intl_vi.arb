@@ -41,7 +41,6 @@
     "preferences": "Cài đặt",
     "deleteAccount": "Xoá tài khoản",
     "prefRequireLogin": "Yêu cầu mật khẩu khi đăng nhập",
-    "prefAlwaysShow": "Luôn hiển thị tên tài khoản và mật khẩu",
     "prefDarkMode": "Bật theme tối",
     "savePassTitle": "Lưu tài khoản và mật khẩu",
     "savePassSubTitle": "Mật khẩu của bạn chỉ được lưu trong máy, bạn có thể kiểm tra hoạt động Internet của máy để xác nhận",

@@ -80,7 +80,6 @@ class _PasswordPageState extends State<PasswordPage> {
           return PasswordListItem(
             key: ObjectKey(item),
             password: item,
-            forceShow: _bloc.prefAlwaysShowPassword,
             onChangeSetting: (settings) {
               _bloc.add(
                 UpdateSettingsEvent(

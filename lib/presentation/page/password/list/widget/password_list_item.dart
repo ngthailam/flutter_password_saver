@@ -19,12 +19,10 @@ class PasswordListItem extends StatefulWidget {
   const PasswordListItem({
     Key? key,
     required this.password,
-    this.forceShow = false,
     this.onChangeSetting,
   }) : super(key: key);
 
   final Password password;
-  final bool forceShow;
   final Function(PasswordSettings passwordSettings)? onChangeSetting;
 
   @override
@@ -54,11 +52,6 @@ class _PasswordListItemState extends State<PasswordListItem> {
     }
 
     if (passSettingAlwaysShow == true) {
-      _alwaysShow = true;
-      _contentVisible = true;
-    } else if (passSettingAlwaysShow == null && widget.forceShow) {
-      // Only check null, to respect individual's password preference
-      // over universal settings
       _alwaysShow = true;
       _contentVisible = true;
     }
