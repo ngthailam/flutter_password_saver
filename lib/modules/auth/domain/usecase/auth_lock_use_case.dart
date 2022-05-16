@@ -1,4 +1,4 @@
-import 'package:flutter_password_saver/domain/repository/auth_repo.dart';
+import 'package:flutter_password_saver/modules/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

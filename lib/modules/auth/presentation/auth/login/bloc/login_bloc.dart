@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/auth_lock_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/biometric_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/login_use_case.dart';
-import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_event.dart';
-import 'package:flutter_password_saver/presentation/page/auth/login/bloc/login_state.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/auth_lock_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/biometric_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/login_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/login/bloc/login_event.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/login/bloc/login_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:injectable/injectable.dart';
 

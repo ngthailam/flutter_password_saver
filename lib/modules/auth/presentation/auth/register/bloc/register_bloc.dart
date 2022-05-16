@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/create_account_use_case.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_event.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/bloc/register_state.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/create_account_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/bloc/register_event.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/bloc/register_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:injectable/injectable.dart';
 

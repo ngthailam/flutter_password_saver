@@ -8,24 +8,14 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import 'data/datasource/account_preference_local_data_source.dart' as _i3;
-import 'data/datasource/auth_local_data_source.dart' as _i10;
 import 'data/datasource/auth_login_lock_data_source.dart' as _i4;
 import 'data/datasource/biometric_data_source.dart' as _i5;
 import 'data/datasource/password_local_data_source.dart' as _i11;
 import 'data/datasource/secure_storage.dart' as _i6;
 import 'data/repository/account_pref_repo_impl.dart' as _i8;
-import 'data/repository/auth_repo_impl.dart' as _i18;
 import 'data/repository/password_repo_impl.dart' as _i13;
 import 'domain/repository/account_pref_repo.dart' as _i7;
-import 'domain/repository/auth_repo.dart' as _i17;
 import 'domain/repository/password_repo.dart' as _i12;
-import 'domain/usecase/auth/auth_lock_use_case.dart' as _i33;
-import 'domain/usecase/auth/biometric_use_case.dart' as _i19;
-import 'domain/usecase/auth/create_account_use_case.dart' as _i20;
-import 'domain/usecase/auth/delete_account_use_case.dart' as _i21;
-import 'domain/usecase/auth/get_current_account_use_case.dart' as _i24;
-import 'domain/usecase/auth/login_use_case.dart' as _i26;
-import 'domain/usecase/auth/update_account_password_use_case.dart' as _i31;
 import 'domain/usecase/password/delete_password_use_case.dart' as _i22;
 import 'domain/usecase/password/get_all_paswords_use_case.dart' as _i23;
 import 'domain/usecase/password/get_password_by_id_use_case.dart' as _i25;
@@ -33,11 +23,24 @@ import 'domain/usecase/password/save_password_use_case.dart' as _i14;
 import 'domain/usecase/password/search_password_use_case.dart' as _i15;
 import 'domain/usecase/password/update_password_settings_use_case.dart' as _i16;
 import 'domain/usecase/preference/account_preference_use_case.dart' as _i9;
-import 'presentation/page/auth/login/bloc/login_bloc.dart' as _i36;
-import 'presentation/page/auth/register/bloc/register_bloc.dart' as _i30;
+import 'modules/auth/data/datasource/auth_local_data_source.dart' as _i10;
+import 'modules/auth/data/repo/auth_repo_impl.dart' as _i18;
+import 'modules/auth/domain/repo/auth_repo.dart' as _i17;
+import 'modules/auth/domain/usecase/auth_lock_use_case.dart' as _i33;
+import 'modules/auth/domain/usecase/biometric_use_case.dart' as _i19;
+import 'modules/auth/domain/usecase/create_account_use_case.dart' as _i20;
+import 'modules/auth/domain/usecase/delete_account_use_case.dart' as _i21;
+import 'modules/auth/domain/usecase/get_current_account_use_case.dart' as _i24;
+import 'modules/auth/domain/usecase/login_use_case.dart' as _i26;
+import 'modules/auth/domain/usecase/update_account_password_use_case.dart'
+    as _i31;
+import 'modules/auth/presentation/auth/authen/bloc/authen_bloc.dart' as _i34;
+import 'modules/auth/presentation/auth/login/bloc/login_bloc.dart' as _i37;
+import 'modules/auth/presentation/auth/register/bloc/register_bloc.dart'
+    as _i30;
 import 'presentation/page/forget_password/bloc/forget_password_bloc.dart'
-    as _i34;
-import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i35;
+    as _i35;
+import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i36;
 import 'presentation/page/password/create/bloc/password_save_bloc.dart' as _i28;
 import 'presentation/page/password/list/bloc/password_bloc.dart' as _i27;
 import 'presentation/page/preferences/bloc/preferences_bloc.dart' as _i29;
@@ -115,14 +118,19 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i31.UpdateAccountPasswordUseCase>()));
   gh.factory<_i33.AuthLockUseCase>(
       () => _i33.AuthLockUseCase(get<_i17.AuthRepository>()));
-  gh.factory<_i34.ForgetPasswordBloc>(() => _i34.ForgetPasswordBloc(
+  gh.factory<_i34.AuthenCubit>(() => _i34.AuthenCubit(
+      get<_i26.LoginUseCase>(),
+      get<_i33.AuthLockUseCase>(),
+      get<_i19.BiometricsUseCase>(),
+      get<_i24.GetCurrentAccountUseCase>()));
+  gh.factory<_i35.ForgetPasswordBloc>(() => _i35.ForgetPasswordBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i21.DeleteAccountUseCase>(),
       get<_i31.UpdateAccountPasswordUseCase>()));
-  gh.factory<_i35.GatewayBloc>(() => _i35.GatewayBloc(
+  gh.factory<_i36.GatewayBloc>(() => _i36.GatewayBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i9.AccountPreferenceUseCase>()));
-  gh.factory<_i36.LoginBloc>(() => _i36.LoginBloc(
+  gh.factory<_i37.LoginBloc>(() => _i37.LoginBloc(
       get<_i24.GetCurrentAccountUseCase>(),
       get<_i26.LoginUseCase>(),
       get<_i33.AuthLockUseCase>(),

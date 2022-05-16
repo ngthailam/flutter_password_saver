@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/security_question.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/security_question.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_event.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';

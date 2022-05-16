@@ -4,9 +4,11 @@ import 'package:equatable/equatable.dart';
 part 'password_settings.g.dart';
 
 const settingsAlwaysShowDefault = false;
+const requireAuthenDefault = false;
 
 enum PasswordSettingsName {
   alwaysShow,
+  requireAuthen,
 }
 
 @CopyWith()

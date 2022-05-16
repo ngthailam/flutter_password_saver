@@ -56,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Sửa"),
         "emptyPasswordHint":
             MessageLookupByLibrary.simpleMessage("Tạo mật khẩu đầu tiên"),
+        "errorPassIncorrect":
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không hợp lệ"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào "),
         "keyChain": MessageLookupByLibrary.simpleMessage("KeyChain"),
@@ -124,6 +126,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "secuQuesTitle": MessageLookupByLibrary.simpleMessage(
             "(Không bắt buộc) Trả lời câu hỏi bảo mật phòng khi bạn mất mật khẩu."),
         "settings": MessageLookupByLibrary.simpleMessage("Cài đặt"),
+        "settingsAlwaysAuthen": MessageLookupByLibrary.simpleMessage(
+            "Luôn yêu cầu nhập mã để xem mật khẩu"),
+        "settingsAlwaysShow": MessageLookupByLibrary.simpleMessage(
+            "Luôn hiển thị tên và mật khẩu"),
         "skip": MessageLookupByLibrary.simpleMessage("Bỏ qua"),
         "textContinue": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "welcomeBack":

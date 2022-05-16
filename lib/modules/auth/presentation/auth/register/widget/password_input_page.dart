@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_checker.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/password_strength_indicator_widget.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/password_strength_checker.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/password_strength_indicator_widget.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';

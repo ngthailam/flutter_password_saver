@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:flutter_password_saver/domain/model/password_settings.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/authen/authen_bottom_sheet.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_password_saver/util/string_ext.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:collection/collection.dart';
 
 class PasswordListItem extends StatefulWidget {
   const PasswordListItem({
@@ -34,13 +34,25 @@ class PasswordListItem extends StatefulWidget {
 class _PasswordListItemState extends State<PasswordListItem> {
   bool _contentVisible = false;
   bool _alwaysShow = false;
+  bool _requireAuthen = false;
 
   @override
   void initState() {
-    bool? passSettingAlwaysShow = widget.password.settings
-        .firstWhereOrNull(
-            (element) => element.name == PasswordSettingsName.alwaysShow)
-        ?.value;
+    bool? passSettingAlwaysShow;
+
+    for (var e in widget.password.settings) {
+      switch (e.name) {
+        case PasswordSettingsName.alwaysShow:
+          passSettingAlwaysShow = e.value;
+          break;
+        case PasswordSettingsName.requireAuthen:
+          _requireAuthen = e.value;
+          break;
+        default:
+          break;
+      }
+    }
+
     if (passSettingAlwaysShow == true) {
       _alwaysShow = true;
       _contentVisible = true;
@@ -87,15 +99,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
           showPasswordSettingsBottomSheet(
             context,
             password: widget.password,
-            onChanged: (name, value) {
-              switch (name) {
-                case PasswordSettingsName.alwaysShow:
-                  widget.onChangeSetting
-                      ?.call(PasswordSettings(name: name, value: value));
-                  break;
-                default:
-                  break;
-              }
+            onChanged: (PasswordSettingsName name, dynamic value) {
+              widget.onChangeSetting
+                  ?.call(PasswordSettings(name: name, value: value));
             },
           );
         },
@@ -136,11 +142,19 @@ class _PasswordListItemState extends State<PasswordListItem> {
 
   Widget _toggleVisibilityIcon() {
     return GestureDetector(
-      onTap: () {
-        setState(() {
+      onTap: () async {
+        if (!_contentVisible) {
+          final authenSucceed = await isAuthenSuccess();
+          if (!authenSucceed) {
+            return;
+          }
+        } else {
           if (_alwaysShow) {
             return;
           }
+        }
+
+        setState(() {
           _contentVisible = !_contentVisible;
         });
       },
@@ -149,6 +163,13 @@ class _PasswordListItemState extends State<PasswordListItem> {
         color: AppColors.blue500,
       ),
     );
+  }
+
+  Future<bool> isAuthenSuccess() async {
+    if (!_requireAuthen) return true;
+
+    final isAuthenticated = await showAuthenBottomSheet(context);
+    return isAuthenticated == true;
   }
 
   Widget _divider() {

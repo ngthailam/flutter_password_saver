@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/delete_account_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/delete_account_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_event.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/bloc/preferences_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';

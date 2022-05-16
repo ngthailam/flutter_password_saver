@@ -1,14 +1,14 @@
 import 'package:flutter_password_saver/data/datasource/auth_login_lock_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
-import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
+import 'package:flutter_password_saver/modules/auth/data/entity/account_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthLocalDataSource {
-  Future<bool> saveAccount(UserEntity user);
+  Future<bool> saveAccount(AccountEntity user);
 
-  Future<UserEntity?> getCurrentUser();
+  Future<AccountEntity?> getCurrentUser();
 
   Future<bool> login(User user);
 
@@ -28,10 +28,10 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   final AuthLoginLockDataSource _authLoginLockDataSource;
 
   @override
-  Future<UserEntity?> getCurrentUser() async {
+  Future<AccountEntity?> getCurrentUser() async {
     final box = await _getUserBox();
     try {
-      final user = await box.values.cast().first as UserEntity;
+      final user = await box.values.cast().first as AccountEntity;
       return user;
     } catch (e) {
       return null;
@@ -41,7 +41,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   }
 
   @override
-  Future<bool> saveAccount(UserEntity user) async {
+  Future<bool> saveAccount(AccountEntity user) async {
     final box = await _getUserBox();
     try {
       await box.put(user.name, user);
@@ -67,10 +67,10 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
     return false;
   }
 
-  Future<Box<UserEntity>> _getUserBox() async {
+  Future<Box<AccountEntity>> _getUserBox() async {
     final encryptionKey = await _secureStorage.getDbEncryptionKey();
     return Hive.openBox(
-      userBox,
+      accountBox,
       encryptionCipher: HiveAesCipher(encryptionKey!),
     );
   }
@@ -87,7 +87,7 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   Future<void> updatePassword(String password) async {
     final box = await _getUserBox();
     try {
-      final user = await box.values.cast().first as UserEntity;
+      final user = await box.values.cast().first as AccountEntity;
       await box.put(user.key, user.copyWith(password: password));
       return;
     } catch (e) {

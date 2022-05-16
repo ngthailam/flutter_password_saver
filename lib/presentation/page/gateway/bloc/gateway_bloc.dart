@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_event.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_state.dart';
 import 'package:flutter_password_saver/util/app_router.dart';

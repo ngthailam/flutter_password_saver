@@ -84,5 +84,8 @@
     "edit": "Sửa",
     "language": "Ngôn ngữ",
     "langEn": "Tiếng Anh",
-    "langVn": "Tiếng Việt"
+    "langVn": "Tiếng Việt",
+    "settingsAlwaysShow": "Luôn hiển thị tên và mật khẩu",
+    "settingsAlwaysAuthen": "Luôn yêu cầu nhập mã để xem mật khẩu",
+    "errorPassIncorrect": "Mật khẩu không hợp lệ"
 }

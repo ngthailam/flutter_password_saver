@@ -27,6 +27,11 @@ class Password extends Equatable {
           name: PasswordSettingsName.alwaysShow,
           value: settingsAlwaysShowDefault,
         ),
+        PasswordSettings(
+          passwordId: passwordId,
+          name: PasswordSettingsName.requireAuthen,
+          value: requireAuthenDefault,
+        ),
       ];
 
   @override

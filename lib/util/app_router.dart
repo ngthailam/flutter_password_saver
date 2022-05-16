@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/common/type_ext.dart';
-import 'package:flutter_password_saver/presentation/page/auth/login/login_page.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/register_page.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/login/login_page.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/register_page.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/forget_password_page.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';

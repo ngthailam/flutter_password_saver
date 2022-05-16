@@ -689,6 +689,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Always show account name and password`
+  String get settingsAlwaysShow {
+    return Intl.message(
+      'Always show account name and password',
+      name: 'settingsAlwaysShow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Always require authen to see password`
+  String get settingsAlwaysAuthen {
+    return Intl.message(
+      'Always require authen to see password',
+      name: 'settingsAlwaysAuthen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password incorrect`
+  String get errorPassIncorrect {
+    return Intl.message(
+      'Password incorrect',
+      name: 'errorPassIncorrect',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

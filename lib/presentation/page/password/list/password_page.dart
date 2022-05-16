@@ -23,29 +23,13 @@ class PasswordPage extends StatefulWidget {
   State<PasswordPage> createState() => _PasswordPageState();
 }
 
-class _PasswordPageState extends State<PasswordPage> with RouteAware {
+class _PasswordPageState extends State<PasswordPage> {
   late PasswordBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _bloc = getIt<PasswordBloc>();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      routeObserver.subscribe(this, ModalRoute.of(context)!);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.close();
-    routeObserver.unsubscribe(this);
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-    _bloc.add(RefreshDataEvent());
   }
 
   @override
@@ -193,6 +177,7 @@ class _PasswordPageState extends State<PasswordPage> with RouteAware {
         await Navigator.of(context).pushNamed(AppRouter.savePassword);
     if (result == true) {
       context.showSuccessSnackBar(S().sbEditSuccess);
+      _bloc.add(RefreshDataEvent());
     }
   }
 }
