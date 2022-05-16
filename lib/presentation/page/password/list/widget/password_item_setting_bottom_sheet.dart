@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/domain/model/password.dart';
 import 'package:flutter_password_saver/domain/model/password_settings.dart';
+import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/platform_switch_widget.dart';
 
@@ -22,8 +23,11 @@ Future<void> showPasswordSettingsBottomSheet(
   );
 }
 
+// !important: Should merge with password.dart default ?
 final List<PasswordSettings> defaultSettings = [
   const PasswordSettings(name: PasswordSettingsName.alwaysShow, value: false),
+  const PasswordSettings(
+      name: PasswordSettingsName.requireAuthen, value: false),
 ];
 
 class PasswordSettingsBottomSheet extends StatefulWidget {
@@ -81,6 +85,7 @@ class _PasswordSettingsBottomSheetState
       );
 
       items.add(item);
+      items.add(const SizedBox(height: 8));
     }
 
     return items;
@@ -89,7 +94,9 @@ class _PasswordSettingsBottomSheetState
   String getSettingDisplayName(PasswordSettings settings) {
     switch (settings.name) {
       case PasswordSettingsName.alwaysShow:
-        return 'Always show account name and password';
+        return S().settingsAlwaysShow;
+      case PasswordSettingsName.requireAuthen:
+        return S().settingsAlwaysAuthen;
       default:
         return '';
     }

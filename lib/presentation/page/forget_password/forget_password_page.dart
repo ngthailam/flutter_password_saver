@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/widget/password_input_page.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/widget/password_input_page.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_state.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/widget/forget_password_answer_widget.dart';

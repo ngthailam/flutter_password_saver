@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "emptyPasswordHint":
             MessageLookupByLibrary.simpleMessage("Save your first password"),
+        "errorPassIncorrect":
+            MessageLookupByLibrary.simpleMessage("Password incorrect"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Get started"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi "),
         "keyChain": MessageLookupByLibrary.simpleMessage("KeyChain"),
@@ -124,6 +126,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "secuQuesTitle": MessageLookupByLibrary.simpleMessage(
             "(Optional) Answer a question to retrieve your password when you forget it."),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsAlwaysAuthen": MessageLookupByLibrary.simpleMessage(
+            "Always require authen to see password"),
+        "settingsAlwaysShow": MessageLookupByLibrary.simpleMessage(
+            "Always show account name and password"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "textContinue": MessageLookupByLibrary.simpleMessage("Continue"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome back"),

@@ -1,4 +1,5 @@
-import 'package:flutter_password_saver/presentation/page/auth/register/util/security_question.dart';
+
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/security_question.dart';
 
 abstract class ForgetPasswordEvent {}
 

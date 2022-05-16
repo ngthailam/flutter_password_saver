@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_entity.dart';
+part of 'account_entity.dart';
 
 // **************************************************************************
 // CopyWithGenerator
 // **************************************************************************
 
-abstract class _$UserEntityCWProxy {
-  UserEntity email(String email);
+abstract class _$AccountEntityCWProxy {
+  AccountEntity email(String email);
 
-  UserEntity name(String name);
+  AccountEntity name(String name);
 
-  UserEntity password(String password);
+  AccountEntity password(String password);
 
-  UserEntity securityQuestionAnswer(String? securityQuestionAnswer);
+  AccountEntity securityQuestionAnswer(String? securityQuestionAnswer);
 
-  UserEntity securityQuestionId(int? securityQuestionId);
+  AccountEntity securityQuestionId(int? securityQuestionId);
 
-  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
   /// ```dart
-  /// UserEntity(...).copyWith(id: 12, name: "My name")
+  /// AccountEntity(...).copyWith(id: 12, name: "My name")
   /// ````
-  UserEntity call({
+  AccountEntity call({
     String? email,
     String? name,
     String? password,
@@ -32,45 +32,45 @@ abstract class _$UserEntityCWProxy {
   });
 }
 
-/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfUserEntity.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfUserEntity.copyWith.fieldName(...)`
-class _$UserEntityCWProxyImpl implements _$UserEntityCWProxy {
-  final UserEntity _value;
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfAccountEntity.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfAccountEntity.copyWith.fieldName(...)`
+class _$AccountEntityCWProxyImpl implements _$AccountEntityCWProxy {
+  final AccountEntity _value;
 
-  const _$UserEntityCWProxyImpl(this._value);
-
-  @override
-  UserEntity email(String email) => this(email: email);
+  const _$AccountEntityCWProxyImpl(this._value);
 
   @override
-  UserEntity name(String name) => this(name: name);
+  AccountEntity email(String email) => this(email: email);
 
   @override
-  UserEntity password(String password) => this(password: password);
+  AccountEntity name(String name) => this(name: name);
 
   @override
-  UserEntity securityQuestionAnswer(String? securityQuestionAnswer) =>
+  AccountEntity password(String password) => this(password: password);
+
+  @override
+  AccountEntity securityQuestionAnswer(String? securityQuestionAnswer) =>
       this(securityQuestionAnswer: securityQuestionAnswer);
 
   @override
-  UserEntity securityQuestionId(int? securityQuestionId) =>
+  AccountEntity securityQuestionId(int? securityQuestionId) =>
       this(securityQuestionId: securityQuestionId);
 
   @override
 
-  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
   /// ```dart
-  /// UserEntity(...).copyWith(id: 12, name: "My name")
+  /// AccountEntity(...).copyWith(id: 12, name: "My name")
   /// ````
-  UserEntity call({
+  AccountEntity call({
     Object? email = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
     Object? securityQuestionAnswer = const $CopyWithPlaceholder(),
     Object? securityQuestionId = const $CopyWithPlaceholder(),
   }) {
-    return UserEntity(
+    return AccountEntity(
       email: email == const $CopyWithPlaceholder() || email == null
           ? _value.email
           // ignore: cast_nullable_to_non_nullable
@@ -96,26 +96,26 @@ class _$UserEntityCWProxyImpl implements _$UserEntityCWProxy {
   }
 }
 
-extension $UserEntityCopyWith on UserEntity {
-  /// Returns a callable class that can be used as follows: `instanceOfclass UserEntity extends HiveObject.name.copyWith(...)` or like so:`instanceOfclass UserEntity extends HiveObject.name.copyWith.fieldName(...)`.
-  _$UserEntityCWProxy get copyWith => _$UserEntityCWProxyImpl(this);
+extension $AccountEntityCopyWith on AccountEntity {
+  /// Returns a callable class that can be used as follows: `instanceOfclass AccountEntity extends HiveObject.name.copyWith(...)` or like so:`instanceOfclass AccountEntity extends HiveObject.name.copyWith.fieldName(...)`.
+  _$AccountEntityCWProxy get copyWith => _$AccountEntityCWProxyImpl(this);
 }
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class UserEntityAdapter extends TypeAdapter<UserEntity> {
+class AccountEntityAdapter extends TypeAdapter<AccountEntity> {
   @override
   final int typeId = 1;
 
   @override
-  UserEntity read(BinaryReader reader) {
+  AccountEntity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserEntity(
+    return AccountEntity(
       name: fields[0] as String,
       password: fields[1] as String,
       email: fields[2] as String,
@@ -125,7 +125,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
   }
 
   @override
-  void write(BinaryWriter writer, UserEntity obj) {
+  void write(BinaryWriter writer, AccountEntity obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
@@ -146,7 +146,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserEntityAdapter &&
+      other is AccountEntityAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

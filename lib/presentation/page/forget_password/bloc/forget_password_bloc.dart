@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/delete_account_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/get_current_account_use_case.dart';
-import 'package:flutter_password_saver/domain/usecase/auth/update_account_password_use_case.dart';
-import 'package:flutter_password_saver/presentation/page/auth/register/util/security_question.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/delete_account_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/update_account_password_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/security_question.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_event.dart';
 import 'package:flutter_password_saver/presentation/page/forget_password/bloc/forget_password_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';

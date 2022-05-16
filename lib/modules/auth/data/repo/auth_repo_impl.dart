@@ -1,11 +1,11 @@
 import 'package:flutter_password_saver/data/datasource/account_preference_local_data_source.dart';
-import 'package:flutter_password_saver/data/datasource/auth_local_data_source.dart';
+import 'package:flutter_password_saver/modules/auth/data/datasource/auth_local_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/auth_login_lock_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/biometric_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/password_local_data_source.dart';
-import 'package:flutter_password_saver/data/entity/user_entity.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
-import 'package:flutter_password_saver/domain/repository/auth_repo.dart';
+import 'package:flutter_password_saver/modules/auth/data/entity/account_entity.dart';
+import 'package:flutter_password_saver/modules/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 import 'package:local_auth_platform_interface/types/biometric_type.dart';
 
@@ -27,7 +27,7 @@ class AuthRepoitoryImpl extends AuthRepository {
 
   @override
   Future<bool> createAccount(User user) {
-    return _authLocalDataSource.saveAccount(UserEntity.fromUser(user));
+    return _authLocalDataSource.saveAccount(AccountEntity.fromUser(user));
   }
 
   @override

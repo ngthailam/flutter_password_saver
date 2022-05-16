@@ -2,14 +2,14 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'user_entity.g.dart';
+part 'account_entity.g.dart';
 
-const String userBox = 'user';
+const String accountBox = 'account';
 
 @CopyWith()
 @HiveType(typeId: 1)
-class UserEntity extends HiveObject {
-  UserEntity({
+class AccountEntity extends HiveObject {
+  AccountEntity({
     this.name = '',
     this.password = '',
     this.email = '',
@@ -31,7 +31,7 @@ class UserEntity extends HiveObject {
   @override
   get key => name;
 
-  factory UserEntity.fromUser(User user) => UserEntity(
+  factory AccountEntity.fromUser(User user) => AccountEntity(
         name: user.name,
         password: user.password,
         email: user.email,
