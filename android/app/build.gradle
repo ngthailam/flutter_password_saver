@@ -46,13 +46,15 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
+    ndkVersion = "20.1.5948944"
     defaultConfig {
         applicationId "vn.thailam.flutter_password_saver"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+
     }
 
     signingConfigs {
@@ -70,9 +72,15 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
         }
         release {
             signingConfig signingConfigs.release
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
         }
     }
 }
