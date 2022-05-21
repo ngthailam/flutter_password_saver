@@ -17,6 +17,11 @@ class _GatewayPageState extends State<GatewayPage> {
   final GatewayBloc _bloc = getIt<GatewayBloc>();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(

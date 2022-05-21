@@ -21,4 +21,8 @@ abstract class AuthRepository {
   Future<bool> authenticate({required String reason});
 
   Future<List<BiometricType>> getAvailableBiometrics();
+
+  bool isLoggedIn();
+
+  Future<bool> isNeedLogin();
 }

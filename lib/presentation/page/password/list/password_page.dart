@@ -8,12 +8,13 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
-import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
+import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/uri_handler.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PasswordPage extends StatefulWidget {
@@ -25,11 +26,13 @@ class PasswordPage extends StatefulWidget {
 
 class _PasswordPageState extends State<PasswordPage> {
   late PasswordBloc _bloc;
+  late UriHandler _uriHandler;
 
   @override
   void initState() {
     super.initState();
     _bloc = getIt<PasswordBloc>();
+    _uriHandler = getIt<UriHandler>();
   }
 
   @override
@@ -40,7 +43,9 @@ class _PasswordPageState extends State<PasswordPage> {
           create: (context) => _bloc..add(InitializeEvent()),
           child: BlocConsumer<PasswordBloc, PasswordState>(
             listener: (BuildContext context, PasswordState state) {
-              // Fill if needed
+              if (state.loadState == LoadState.success) {
+                _handlePendingUri();
+              }
             },
             builder: (BuildContext context, PasswordState state) {
               return _body(state);
@@ -48,6 +53,19 @@ class _PasswordPageState extends State<PasswordPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void _handlePendingUri() {
+    final pendingUri = _uriHandler.getPendingUri();
+    if (pendingUri == null) return;
+
+    final routeName = pendingUri.getCleanRouteName();
+    _uriHandler.markPendingUriResolved();
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      routeName,
+      (route) => route.settings.name != routeName,
     );
   }
 
@@ -175,7 +193,6 @@ class _PasswordPageState extends State<PasswordPage> {
     final result =
         await Navigator.of(context).pushNamed(AppRouter.savePassword);
     if (result == true) {
-      context.showSuccessSnackBar(S().sbEditSuccess);
       _bloc.add(RefreshDataEvent());
     }
   }

@@ -9,6 +9,8 @@ import 'package:flutter_password_saver/modules/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 import 'package:local_auth_platform_interface/types/biometric_type.dart';
 
+bool _isLoggedIn = false;
+
 @Injectable(as: AuthRepository)
 class AuthRepoitoryImpl extends AuthRepository {
   AuthRepoitoryImpl(
@@ -27,7 +29,14 @@ class AuthRepoitoryImpl extends AuthRepository {
 
   @override
   Future<bool> createAccount(User user) {
-    return _authLocalDataSource.saveAccount(AccountEntity.fromUser(user));
+    return _authLocalDataSource
+        .saveAccount(AccountEntity.fromUser(user))
+        .then((value) {
+      if (value) {
+        _isLoggedIn = true;
+      }
+      return value;
+    });
   }
 
   @override
@@ -39,7 +48,12 @@ class AuthRepoitoryImpl extends AuthRepository {
 
   @override
   Future<bool> login(User user) {
-    return _authLocalDataSource.login(user);
+    return _authLocalDataSource.login(user).then((value) {
+      if (value) {
+        _isLoggedIn = true;
+      }
+      return value;
+    });
   }
 
   @override
@@ -47,6 +61,7 @@ class AuthRepoitoryImpl extends AuthRepository {
     _passwordLocalDataSource.deleteAll();
     await _authLocalDataSource.deleteAll();
     await _accountPreferenceLocalDataSource.deleteAll();
+    _isLoggedIn = false;
     return;
   }
 
@@ -67,7 +82,12 @@ class AuthRepoitoryImpl extends AuthRepository {
 
   @override
   Future<bool> authenticate({required String reason}) {
-    return _biometricsDataSource.authenticate(reason: reason);
+    return _biometricsDataSource.authenticate(reason: reason).then((value) {
+      if (value) {
+        _isLoggedIn = true;
+      }
+      return value;
+    });
   }
 
   @override
@@ -78,5 +98,17 @@ class AuthRepoitoryImpl extends AuthRepository {
   @override
   Future<List<BiometricType>> getAvailableBiometrics() {
     return _biometricsDataSource.getAvailableBiometrics();
+  }
+
+  @override
+  bool isLoggedIn() {
+    return _isLoggedIn;
+  }
+
+  @override
+  Future<bool> isNeedLogin() async {
+    final pref = await _accountPreferenceLocalDataSource.getAccountPrefs();
+    if (isLoggedIn()) return false;
+    return pref.requireLogin;
   }
 }

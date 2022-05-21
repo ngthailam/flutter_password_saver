@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           child: BlocConsumer<LoginBloc, LoginState>(
             listener: ((context, state) {
               if (state.loginLoadState == LoadState.success) {
-                _navigateToPasswordPage(context);
+                _onLoginSuccess(context);
               } else if (state.loginLoadState == LoadState.failure) {
                 if (state.lockTimeRemaining == 0) {
                   context.showErrorSnackBar(S().sbLoginError);
@@ -227,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _navigateToPasswordPage(BuildContext context) {
+  void _onLoginSuccess(BuildContext context) async {
     Navigator.of(context).popAndPushNamed(AppRouter.password);
   }
 }
