@@ -6,6 +6,7 @@ import 'package:flutter_password_saver/presentation/page/password/create/bloc/pa
 import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/bloc/password_save_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
@@ -70,6 +71,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
           child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
             listener: (context, state) {
               if (state.loadState == LoadState.success) {
+                context.showSuccessSnackBar(S().sbEditSuccess);
                 Navigator.of(context).pop(_bloc.isDataChanged);
               }
 

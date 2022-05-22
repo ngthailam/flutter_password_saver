@@ -11,9 +11,12 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
 
-Future<bool?> showAuthenBottomSheet(BuildContext context) {
+Future<bool?> showAuthenBottomSheet(BuildContext context,
+    {bool isDismissible = false}) {
   return showModalBottomSheet<bool>(
     context: context,
+    isScrollControlled: true,
+    isDismissible: isDismissible,
     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -56,8 +59,8 @@ class _AuthenBottomSheetState extends State<AuthenBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
+    return Container(
+      padding: MediaQuery.of(context).viewInsets,
       child: BlocProvider(
         create: (context) => _authenCubit!,
         child: BlocListener<AuthenCubit, AuthenState>(

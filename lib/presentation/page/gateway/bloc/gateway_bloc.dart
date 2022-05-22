@@ -11,8 +11,10 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class GatewayBloc extends Bloc<GatewayEvent, GatewayState> {
-  GatewayBloc(this._getCurrentAccountUseCase, this._accountPreferenceUseCase)
-      : super(GatewayState()) {
+  GatewayBloc(
+    this._getCurrentAccountUseCase,
+    this._accountPreferenceUseCase,
+  ) : super(GatewayState()) {
     on<OpenStartPageEvent>(_openStartPage);
   }
 
@@ -29,7 +31,6 @@ class GatewayBloc extends Bloc<GatewayEvent, GatewayState> {
     if (result != null) {
       // user is registered
       final pref = await _accountPreferenceUseCase.getAccountPrefs();
-
       if (pref.getItemByName(PreferenceName.requirePass)?.value == false) {
         destinationRouteName = AppRouter.password;
       } else {

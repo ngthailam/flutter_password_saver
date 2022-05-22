@@ -46,7 +46,7 @@ class AppRouter {
             builder: (context) => const UpdatePasswordPage(),
             settings: settings);
       default:
-        throw Exception('Route not supported');
+        return null;
     }
   }
 }

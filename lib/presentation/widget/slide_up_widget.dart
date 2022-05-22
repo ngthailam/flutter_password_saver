@@ -49,8 +49,8 @@ class _SlideUpState extends State<SlideUp> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     _animController?.dispose();
+    super.dispose();
   }
 
   @override

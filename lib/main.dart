@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_password_saver/util/app_router.dart';
 import 'package:flutter_password_saver/util/language_util.dart';
 import 'package:flutter_password_saver/util/multi_value_listener_builder.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:flutter_password_saver/util/uri_handler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -34,8 +37,13 @@ void main() async {
   configureDependencies();
   await initHive();
   await initPreferences();
+  await initUniLink();
 
   runApp(const MyApp());
+}
+
+Future<void> initUniLink() async {
+  await getIt<UriHandler>().initialize();
 }
 
 Future<void> initPreferences() async {
@@ -75,6 +83,8 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class _MyAppState extends State<MyApp> {
   @override
   void didChangeDependencies() {
@@ -95,6 +105,7 @@ class _MyAppState extends State<MyApp> {
         ],
         builder: (ctx, values, child) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             localizationsDelegates: const [
               AppLocalizationDelegate(),
               GlobalMaterialLocalizations.delegate,
@@ -119,15 +130,10 @@ class _MyAppState extends State<MyApp> {
             locale: Locale(values[1]),
             onGenerateRoute: (RouteSettings settings) =>
                 AppRouter.generateRoute(settings),
-            initialRoute: getInitialRoute(),
             home: const GatewayPage(),
           );
         },
       ),
     );
-  }
-
-  String getInitialRoute() {
-    return AppRouter.gateway;
   }
 }

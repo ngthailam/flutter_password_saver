@@ -15,6 +15,7 @@ import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
 import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/util/app_short_cut_manager.dart';
 import 'package:flutter_password_saver/util/theme_util.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -476,8 +477,19 @@ class __NameInputPageState extends State<_NameInputPage>
   bool get wantKeepAlive => true;
 }
 
-class _CongratulatePage extends StatelessWidget {
+class _CongratulatePage extends StatefulWidget {
   const _CongratulatePage({Key? key}) : super(key: key);
+
+  @override
+  State<_CongratulatePage> createState() => _CongratulatePageState();
+}
+
+class _CongratulatePageState extends State<_CongratulatePage> {
+  @override
+  void initState() {
+    super.initState();
+    getIt<AppShortcutManager>().pushCreatePassShortcut();
+  }
 
   @override
   Widget build(BuildContext context) {
