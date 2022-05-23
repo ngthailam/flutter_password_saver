@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/util/debouncer.dart';
-import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
 
 class SearchBox extends StatelessWidget {
   SearchBox({

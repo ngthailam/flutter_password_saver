@@ -11,7 +11,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_item_setting_bottom_sheet.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:flutter_password_saver/util/string_ext.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

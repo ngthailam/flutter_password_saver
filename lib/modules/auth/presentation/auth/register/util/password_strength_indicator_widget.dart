@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
-import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
 
 // ignore: must_be_immutable
 class PasswordStrengthIndicator extends StatelessWidget {

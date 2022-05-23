@@ -12,10 +12,12 @@ class PasswordState {
     this.passwords = const [],
     this.searchKeyword = '',
     this.user,
+    this.shouldShowOnboard = false,
   });
 
   final LoadState loadState;
   final List<Password> passwords;
   final String searchKeyword;
   final User? user;
+  final bool shouldShowOnboard;
 }

@@ -16,9 +16,9 @@ import 'package:flutter_password_saver/presentation/widget/delete_account_button
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/icon_ink_well_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/loading_indicator.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
-import 'package:flutter_password_saver/util/language_util.dart';
-import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
+import 'package:flutter_password_saver/initializer/language_util.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
 import 'package:collection/collection.dart';
 
 Future<void> showPreferencePage(BuildContext context) {

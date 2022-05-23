@@ -8,6 +8,7 @@ import 'package:flutter_password_saver/domain/usecase/password/get_all_paswords_
 import 'package:flutter_password_saver/domain/usecase/password/search_password_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/update_password_settings_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
+import 'package:flutter_password_saver/domain/usecase/user/show_onboard_use_case.dart';
 import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
@@ -23,6 +24,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     this._getCurrentAccountUseCase,
     this._updatePasswordSettingsUseCase,
     this._accountPreferenceUseCase,
+    this._showOnboardUseCase,
   ) : super(PasswordState()) {
     on<InitializeEvent>(_initialize);
     on<RefreshDataEvent>(_refreshData);
@@ -30,6 +32,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     on<DeletePasswordEvent>(_deletePassword);
     on<SearchPasswordEvent>(_searchPassword);
     on<UpdateSettingsEvent>(_updateSettings);
+    on<HasShownOnboardEvent>(_onHasShownOnboard);
   }
 
   final GetAllPasswordsUseCase _getAllPasswordsUseCase;
@@ -38,8 +41,11 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   final GetCurrentAccountUseCase _getCurrentAccountUseCase;
   final UpdatePasswordSettingsUseCase _updatePasswordSettingsUseCase;
   final AccountPreferenceUseCase _accountPreferenceUseCase;
+  final ShowOnboardUseCase _showOnboardUseCase;
 
   bool get isSearching => state.searchKeyword.isNotEmpty;
+
+  bool hasShownOnboardThisSession = false;
 
   AccountPreference? _accountPreference;
   AccountPreference? get accountPreference => _accountPreference;
@@ -90,7 +96,8 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   ) async {
     final User? user = await _getCurrentAccountUseCase.execute(null);
     if (user != null) {
-      emit(state.copyWith(user: user));
+      final bool showOnboard = await _showOnboardUseCase.isShowOnboard();
+      emit(state.copyWith(user: user, shouldShowOnboard: showOnboard));
       add(RefreshDataEvent());
     }
   }
@@ -115,5 +122,13 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   ) {
     _reLoadPrefs();
     _reloadPasswords();
+  }
+
+  FutureOr<void> _onHasShownOnboard(
+    HasShownOnboardEvent event,
+    Emitter<PasswordState> emit,
+  ) async {
+    hasShownOnboardThisSession = true;
+    await _showOnboardUseCase.setHasShownOnboard();
   }
 }

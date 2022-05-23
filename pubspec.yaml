@@ -53,6 +53,7 @@ dependencies:
   intl_utils: ^2.1.0 
   flutter_app_shortcut: ^1.0.0
   uni_links: ^0.5.1
+  super_tooltip: ^1.0.1
 
 dev_dependencies:
   flutter_test:

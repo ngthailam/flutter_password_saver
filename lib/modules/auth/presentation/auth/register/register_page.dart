@@ -14,9 +14,9 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
-import 'package:flutter_password_saver/util/app_short_cut_manager.dart';
-import 'package:flutter_password_saver/util/theme_util.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
+import 'package:flutter_password_saver/initializer/app_short_cut_manager.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RegisterPage extends StatefulWidget {
