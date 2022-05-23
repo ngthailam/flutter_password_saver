@@ -25,4 +25,8 @@ abstract class AuthRepository {
   bool isLoggedIn();
 
   Future<bool> isNeedLogin();
+
+  Future<bool> isFirstTimeLogin();
+
+  Future<void> setIsFirstTimeLogin(bool isFirstTime);
 }

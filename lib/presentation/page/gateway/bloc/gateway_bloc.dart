@@ -6,7 +6,7 @@ import 'package:flutter_password_saver/domain/usecase/preference/account_prefere
 import 'package:flutter_password_saver/modules/auth/domain/usecase/get_current_account_use_case.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_event.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/bloc/gateway_state.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/modules/auth/domain/usecase/is_need_log_in_use_case.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uni_links/uni_links.dart';
 

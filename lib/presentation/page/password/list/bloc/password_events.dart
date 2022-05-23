@@ -31,3 +31,5 @@ class UpdateSettingsEvent extends PasswordEvent {
 }
 
 class RefreshDataEvent extends PasswordEvent {}
+
+class HasShownOnboardEvent extends PasswordEvent {}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
+import 'package:flutter_password_saver/presentation/page/password/list/password_page_tooltip_mixin.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
@@ -13,8 +15,8 @@ import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
-import 'package:flutter_password_saver/util/uri_handler.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
+import 'package:flutter_password_saver/initializer/uri_handler.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PasswordPage extends StatefulWidget {
@@ -24,7 +26,8 @@ class PasswordPage extends StatefulWidget {
   State<PasswordPage> createState() => _PasswordPageState();
 }
 
-class _PasswordPageState extends State<PasswordPage> {
+class _PasswordPageState extends State<PasswordPage>
+    with PasswordPageTooltipMixin {
   late PasswordBloc _bloc;
   late UriHandler _uriHandler;
 
@@ -45,6 +48,17 @@ class _PasswordPageState extends State<PasswordPage> {
             listener: (BuildContext context, PasswordState state) {
               if (state.loadState == LoadState.success) {
                 _handlePendingUri();
+                return;
+              }
+
+              if (state.shouldShowOnboard &&
+                  !_bloc.hasShownOnboardThisSession) {
+                _bloc.add(HasShownOnboardEvent());
+                SchedulerBinding.instance?.addPostFrameCallback((_) async {
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  showTooltips();
+                });
+                return;
               }
             },
             builder: (BuildContext context, PasswordState state) {
@@ -119,30 +133,36 @@ class _PasswordPageState extends State<PasswordPage> {
       right: 0,
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.blue500,
-          foregroundColor: AppColors.white500,
-          child: const Icon(Icons.add),
-          onPressed: _goToSavePassword,
+        child: Builder(
+          builder: (ctx) {
+            fabContext = ctx;
+            return FloatingActionButton(
+              backgroundColor: AppColors.blue500,
+              foregroundColor: AppColors.white500,
+              child: const Icon(Icons.add),
+              onPressed: _goToSavePassword,
+            );
+          },
         ),
       ),
     );
   }
 
   Widget _searchBox(User? user) {
-    return Builder(
-      builder: (BuildContext context) {
-        return SearchBox(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          onChanged: (text) {
-            _bloc.add(SearchPasswordEvent(keyword: text));
-          },
-          trailingWidget: AccountIcon(
-            user: user,
-            onTap: () => showPreferencePage(context),
-          ),
-        );
+    return SearchBox(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      onChanged: (text) {
+        _bloc.add(SearchPasswordEvent(keyword: text));
       },
+      trailingWidget: Builder(
+        builder: (ctx) {
+          avatarContext = ctx;
+          return AccountIcon(
+            user: user,
+            onTap: () => showPreferencePage(ctx),
+          );
+        },
+      ),
     );
   }
 

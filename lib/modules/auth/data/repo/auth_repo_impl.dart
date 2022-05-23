@@ -111,4 +111,14 @@ class AuthRepoitoryImpl extends AuthRepository {
     if (isLoggedIn()) return false;
     return pref.requireLogin;
   }
+
+  @override
+  Future<bool> isFirstTimeLogin() {
+    return _authLocalDataSource.isFirstTimeLogin();
+  }
+
+  @override
+  Future<void> setIsFirstTimeLogin(bool isFirstTime) {
+    return _authLocalDataSource.setIsFirstTimeLogin(isFirstTime);
+  }
 }

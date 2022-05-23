@@ -11,7 +11,7 @@ import 'package:flutter_password_saver/presentation/utils/time_util.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
-import 'package:flutter_password_saver/util/app_router.dart';
+import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {

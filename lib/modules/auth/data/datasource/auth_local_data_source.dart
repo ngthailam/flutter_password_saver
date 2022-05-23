@@ -4,6 +4,10 @@ import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/modules/auth/data/entity/account_entity.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const String prefKeyIsFirstLogin = 'isFirstLogin';
+const bool isFirstLoginDefault = true;
 
 abstract class AuthLocalDataSource {
   Future<bool> saveAccount(AccountEntity user);
@@ -15,6 +19,10 @@ abstract class AuthLocalDataSource {
   Future<void> deleteAll();
 
   Future<void> updatePassword(String password);
+
+  Future<bool> isFirstTimeLogin();
+
+  Future<void> setIsFirstTimeLogin(bool isFirstTime);
 }
 
 @Injectable(as: AuthLocalDataSource)
@@ -26,6 +34,8 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
 
   final SecureStorage _secureStorage;
   final AuthLoginLockDataSource _authLoginLockDataSource;
+
+  Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
   @override
   Future<AccountEntity?> getCurrentUser() async {
@@ -94,6 +104,28 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
       return Future.error(e);
     } finally {
       await box.close();
+    }
+  }
+
+  @override
+  Future<bool> isFirstTimeLogin() async {
+    try {
+      final sharedPref = await _prefs;
+      final isFirstLogin = sharedPref.getBool(prefKeyIsFirstLogin);
+      return isFirstLogin ?? isFirstLoginDefault;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<void> setIsFirstTimeLogin(bool isFirstTime) async {
+    try {
+      final sharedPref = await _prefs;
+      await sharedPref.setBool(prefKeyIsFirstLogin, isFirstTime);
+      return;
+    } catch (e) {
+      return;
     }
   }
 }

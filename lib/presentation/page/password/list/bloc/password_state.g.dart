@@ -13,6 +13,8 @@ abstract class _$PasswordStateCWProxy {
 
   PasswordState searchKeyword(String searchKeyword);
 
+  PasswordState shouldShowOnboard(bool shouldShowOnboard);
+
   PasswordState user(User? user);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `PasswordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -25,6 +27,7 @@ abstract class _$PasswordStateCWProxy {
     LoadState? loadState,
     List<Password>? passwords,
     String? searchKeyword,
+    bool? shouldShowOnboard,
     User? user,
   });
 }
@@ -47,6 +50,10 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
       this(searchKeyword: searchKeyword);
 
   @override
+  PasswordState shouldShowOnboard(bool shouldShowOnboard) =>
+      this(shouldShowOnboard: shouldShowOnboard);
+
+  @override
   PasswordState user(User? user) => this(user: user);
 
   @override
@@ -61,6 +68,7 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
     Object? loadState = const $CopyWithPlaceholder(),
     Object? passwords = const $CopyWithPlaceholder(),
     Object? searchKeyword = const $CopyWithPlaceholder(),
+    Object? shouldShowOnboard = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
   }) {
     return PasswordState(
@@ -77,6 +85,11 @@ class _$PasswordStateCWProxyImpl implements _$PasswordStateCWProxy {
               ? _value.searchKeyword
               // ignore: cast_nullable_to_non_nullable
               : searchKeyword as String,
+      shouldShowOnboard: shouldShowOnboard == const $CopyWithPlaceholder() ||
+              shouldShowOnboard == null
+          ? _value.shouldShowOnboard
+          // ignore: cast_nullable_to_non_nullable
+          : shouldShowOnboard as bool,
       user: user == const $CopyWithPlaceholder()
           ? _value.user
           // ignore: cast_nullable_to_non_nullable
