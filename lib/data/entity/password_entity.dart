@@ -17,6 +17,8 @@ class PasswordEntity extends HiveObject {
     this.accName = '',
     this.password = '',
     this.settings,
+    this.order = 0,
+    this.createdAt = 0,
   });
 
   @HiveField(0)
@@ -29,13 +31,17 @@ class PasswordEntity extends HiveObject {
   final String password;
   @HiveField(4)
   final HiveList<PasswordSettingsEntity>? settings;
+  @HiveField(5)
+  final int? order;
+  @HiveField(6)
+  final int? createdAt;
 
   @override
   get key => id;
 
   @override
   String toString() {
-    return '[PasswordEntity] id=$id, name=$name, accName=$accName, password=$password';
+    return '[PasswordEntity] id=$id, name=$name, accName=$accName, password=$password, order=$order, createdAt=$createdAt';
   }
 
   factory PasswordEntity.fromPassword({
@@ -48,12 +54,17 @@ class PasswordEntity extends HiveObject {
         accName: password.accName,
         password: password.password,
         settings: settings,
+        order: password.order,
+        createdAt: password.createdAt,
       );
 
   Password toModel(List<PasswordSettings> settings) => Password(
-      id: id,
-      name: name,
-      accName: accName,
-      password: password,
-      settings: settings);
+        id: id,
+        name: name,
+        accName: accName,
+        password: password,
+        settings: settings,
+        order: order ?? 0,
+        createdAt: createdAt ?? 0,
+      );
 }

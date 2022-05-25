@@ -12,6 +12,8 @@ class Password extends Equatable {
     this.accName = '',
     this.password = '',
     required this.settings,
+    this.order = 0,
+    this.createdAt = 0,
   });
 
   final String id;
@@ -19,6 +21,8 @@ class Password extends Equatable {
   final String accName;
   final String password;
   final List<PasswordSettings> settings;
+  final int order;
+  final int createdAt;
 
   static List<PasswordSettings> defaultSettings({required String passwordId}) =>
       [
@@ -40,5 +44,7 @@ class Password extends Equatable {
         name,
         accName,
         settings,
+        order,
+        createdAt,
       ];
 }

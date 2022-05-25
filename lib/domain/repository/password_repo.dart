@@ -13,4 +13,6 @@ abstract class PasswordRepository {
   Future<List<Password>> searchPassword(String keyword);
 
   Future<void> updateSettings(PasswordSettings settings);
+
+  Future<bool> reOrderPasswords(List<Password> passwords);
 }

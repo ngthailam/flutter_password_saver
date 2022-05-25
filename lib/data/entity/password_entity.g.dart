@@ -9,9 +9,13 @@ part of 'password_entity.dart';
 abstract class _$PasswordEntityCWProxy {
   PasswordEntity accName(String accName);
 
+  PasswordEntity createdAt(int? createdAt);
+
   PasswordEntity id(String id);
 
   PasswordEntity name(String name);
+
+  PasswordEntity order(int? order);
 
   PasswordEntity password(String password);
 
@@ -25,8 +29,10 @@ abstract class _$PasswordEntityCWProxy {
   /// ````
   PasswordEntity call({
     String? accName,
+    int? createdAt,
     String? id,
     String? name,
+    int? order,
     String? password,
     HiveList<PasswordSettingsEntity>? settings,
   });
@@ -42,10 +48,16 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
   PasswordEntity accName(String accName) => this(accName: accName);
 
   @override
+  PasswordEntity createdAt(int? createdAt) => this(createdAt: createdAt);
+
+  @override
   PasswordEntity id(String id) => this(id: id);
 
   @override
   PasswordEntity name(String name) => this(name: name);
+
+  @override
+  PasswordEntity order(int? order) => this(order: order);
 
   @override
   PasswordEntity password(String password) => this(password: password);
@@ -64,8 +76,10 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
   /// ````
   PasswordEntity call({
     Object? accName = const $CopyWithPlaceholder(),
+    Object? createdAt = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
+    Object? order = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
     Object? settings = const $CopyWithPlaceholder(),
   }) {
@@ -74,6 +88,10 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
           ? _value.accName
           // ignore: cast_nullable_to_non_nullable
           : accName as String,
+      createdAt: createdAt == const $CopyWithPlaceholder()
+          ? _value.createdAt
+          // ignore: cast_nullable_to_non_nullable
+          : createdAt as int?,
       id: id == const $CopyWithPlaceholder() || id == null
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
@@ -82,6 +100,10 @@ class _$PasswordEntityCWProxyImpl implements _$PasswordEntityCWProxy {
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
           : name as String,
+      order: order == const $CopyWithPlaceholder()
+          ? _value.order
+          // ignore: cast_nullable_to_non_nullable
+          : order as int?,
       password: password == const $CopyWithPlaceholder() || password == null
           ? _value.password
           // ignore: cast_nullable_to_non_nullable
@@ -119,13 +141,15 @@ class PasswordEntityAdapter extends TypeAdapter<PasswordEntity> {
       accName: fields[2] as String,
       password: fields[3] as String,
       settings: (fields[4] as HiveList?)?.castHiveList(),
+      order: fields[5] as int?,
+      createdAt: fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PasswordEntity obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -135,7 +159,11 @@ class PasswordEntityAdapter extends TypeAdapter<PasswordEntity> {
       ..writeByte(3)
       ..write(obj.password)
       ..writeByte(4)
-      ..write(obj.settings);
+      ..write(obj.settings)
+      ..writeByte(5)
+      ..write(obj.order)
+      ..writeByte(6)
+      ..write(obj.createdAt);
   }
 
   @override

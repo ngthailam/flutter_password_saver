@@ -20,6 +20,8 @@ abstract class PasswordLocalDataSource {
   Future<void> updateSettings(PasswordSettings settings);
 
   Future<void> deleteAll();
+
+  Future<bool> reOrderPasswords(List<Password> passwords);
 }
 
 @Injectable(as: PasswordLocalDataSource)
@@ -168,5 +170,31 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
     await settingsBox.clear();
     await box.clear();
     return;
+  }
+
+  @override
+  Future<bool> reOrderPasswords(List<Password> passwords) async {
+    try {
+      final settingsBox = await _getSettingsBox();
+      final box = await _getPasswordBox();
+      for (var password in passwords) {
+        final settingEntities = password.settings
+            .map((e) => PasswordSettingsEntity.fromPasswordSettings(e))
+            .toList();
+        settingsBox.putAll(
+          {for (var e in settingEntities) e.key: e},
+        );
+
+        final passEntity = PasswordEntity.fromPassword(
+          password: password,
+          settings: HiveList(settingsBox, objects: settingEntities),
+        );
+
+        await box.put(passEntity.key, passEntity);
+      }
+      return true;
+    } catch (e) {
+      return false;
+    } finally {}
   }
 }

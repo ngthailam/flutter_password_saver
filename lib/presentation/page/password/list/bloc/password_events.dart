@@ -33,3 +33,13 @@ class UpdateSettingsEvent extends PasswordEvent {
 class RefreshDataEvent extends PasswordEvent {}
 
 class HasShownOnboardEvent extends PasswordEvent {}
+
+class ReOrderPasswordEvent extends PasswordEvent {
+  final int oldIndex;
+  final int newIndex;
+
+  ReOrderPasswordEvent({
+    required this.oldIndex,
+    required this.newIndex,
+  });
+}

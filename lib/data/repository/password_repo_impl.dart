@@ -39,4 +39,9 @@ class PasswordRepositoryImpl extends PasswordRepository {
   Future<void> updateSettings(PasswordSettings settings) {
     return _localDataSource.updateSettings(settings);
   }
+
+  @override
+  Future<bool> reOrderPasswords(List<Password> passwords) {
+    return _localDataSource.reOrderPasswords(passwords);
+  }
 }

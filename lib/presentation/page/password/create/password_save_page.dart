@@ -64,7 +64,6 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        top: false,
         child: BlocProvider(
           create: (ctx) =>
               _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),

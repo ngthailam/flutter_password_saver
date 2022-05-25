@@ -19,11 +19,9 @@ class PasswordListItem extends StatefulWidget {
   const PasswordListItem({
     Key? key,
     required this.password,
-    this.onChangeSetting,
   }) : super(key: key);
 
   final Password password;
-  final Function(PasswordSettings passwordSettings)? onChangeSetting;
 
   @override
   State<PasswordListItem> createState() => _PasswordListItemState();
@@ -79,6 +77,8 @@ class _PasswordListItemState extends State<PasswordListItem> {
             _divider(),
             const SizedBox(width: 16),
             _mainContent(),
+            const SizedBox(width: 16),
+            _trailingIcon(),
           ],
         ),
       ),
@@ -93,8 +93,13 @@ class _PasswordListItemState extends State<PasswordListItem> {
             context,
             password: widget.password,
             onChanged: (PasswordSettingsName name, dynamic value) {
-              widget.onChangeSetting
-                  ?.call(PasswordSettings(name: name, value: value));
+              context.read<PasswordBloc>().add(
+                    UpdateSettingsEvent(
+                      passwordId: widget.password.id,
+                      name: name,
+                      value: value,
+                    ),
+                  );
             },
           );
         },
@@ -109,7 +114,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
               AppRouter.savePassword,
               arguments: SavePasswordPageArg(id: widget.password.id));
           if (result == true) {
-            context.showSuccessSnackBar(S().sbEditSuccess);
+            context
+              ..showSuccessSnackBar(S().sbEditSuccess)
+              ..read<PasswordBloc>().add(RefreshDataEvent());
           }
         },
         backgroundColor: AppColors.blue400,
@@ -174,14 +181,24 @@ class _PasswordListItemState extends State<PasswordListItem> {
   }
 
   Widget _mainContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(widget.password.name),
-        const SizedBox(height: 4),
-        _textWithCopy(widget.password.accName),
-        _textWithCopy(widget.password.password),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(widget.password.name),
+          const SizedBox(height: 4),
+          _textWithCopy(widget.password.accName),
+          _textWithCopy(widget.password.password),
+        ],
+      ),
+    );
+  }
+
+  Widget _trailingIcon() {
+    return const Icon(
+      Icons.menu,
+      size: 18,
+      color: AppColors.blue500,
     );
   }
 
