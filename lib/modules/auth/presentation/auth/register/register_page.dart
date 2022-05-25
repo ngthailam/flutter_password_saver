@@ -10,6 +10,7 @@ import 'package:flutter_password_saver/modules/auth/presentation/auth/register/b
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/security_question.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/widget/password_input_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_alert_dialog.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
@@ -366,8 +367,6 @@ class __NameInputPageState extends State<_NameInputPage>
   late TextEditingController _textEditingController;
   late FocusNode _textFocusNode;
 
-  bool _showError = false;
-
   @override
   void initState() {
     super.initState();
@@ -398,8 +397,6 @@ class __NameInputPageState extends State<_NameInputPage>
                 _title(),
                 const SizedBox(height: 36),
                 _inputTextField(),
-                const SizedBox(height: 8),
-                _errorText(),
               ],
             ),
           ),
@@ -429,27 +426,6 @@ class __NameInputPageState extends State<_NameInputPage>
         cursorColor: AppColors.blue500,
         decoration: InputDecoration(hintText: S().nameInputHint),
         controller: _textEditingController,
-        onChanged: (text) {
-          if (_showError) {
-            setState(() {
-              _showError = false;
-            });
-          }
-        },
-      ),
-    );
-  }
-
-  Widget _errorText() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 350),
-        opacity: _showError ? 1 : 0,
-        child: Text(
-          S().nameInputError,
-          style: const TextStyle(color: AppColors.red500),
-        ),
       ),
     );
   }
@@ -459,12 +435,10 @@ class __NameInputPageState extends State<_NameInputPage>
       delay: const Duration(milliseconds: 400),
       child: _Button(
         onPressed: () {
-          _textFocusNode.unfocus();
           if (_textEditingController.text.isEmpty) {
-            setState(() {
-              _showError = true;
-            });
+            context.showErrorSnackBar(S().nameInputError);
           } else {
+            _textFocusNode.unfocus();
             widget.onContinue(_textEditingController.text);
           }
         },
@@ -561,7 +535,6 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
   late TextEditingController _textEditingController;
   late FocusNode _answerFocusNode;
   SecurityQuestion? _chosenQuestion;
-  bool _showError = false;
 
   List<SecurityQuestion> questions = SecurityQuestion.questionList();
 
@@ -594,8 +567,6 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
               _questionPicker(),
               const SizedBox(height: 8),
               _answerTextField(),
-              const SizedBox(height: 8),
-              _errorText(),
             ],
           ),
         ),
@@ -672,7 +643,6 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
           onChanged: (value) {
             if (value != _chosenQuestion) {
               setState(() {
-                _showError = false;
                 _chosenQuestion = value;
               });
               _answerFocusNode.requestFocus();
@@ -692,13 +662,6 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
           cursorColor: AppColors.blue500,
           decoration: InputDecoration(hintText: S().answer),
           controller: _textEditingController,
-          onChanged: (text) {
-            if (_showError) {
-              setState(() {
-                _showError = false;
-              });
-            }
-          },
         ),
       ),
     );
@@ -711,34 +674,15 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
         delay: const Duration(milliseconds: 400),
         child: _Button(
           onPressed: () {
-            _unfocus();
             if (_textEditingController.text.isEmpty) {
-              setState(() {
-                _showError = true;
-              });
+              context.showErrorSnackBar(S().secuQuesError);
             } else {
+              _unfocus();
               widget.onAnswer(_chosenQuestion!
                   .copyWith(answer: _textEditingController.text));
             }
           },
           text: S().answer,
-        ),
-      ),
-    );
-  }
-
-  Widget _errorText() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: AnimatedOpacity(
-          opacity: _showError ? 1 : 0,
-          duration: const Duration(milliseconds: 250),
-          child: Text(
-            S().secuQuesError,
-            style: const TextStyle(color: AppColors.red500),
-          ),
         ),
       ),
     );
