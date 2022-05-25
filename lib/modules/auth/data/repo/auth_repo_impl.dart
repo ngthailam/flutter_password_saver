@@ -11,6 +11,12 @@ import 'package:local_auth_platform_interface/types/biometric_type.dart';
 
 bool _isLoggedIn = false;
 
+// Last time when user is active while logged in
+int _lastLogInActiveMillis = 0;
+
+// in milliseconds
+int _maxTimeLoggedInWithoutAuthen = 6000;
+
 @Injectable(as: AuthRepository)
 class AuthRepoitoryImpl extends AuthRepository {
   AuthRepoitoryImpl(
@@ -107,9 +113,19 @@ class AuthRepoitoryImpl extends AuthRepository {
 
   @override
   Future<bool> isNeedLogin() async {
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    final isPassedMaxLoggedInPeriod =
+        currentTime - _lastLogInActiveMillis > _maxTimeLoggedInWithoutAuthen;
     final pref = await _accountPreferenceLocalDataSource.getAccountPrefs();
-    if (isLoggedIn()) return false;
-    return pref.requireLogin;
+
+    if (!pref.requireLogin) return false;
+    if (!isLoggedIn()) return false;
+
+    if (_lastLogInActiveMillis != 0) {
+      return isPassedMaxLoggedInPeriod;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -120,5 +136,11 @@ class AuthRepoitoryImpl extends AuthRepository {
   @override
   Future<void> setIsFirstTimeLogin(bool isFirstTime) {
     return _authLocalDataSource.setIsFirstTimeLogin(isFirstTime);
+  }
+
+  @override
+  Future<void> markLastLoggedInActive() {
+    _lastLogInActiveMillis = DateTime.now().millisecondsSinceEpoch;
+    return Future.value();
   }
 }

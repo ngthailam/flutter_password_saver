@@ -25,8 +25,11 @@ Future<bool?> showAuthenBottomSheet(BuildContext context,
       ),
     ),
     builder: (context) {
-      return Wrap(
-        children: const [AuthenBottomSheet()],
+      return WillPopScope(
+        onWillPop: () => Future.value(false),
+        child: Wrap(
+          children: const [AuthenBottomSheet()],
+        ),
       );
     },
   );

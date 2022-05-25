@@ -6,6 +6,9 @@ import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/is_need_log_in_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/domain/usecase/mark_app_paused_use_case.dart';
+import 'package:flutter_password_saver/modules/auth/presentation/auth/authen/authen_bottom_sheet.dart';
 import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
@@ -85,9 +88,43 @@ class MyApp extends StatefulWidget {
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  BuildContext? _appContext;
+
   @override
-  void didChangeDependencies() {
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        final needLogin = await getIt<IsNeedLogInUseCase>().execute(null);
+        if (needLogin && _appContext != null) {
+          // final isAuthenSuccess = await showAuthenBottomSheet(_appContext!);
+          // if (isAuthenSuccess != true) {
+          //   Navigator.pop(_appContext!);
+          // }
+        }
+        break;
+      case AppLifecycleState.paused:
+        await getIt<MarkAppPausedUseCase>().execute(null);
+        break;
+      default:
+        return;
+    }
+  }
+
+  @override
+  void didChangeDependencies() async {
     super.didChangeDependencies();
     precachePicture(
       SvgPicture.asset('assets/svg/login.svg').pictureProvider,

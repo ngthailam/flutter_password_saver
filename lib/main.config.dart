@@ -24,33 +24,34 @@ import 'domain/usecase/password/save_password_use_case.dart' as _i17;
 import 'domain/usecase/password/search_password_use_case.dart' as _i18;
 import 'domain/usecase/password/update_password_settings_use_case.dart' as _i19;
 import 'domain/usecase/preference/account_preference_use_case.dart' as _i11;
-import 'domain/usecase/user/show_onboard_use_case.dart' as _i34;
+import 'domain/usecase/user/show_onboard_use_case.dart' as _i35;
 import 'initializer/app_short_cut_manager.dart' as _i4;
 import 'initializer/uri_handler.dart' as _i8;
 import 'modules/auth/data/datasource/auth_local_data_source.dart' as _i12;
 import 'modules/auth/data/repo/auth_repo_impl.dart' as _i21;
 import 'modules/auth/domain/repo/auth_repo.dart' as _i20;
-import 'modules/auth/domain/usecase/auth_lock_use_case.dart' as _i37;
+import 'modules/auth/domain/usecase/auth_lock_use_case.dart' as _i38;
 import 'modules/auth/domain/usecase/biometric_use_case.dart' as _i22;
 import 'modules/auth/domain/usecase/create_account_use_case.dart' as _i23;
 import 'modules/auth/domain/usecase/delete_account_use_case.dart' as _i24;
 import 'modules/auth/domain/usecase/get_current_account_use_case.dart' as _i27;
 import 'modules/auth/domain/usecase/is_need_log_in_use_case.dart' as _i29;
 import 'modules/auth/domain/usecase/login_use_case.dart' as _i30;
+import 'modules/auth/domain/usecase/mark_app_paused_use_case.dart' as _i31;
 import 'modules/auth/domain/usecase/update_account_password_use_case.dart'
-    as _i35;
-import 'modules/auth/presentation/auth/authen/bloc/authen_bloc.dart' as _i38;
-import 'modules/auth/presentation/auth/login/bloc/login_bloc.dart' as _i41;
+    as _i36;
+import 'modules/auth/presentation/auth/authen/bloc/authen_bloc.dart' as _i39;
+import 'modules/auth/presentation/auth/login/bloc/login_bloc.dart' as _i42;
 import 'modules/auth/presentation/auth/register/bloc/register_bloc.dart'
-    as _i33;
+    as _i34;
 import 'presentation/page/forget_password/bloc/forget_password_bloc.dart'
-    as _i39;
-import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i40;
-import 'presentation/page/password/create/bloc/password_save_bloc.dart' as _i31;
-import 'presentation/page/password/list/bloc/password_bloc.dart' as _i42;
-import 'presentation/page/preferences/bloc/preferences_bloc.dart' as _i32;
+    as _i40;
+import 'presentation/page/gateway/bloc/gateway_bloc.dart' as _i41;
+import 'presentation/page/password/create/bloc/password_save_bloc.dart' as _i32;
+import 'presentation/page/password/list/bloc/password_bloc.dart' as _i43;
+import 'presentation/page/preferences/bloc/preferences_bloc.dart' as _i33;
 import 'presentation/page/update_password/bloc/update_password_bloc.dart'
-    as _i36; // ignore_for_file: unnecessary_lambdas
+    as _i37; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -107,48 +108,50 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i29.IsNeedLogInUseCase(get<_i20.AuthRepository>()));
   gh.factory<_i30.LoginUseCase>(
       () => _i30.LoginUseCase(get<_i20.AuthRepository>()));
-  gh.factory<_i31.PasswordSaveBloc>(() => _i31.PasswordSaveBloc(
+  gh.factory<_i31.MarkAppPausedUseCase>(
+      () => _i31.MarkAppPausedUseCase(get<_i20.AuthRepository>()));
+  gh.factory<_i32.PasswordSaveBloc>(() => _i32.PasswordSaveBloc(
       get<_i17.SavePasswordUsecase>(), get<_i28.GetPasswordByIdUseCase>()));
-  gh.factory<_i32.PreferencesBloc>(() => _i32.PreferencesBloc(
+  gh.factory<_i33.PreferencesBloc>(() => _i33.PreferencesBloc(
       get<_i11.AccountPreferenceUseCase>(),
       get<_i27.GetCurrentAccountUseCase>(),
       get<_i24.DeleteAccountUseCase>()));
-  gh.factory<_i33.RegisterBloc>(
-      () => _i33.RegisterBloc(get<_i23.CreateAccountUseCase>()));
-  gh.factory<_i34.ShowOnboardUseCase>(
-      () => _i34.ShowOnboardUseCase(get<_i20.AuthRepository>()));
-  gh.factory<_i35.UpdateAccountPasswordUseCase>(
-      () => _i35.UpdateAccountPasswordUseCase(get<_i20.AuthRepository>()));
-  gh.factory<_i36.UpdatePasswordBloc>(() => _i36.UpdatePasswordBloc(
+  gh.factory<_i34.RegisterBloc>(
+      () => _i34.RegisterBloc(get<_i23.CreateAccountUseCase>()));
+  gh.factory<_i35.ShowOnboardUseCase>(
+      () => _i35.ShowOnboardUseCase(get<_i20.AuthRepository>()));
+  gh.factory<_i36.UpdateAccountPasswordUseCase>(
+      () => _i36.UpdateAccountPasswordUseCase(get<_i20.AuthRepository>()));
+  gh.factory<_i37.UpdatePasswordBloc>(() => _i37.UpdatePasswordBloc(
       get<_i27.GetCurrentAccountUseCase>(),
-      get<_i35.UpdateAccountPasswordUseCase>()));
-  gh.factory<_i37.AuthLockUseCase>(
-      () => _i37.AuthLockUseCase(get<_i20.AuthRepository>()));
-  gh.factory<_i38.AuthenCubit>(() => _i38.AuthenCubit(
+      get<_i36.UpdateAccountPasswordUseCase>()));
+  gh.factory<_i38.AuthLockUseCase>(
+      () => _i38.AuthLockUseCase(get<_i20.AuthRepository>()));
+  gh.factory<_i39.AuthenCubit>(() => _i39.AuthenCubit(
       get<_i30.LoginUseCase>(),
-      get<_i37.AuthLockUseCase>(),
+      get<_i38.AuthLockUseCase>(),
       get<_i22.BiometricsUseCase>(),
       get<_i27.GetCurrentAccountUseCase>()));
-  gh.factory<_i39.ForgetPasswordBloc>(() => _i39.ForgetPasswordBloc(
+  gh.factory<_i40.ForgetPasswordBloc>(() => _i40.ForgetPasswordBloc(
       get<_i27.GetCurrentAccountUseCase>(),
       get<_i24.DeleteAccountUseCase>(),
-      get<_i35.UpdateAccountPasswordUseCase>()));
-  gh.factory<_i40.GatewayBloc>(() => _i40.GatewayBloc(
+      get<_i36.UpdateAccountPasswordUseCase>()));
+  gh.factory<_i41.GatewayBloc>(() => _i41.GatewayBloc(
       get<_i27.GetCurrentAccountUseCase>(),
       get<_i11.AccountPreferenceUseCase>()));
-  gh.factory<_i41.LoginBloc>(() => _i41.LoginBloc(
+  gh.factory<_i42.LoginBloc>(() => _i42.LoginBloc(
       get<_i27.GetCurrentAccountUseCase>(),
       get<_i30.LoginUseCase>(),
-      get<_i37.AuthLockUseCase>(),
+      get<_i38.AuthLockUseCase>(),
       get<_i22.BiometricsUseCase>()));
-  gh.factory<_i42.PasswordBloc>(() => _i42.PasswordBloc(
+  gh.factory<_i43.PasswordBloc>(() => _i43.PasswordBloc(
       get<_i26.GetAllPasswordsUseCase>(),
       get<_i25.DeletePasswordUseCase>(),
       get<_i18.SearchPasswordUseCase>(),
       get<_i27.GetCurrentAccountUseCase>(),
       get<_i19.UpdatePasswordSettingsUseCase>(),
       get<_i11.AccountPreferenceUseCase>(),
-      get<_i34.ShowOnboardUseCase>(),
+      get<_i35.ShowOnboardUseCase>(),
       get<_i16.ReOrderPasswordUseCase>(),
       get<_i17.SavePasswordUsecase>()));
   return get;
