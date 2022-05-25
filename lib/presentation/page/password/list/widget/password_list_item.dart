@@ -126,11 +126,21 @@ class _PasswordListItemState extends State<PasswordListItem> {
       ),
       SlidableAction(
         onPressed: (ctx) {
-          context
-              .read<PasswordBloc>()
-              .add(DeletePasswordEvent(id: widget.password.id));
-          context
-              .showSuccessSnackBar(S().sbDeletePassword(widget.password.name));
+          final passwordBloc = context.read<PasswordBloc>();
+          passwordBloc.add(DeletePasswordEvent(id: widget.password.id));
+          // Show success toast with undo button
+          final scaffold = ScaffoldMessenger.of(context);
+          scaffold.showSnackBar(
+            SnackBar(
+              content: Text(S().sbDeletePassword(widget.password.name)),
+              action: SnackBarAction(
+                  label: S().undo.toUpperCase(),
+                  onPressed: () {
+                    scaffold.hideCurrentSnackBar;
+                    passwordBloc.add(UndoDeletePasswordEvent());
+                  }),
+            ),
+          );
         },
         backgroundColor: AppColors.red400,
         foregroundColor: Colors.white,

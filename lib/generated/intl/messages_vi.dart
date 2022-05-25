@@ -130,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Luôn hiển thị tên và mật khẩu"),
         "skip": MessageLookupByLibrary.simpleMessage("Bỏ qua"),
         "textContinue": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
+        "undo": MessageLookupByLibrary.simpleMessage("Hoàn tác"),
         "welcomeBack":
             MessageLookupByLibrary.simpleMessage("Chào mừng trở lại"),
         "welcomeTo": MessageLookupByLibrary.simpleMessage("Chào mừng đến với")

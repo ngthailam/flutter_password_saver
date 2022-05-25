@@ -130,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Always show account name and password"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "textContinue": MessageLookupByLibrary.simpleMessage("Continue"),
+        "undo": MessageLookupByLibrary.simpleMessage("undo"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome back"),
         "welcomeTo": MessageLookupByLibrary.simpleMessage("Welcome to")
       };

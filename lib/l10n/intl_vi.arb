@@ -86,5 +86,6 @@
     "langVn": "Tiếng Việt",
     "settingsAlwaysShow": "Luôn hiển thị tên và mật khẩu",
     "settingsAlwaysAuthen": "Luôn yêu cầu nhập mã để xem mật khẩu",
-    "errorPassIncorrect": "Mật khẩu không hợp lệ"
+    "errorPassIncorrect": "Mật khẩu không hợp lệ",
+    "undo": "Hoàn tác"
 }
