@@ -62,7 +62,23 @@ class _PasswordPageState extends State<PasswordPage>
               }
             },
             builder: (BuildContext context, PasswordState state) {
-              return _body(state);
+              return AnimatedCrossFade(
+                key: const Key('password_cross_fade_main'),
+                firstChild: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                secondChild: _body(state),
+                crossFadeState: (state.loadState == LoadState.none ||
+                            state.loadState == LoadState.loading) &&
+                        state.passwords.isEmpty
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 550),
+                alignment: Alignment.center,
+                firstCurve: Curves.easeInOut,
+                secondCurve: Curves.easeInOut,
+              );
             },
           ),
         ),
@@ -104,24 +120,23 @@ class _PasswordPageState extends State<PasswordPage>
 
   Widget _passwordList() {
     return Container(
+      // 64 == SearchBox height, to avoid widget collision
       margin: const EdgeInsets.only(top: 64),
-      child: ListView.builder(
-        itemCount: _bloc.state.passwords.length,
+      child: ReorderableListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, i) {
           final item = _bloc.state.passwords[i];
           return PasswordListItem(
             key: ObjectKey(item),
             password: item,
-            onChangeSetting: (settings) {
-              _bloc.add(
-                UpdateSettingsEvent(
-                  passwordId: item.id,
-                  name: settings.name,
-                  value: settings.value,
-                ),
-              );
-            },
           );
+        },
+        itemCount: _bloc.state.passwords.length,
+        onReorder: (oldIndex, newIndex) {
+          _bloc.add(ReOrderPasswordEvent(
+            oldIndex: oldIndex,
+            newIndex: newIndex,
+          ));
         },
       ),
     );

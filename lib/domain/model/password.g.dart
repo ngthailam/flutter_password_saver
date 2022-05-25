@@ -9,9 +9,13 @@ part of 'password.dart';
 abstract class _$PasswordCWProxy {
   Password accName(String accName);
 
+  Password createdAt(int createdAt);
+
   Password id(String id);
 
   Password name(String name);
+
+  Password order(int order);
 
   Password password(String password);
 
@@ -25,8 +29,10 @@ abstract class _$PasswordCWProxy {
   /// ````
   Password call({
     String? accName,
+    int? createdAt,
     String? id,
     String? name,
+    int? order,
     String? password,
     List<PasswordSettings>? settings,
   });
@@ -42,10 +48,16 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
   Password accName(String accName) => this(accName: accName);
 
   @override
+  Password createdAt(int createdAt) => this(createdAt: createdAt);
+
+  @override
   Password id(String id) => this(id: id);
 
   @override
   Password name(String name) => this(name: name);
+
+  @override
+  Password order(int order) => this(order: order);
 
   @override
   Password password(String password) => this(password: password);
@@ -64,8 +76,10 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
   /// ````
   Password call({
     Object? accName = const $CopyWithPlaceholder(),
+    Object? createdAt = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
+    Object? order = const $CopyWithPlaceholder(),
     Object? password = const $CopyWithPlaceholder(),
     Object? settings = const $CopyWithPlaceholder(),
   }) {
@@ -74,6 +88,10 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
           ? _value.accName
           // ignore: cast_nullable_to_non_nullable
           : accName as String,
+      createdAt: createdAt == const $CopyWithPlaceholder() || createdAt == null
+          ? _value.createdAt
+          // ignore: cast_nullable_to_non_nullable
+          : createdAt as int,
       id: id == const $CopyWithPlaceholder() || id == null
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
@@ -82,6 +100,10 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
           : name as String,
+      order: order == const $CopyWithPlaceholder() || order == null
+          ? _value.order
+          // ignore: cast_nullable_to_non_nullable
+          : order as int,
       password: password == const $CopyWithPlaceholder() || password == null
           ? _value.password
           // ignore: cast_nullable_to_non_nullable

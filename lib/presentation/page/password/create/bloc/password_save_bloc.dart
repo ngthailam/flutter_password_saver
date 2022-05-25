@@ -57,7 +57,12 @@ class PasswordSaveBloc extends Bloc<PasswordSaveEvent, PasswordSaveState> {
     PasswordSaveEvent event,
     Emitter<PasswordSaveState> emit,
   ) async {
-    await _savePasswordUsecase.execute(_inputPassword);
+    final passwordToSave = _inputPassword.copyWith(
+      createdAt: _inputPassword.createdAt == 0
+          ? DateTime.now().millisecondsSinceEpoch
+          : _inputPassword.createdAt,
+    );
+    await _savePasswordUsecase.execute(passwordToSave);
     emit(state.copyWith(loadState: LoadState.success));
   }
 

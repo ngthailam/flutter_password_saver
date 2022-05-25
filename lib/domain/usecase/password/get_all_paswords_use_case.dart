@@ -11,6 +11,15 @@ class GetAllPasswordsUseCase extends BaseUseCase<void, List<Password>> {
 
   @override
   Future<List<Password>> execute(input) {
-    return _passwordRepository.getAllPasswords();
+    return _passwordRepository.getAllPasswords().then((value) {
+      value.sort((a, b) {
+        if (a.order == b.order) {
+          return b.createdAt.compareTo(a.createdAt);
+        } else {
+          return a.order.compareTo(b.order);
+        }
+      });
+      return value;
+    });
   }
 }
