@@ -21,7 +21,7 @@ extension SnackbarExtension on BuildContext {
       displayDuration: const Duration(milliseconds: 1500),
       leftPadding: 16,
       rightPadding: 16,
-      additionalTopPadding: 0,
+      additionalTopPadding: 16,
     );
   }
 

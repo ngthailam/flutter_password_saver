@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/password_strength_checker.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/password_strength_indicator_widget.dart';
+import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/slide_up_widget.dart';
@@ -36,7 +37,6 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   late FocusNode _confirmPasswordFocusNode;
   bool _isDarkMode = false;
 
-  bool _showNotMatchedError = false;
   int _passwordStrengthIndex = 0;
   bool _visiblePassword = false;
 
@@ -81,8 +81,6 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
               _confirmPasswordTextField(),
               const SizedBox(height: 8),
               _passStrengthIndicator(),
-              const SizedBox(height: 8),
-              _errorText(),
             ],
           ),
         ),
@@ -135,20 +133,6 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
     );
   }
 
-  Widget _errorText() {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: AnimatedOpacity(
-        opacity: _showNotMatchedError ? 1 : 0,
-        duration: const Duration(milliseconds: 250),
-        child: Text(
-          S().savePassError,
-          style: const TextStyle(color: AppColors.red500),
-        ),
-      ),
-    );
-  }
-
   Widget _inputPasswordTextField() {
     return SlideUp(
       onComplete: _passwordFocusNode.requestFocus,
@@ -180,10 +164,9 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
 
   void _onPasswordChanged(String password) {
     final newStrengthIndex = PasswordStrengthChecker.check(password);
-    if (_passwordStrengthIndex != newStrengthIndex || _showNotMatchedError) {
+    if (_passwordStrengthIndex != newStrengthIndex) {
       setState(() {
         _passwordStrengthIndex = newStrengthIndex;
-        _showNotMatchedError = false;
       });
     }
   }
@@ -198,11 +181,6 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
         decoration: InputDecoration(hintText: S().savePassHintConfirm),
         controller: _confirmPasswordTextEdtCtrl,
         obscureText: !_visiblePassword,
-        onChanged: (text) {
-          setState(() {
-            _showNotMatchedError = false;
-          });
-        },
       ),
     );
   }
@@ -226,13 +204,11 @@ class _PasswordInputPageState extends State<PasswordInputPage> {
   }
 
   void _onConfirm() {
-    _unfocusAll();
     if (_confirmPasswordTextEdtCtrl.text == _passwordTextEdtCtrl.text) {
+      _unfocusAll();
       widget.onConfirm(_confirmPasswordTextEdtCtrl.text);
     } else {
-      setState(() {
-        _showNotMatchedError = true;
-      });
+      context.showErrorSnackBar(S().savePassError);
     }
   }
 
