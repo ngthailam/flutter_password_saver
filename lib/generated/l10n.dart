@@ -709,6 +709,16 @@ class S {
       args: [],
     );
   }
+
+  /// `undo`
+  String get undo {
+    return Intl.message(
+      'undo',
+      name: 'undo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

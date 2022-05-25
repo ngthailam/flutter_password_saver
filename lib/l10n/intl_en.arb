@@ -86,5 +86,6 @@
     "langVn": "Vietnamese",
     "settingsAlwaysShow": "Always show account name and password",
     "settingsAlwaysAuthen": "Always require authen to see password",
-    "errorPassIncorrect": "Password incorrect"
+    "errorPassIncorrect": "Password incorrect",
+    "undo": "undo"
 }

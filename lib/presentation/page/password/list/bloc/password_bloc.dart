@@ -7,6 +7,7 @@ import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/domain/usecase/password/delete_password_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/get_all_paswords_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/reorder_password_use_case.dart';
+import 'package:flutter_password_saver/domain/usecase/password/save_password_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/search_password_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/password/update_password_settings_use_case.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:injectable/injectable.dart';
+import 'package:collection/collection.dart';
 
 @injectable
 class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
@@ -28,6 +30,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     this._accountPreferenceUseCase,
     this._showOnboardUseCase,
     this._reOrderPasswordUseCase,
+    this._savePasswordUsecase,
   ) : super(PasswordState()) {
     on<InitializeEvent>(_initialize);
     on<RefreshDataEvent>(_refreshData);
@@ -37,6 +40,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     on<UpdateSettingsEvent>(_updateSettings);
     on<HasShownOnboardEvent>(_onHasShownOnboard);
     on<ReOrderPasswordEvent>(_reoderPassword);
+    on<UndoDeletePasswordEvent>(_undoDeletePassword);
   }
 
   final GetAllPasswordsUseCase _getAllPasswordsUseCase;
@@ -47,6 +51,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   final AccountPreferenceUseCase _accountPreferenceUseCase;
   final ShowOnboardUseCase _showOnboardUseCase;
   final ReOrderPasswordUseCase _reOrderPasswordUseCase;
+  final SavePasswordUsecase _savePasswordUsecase;
 
   bool get isSearching => state.searchKeyword.isNotEmpty;
 
@@ -54,6 +59,8 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
 
   AccountPreference? _accountPreference;
   AccountPreference? get accountPreference => _accountPreference;
+
+  Password? _lastDeletedPassword;
 
   FutureOr<void> _getPasswords(
     GetPasswordEvent event,
@@ -69,7 +76,18 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
     DeletePasswordEvent event,
     Emitter<PasswordState> emit,
   ) async {
+    _lastDeletedPassword =
+        state.passwords.firstWhereOrNull((element) => element.id == event.id);
     await _deletePasswordUseCase.execute(event.id);
+    _reloadPasswords();
+  }
+
+  FutureOr<void> _undoDeletePassword(
+    UndoDeletePasswordEvent event,
+    Emitter<PasswordState> emit,
+  ) async {
+    if (_lastDeletedPassword == null) return;
+    await _savePasswordUsecase.execute(_lastDeletedPassword!);
     _reloadPasswords();
   }
 
@@ -177,7 +195,7 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
             reOrderedPasswodList[i + 1] =
                 passwordList[i].copyWith(order: i + 1);
           }
-        } 
+        }
 
         //
       } else {

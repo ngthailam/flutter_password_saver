@@ -149,6 +149,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i19.UpdatePasswordSettingsUseCase>(),
       get<_i11.AccountPreferenceUseCase>(),
       get<_i34.ShowOnboardUseCase>(),
-      get<_i16.ReOrderPasswordUseCase>()));
+      get<_i16.ReOrderPasswordUseCase>(),
+      get<_i17.SavePasswordUsecase>()));
   return get;
 }
