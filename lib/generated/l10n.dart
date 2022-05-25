@@ -719,6 +719,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Press this button to start create a new password`
+  String get onboard_desc_create {
+    return Intl.message(
+      'Press this button to start create a new password',
+      name: 'onboard_desc_create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hold and drag passwords to reorder them to your liking`
+  String get onboard_desc_reorder {
+    return Intl.message(
+      'Hold and drag passwords to reorder them to your liking',
+      name: 'onboard_desc_reorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Swipe left on passwords for more actions`
+  String get onboard_desc_swipe {
+    return Intl.message(
+      'Swipe left on passwords for more actions',
+      name: 'onboard_desc_swipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press this icon to open app settings`
+  String get onboard_desc_settings {
+    return Intl.message(
+      'Press this icon to open app settings',
+      name: 'onboard_desc_settings',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

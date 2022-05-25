@@ -87,5 +87,9 @@
     "settingsAlwaysShow": "Always show account name and password",
     "settingsAlwaysAuthen": "Always require authen to see password",
     "errorPassIncorrect": "Password incorrect",
-    "undo": "undo"
+    "undo": "undo",
+    "onboard_desc_create": "Press this button to start create a new password",
+    "onboard_desc_reorder": "Hold and drag passwords to reorder them to your liking",
+    "onboard_desc_swipe": "Swipe left on passwords for more actions",
+    "onboard_desc_settings": "Press this icon to open app settings"
 }

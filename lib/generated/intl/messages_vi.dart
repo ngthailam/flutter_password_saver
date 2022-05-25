@@ -72,6 +72,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tên bạn là gì?"),
         "noResults":
             MessageLookupByLibrary.simpleMessage("Không tìm thấy kết quả"),
+        "onboard_desc_create": MessageLookupByLibrary.simpleMessage(
+            "Bấm nút này để bắt đầu lưu một mật khẩu mới"),
+        "onboard_desc_reorder": MessageLookupByLibrary.simpleMessage(
+            "Giữ và kéo để sắp xếp lại các mật khẩu theo sở thích"),
+        "onboard_desc_settings": MessageLookupByLibrary.simpleMessage(
+            "Bấm vào hình này để mở cài đặt của ứng dụng"),
+        "onboard_desc_swipe": MessageLookupByLibrary.simpleMessage(
+            "Quẹt trái mật khẩu để hiển thị thêm các tác vụ"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
         "prefDarkMode": MessageLookupByLibrary.simpleMessage("Bật theme tối"),
         "prefRequireLogin": MessageLookupByLibrary.simpleMessage(

@@ -71,6 +71,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameInputTitle":
             MessageLookupByLibrary.simpleMessage("What is your name?"),
         "noResults": MessageLookupByLibrary.simpleMessage("No results found"),
+        "onboard_desc_create": MessageLookupByLibrary.simpleMessage(
+            "Press this button to start create a new password"),
+        "onboard_desc_reorder": MessageLookupByLibrary.simpleMessage(
+            "Hold and drag passwords to reorder them to your liking"),
+        "onboard_desc_settings": MessageLookupByLibrary.simpleMessage(
+            "Press this icon to open app settings"),
+        "onboard_desc_swipe": MessageLookupByLibrary.simpleMessage(
+            "Swipe left on passwords for more actions"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
         "prefDarkMode":
             MessageLookupByLibrary.simpleMessage("Enable dark mode"),
