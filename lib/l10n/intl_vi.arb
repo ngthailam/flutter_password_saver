@@ -87,5 +87,9 @@
     "settingsAlwaysShow": "Luôn hiển thị tên và mật khẩu",
     "settingsAlwaysAuthen": "Luôn yêu cầu nhập mã để xem mật khẩu",
     "errorPassIncorrect": "Mật khẩu không hợp lệ",
-    "undo": "Hoàn tác"
+    "undo": "Hoàn tác",
+    "onboard_desc_create": "Bấm nút này để bắt đầu lưu một mật khẩu mới",
+    "onboard_desc_reorder": "Giữ và kéo để sắp xếp lại các mật khẩu theo sở thích",
+    "onboard_desc_swipe": "Quẹt trái mật khẩu để hiển thị thêm các tác vụ",
+    "onboard_desc_settings": "Bấm vào hình này để mở cài đặt của ứng dụng"
 }

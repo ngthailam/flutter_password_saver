@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
+import 'package:flutter_password_saver/presentation/page/onboarding/onboarding_bottom_sheet.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_bloc.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
-import 'package:flutter_password_saver/presentation/page/password/list/password_page_tooltip_mixin.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
@@ -26,8 +26,7 @@ class PasswordPage extends StatefulWidget {
   State<PasswordPage> createState() => _PasswordPageState();
 }
 
-class _PasswordPageState extends State<PasswordPage>
-    with PasswordPageTooltipMixin {
+class _PasswordPageState extends State<PasswordPage> {
   late PasswordBloc _bloc;
   late UriHandler _uriHandler;
 
@@ -56,7 +55,7 @@ class _PasswordPageState extends State<PasswordPage>
                 _bloc.add(HasShownOnboardEvent());
                 SchedulerBinding.instance?.addPostFrameCallback((_) async {
                   await Future.delayed(const Duration(milliseconds: 500));
-                  showTooltips();
+                  _showOnboarding();
                 });
                 return;
               }
@@ -148,16 +147,11 @@ class _PasswordPageState extends State<PasswordPage>
       right: 0,
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Builder(
-          builder: (ctx) {
-            fabContext = ctx;
-            return FloatingActionButton(
-              backgroundColor: AppColors.blue500,
-              foregroundColor: AppColors.white500,
-              child: const Icon(Icons.add),
-              onPressed: _goToSavePassword,
-            );
-          },
+        child: FloatingActionButton(
+          backgroundColor: AppColors.blue500,
+          foregroundColor: AppColors.white500,
+          child: const Icon(Icons.add),
+          onPressed: _goToSavePassword,
         ),
       ),
     );
@@ -171,7 +165,6 @@ class _PasswordPageState extends State<PasswordPage>
       },
       trailingWidget: Builder(
         builder: (ctx) {
-          avatarContext = ctx;
           return AccountIcon(
             user: user,
             onTap: () => showPreferencePage(ctx),
@@ -230,5 +223,9 @@ class _PasswordPageState extends State<PasswordPage>
     if (result == true) {
       _bloc.add(RefreshDataEvent());
     }
+  }
+
+  void _showOnboarding() async {
+    await showOnboardingBottomSheet(context);
   }
 }
