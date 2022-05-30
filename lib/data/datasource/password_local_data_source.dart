@@ -134,7 +134,8 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
       } else {
         return value
             .where(
-              (element) => element.name.contains(keyword),
+              (element) =>
+                  element.name.toLowerCase().contains(keyword.toLowerCase()),
               //  || element.accName.contains(keyword)
             )
             .toList();
