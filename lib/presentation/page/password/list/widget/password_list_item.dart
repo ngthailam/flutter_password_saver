@@ -19,18 +19,21 @@ class PasswordListItem extends StatefulWidget {
   const PasswordListItem({
     Key? key,
     required this.password,
+    required this.prefShowAccName,
   }) : super(key: key);
 
   final Password password;
+  final bool prefShowAccName;
 
   @override
   State<PasswordListItem> createState() => _PasswordListItemState();
 }
 
 class _PasswordListItemState extends State<PasswordListItem> {
-  bool _contentVisible = false;
   bool _alwaysShow = false;
   bool _requireAuthen = false;
+  bool _accNameVisible = false;
+  bool _passwordVisible = false;
 
   @override
   void initState() {
@@ -51,8 +54,10 @@ class _PasswordListItemState extends State<PasswordListItem> {
 
     if (passSettingAlwaysShow == true) {
       _alwaysShow = true;
-      _contentVisible = true;
+      _passwordVisible = true;
     }
+
+    _accNameVisible = widget.prefShowAccName;
     super.initState();
   }
 
@@ -153,7 +158,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
   Widget _toggleVisibilityIcon() {
     return GestureDetector(
       onTap: () async {
-        if (!_contentVisible) {
+        if (!_passwordVisible) {
           final authenSucceed = await isAuthenSuccess();
           if (!authenSucceed) {
             return;
@@ -165,11 +170,11 @@ class _PasswordListItemState extends State<PasswordListItem> {
         }
 
         setState(() {
-          _contentVisible = !_contentVisible;
+          _passwordVisible = !_passwordVisible;
         });
       },
       child: Icon(
-        _contentVisible ? Icons.visibility_off : Icons.visibility,
+        _passwordVisible ? Icons.visibility_off : Icons.visibility,
         color: AppColors.blue500,
       ),
     );
@@ -197,8 +202,8 @@ class _PasswordListItemState extends State<PasswordListItem> {
         children: [
           Text(widget.password.name),
           const SizedBox(height: 4),
-          _textWithCopy(widget.password.accName),
-          _textWithCopy(widget.password.password),
+          _textWithCopy(widget.password.accName, _accNameVisible),
+          _textWithCopy(widget.password.password, _passwordVisible),
         ],
       ),
     );
@@ -212,16 +217,16 @@ class _PasswordListItemState extends State<PasswordListItem> {
     );
   }
 
-  Widget _textWithCopy(String text) {
+  Widget _textWithCopy(String text, bool visible) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(text.obscureText(!_contentVisible)),
+        Text(text.obscureText(!visible)),
         const SizedBox(width: 8),
         GestureDetector(
           onTap: () {
-            if (_contentVisible) {
+            if (visible) {
               Clipboard.setData(ClipboardData(text: text));
               context.showToast(S().copied(text));
             } else {

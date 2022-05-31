@@ -30,6 +30,8 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
       case PreferenceName.languageCode:
         return _accountPreferenceLocalDataSource
             .setLanguageCode(value as String);
+      case PreferenceName.showAccName:
+        return _accountPreferenceLocalDataSource.saveShowAccName(value as bool);
       default:
         return Future.error(Exception('Not implemented'));
     }

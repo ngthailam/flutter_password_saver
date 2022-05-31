@@ -91,5 +91,7 @@
     "onboard_desc_create": "Press this button to start create a new password",
     "onboard_desc_reorder": "Hold and drag passwords to reorder them to your liking",
     "onboard_desc_swipe": "Swipe left on passwords for more actions",
-    "onboard_desc_settings": "Press this icon to open app settings"
+    "onboard_desc_settings": "Press this icon to open app settings",
+    "prefDarkModeShowAccName": "Always show account name",
+    "errorUnknown": "An error has occured"
 }

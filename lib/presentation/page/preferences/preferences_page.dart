@@ -19,10 +19,9 @@ import 'package:flutter_password_saver/presentation/widget/loading_indicator.dar
 import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:flutter_password_saver/initializer/language_util.dart';
 import 'package:flutter_password_saver/initializer/theme_util.dart';
-import 'package:collection/collection.dart';
 
-Future<void> showPreferencePage(BuildContext context) {
-  return showDialog(
+Future<bool?> showPreferencePage(BuildContext context) {
+  return showDialog<bool>(
     context: context,
     barrierDismissible: true,
     barrierColor: AppColors.ink300,
@@ -54,67 +53,76 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      width: MediaQuery.of(context).size.height * 0.9,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: BlocProvider(
-        create: (context) => _bloc..add(PreferenceInitEvent()),
-        child: BlocConsumer<PreferencesBloc, PreferenceState>(
-          listener: ((context, state) {
-            if (state.deleteLoadState != LoadState.none) {
-              if (state.deleteLoadState == LoadState.success) {
-                context.showErrorSnackBar(S().sbDeleteSuccess);
-                HotRestart.of(context).hotRestart();
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(_bloc.dataChanged);
+        return false;
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        width: MediaQuery.of(context).size.height * 0.9,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: BlocProvider(
+          create: (context) => _bloc..add(PreferenceInitEvent()),
+          child: BlocConsumer<PreferencesBloc, PreferenceState>(
+            listener: ((context, state) {
+              if (state.deleteLoadState != LoadState.none) {
+                if (state.deleteLoadState == LoadState.success) {
+                  context.showErrorSnackBar(S().sbDeleteSuccess);
+                  HotRestart.of(context).hotRestart();
+                }
+
+                if (state.deleteLoadState == LoadState.failure) {
+                  context.showErrorSnackBar(S().sbDeleteError);
+                }
               }
 
-              if (state.deleteLoadState == LoadState.failure) {
-                context.showErrorSnackBar(S().sbDeleteError);
+              if (state.loadState == LoadState.failure) {
+                context.showErrorSnackBar(S().errorUnknown);
+                return;
               }
-            }
 
-            final isEnableDarkMode = state.preference?.items
-                .firstWhereOrNull(
-                    (element) => element.name == PreferenceName.enableDarkMode)
-                ?.value;
-            if (isEnableDarkMode != null && isEnableDarkMode != isDarkMode()) {
-              changeThemeMode();
-            }
+              final isEnableDarkMode =
+                  state.preference?.getItemValue(PreferenceName.enableDarkMode);
+              if (isEnableDarkMode != null &&
+                  isEnableDarkMode != isDarkMode()) {
+                changeThemeMode();
+              }
 
-            final isChangeLanguage = state.preference?.items
-                .firstWhereOrNull(
-                    (element) => element.name == PreferenceName.languageCode)
-                ?.value;
-            if (isChangeLanguage != null) {
-              setLanguage(isChangeLanguage);
-            }
-          }),
-          builder: (context, state) {
-            switch (state.loadState) {
-              case LoadState.loading:
-                return Center(
-                    child: LoadingIndicator(
-                  color: LoadingIndicator.defaultColor,
-                ));
-              case LoadState.failure:
-                return const Center(child: Text('Error'));
-              case LoadState.success:
-                if (state.deleteLoadState == LoadState.none) {
-                  return _primary(state);
-                } else {
+              final isChangeLanguage =
+                  state.preference?.getItemValue(PreferenceName.languageCode);
+              if (isChangeLanguage != null) {
+                setLanguage(isChangeLanguage);
+              }
+            }),
+            builder: (context, state) {
+              switch (state.loadState) {
+                case LoadState.loading:
                   return Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        LoadingIndicator(),
-                      ],
+                    child: LoadingIndicator(
+                      color: LoadingIndicator.defaultColor,
                     ),
                   );
-                }
-              default:
-                return const SizedBox.shrink();
-            }
-          },
+                case LoadState.failure:
+                  return const Center(child: Text('Error'));
+                case LoadState.success:
+                  if (state.deleteLoadState == LoadState.none) {
+                    return _primary(state);
+                  } else {
+                    return Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          LoadingIndicator(),
+                        ],
+                      ),
+                    );
+                  }
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
+          ),
         ),
       ),
     );
@@ -160,7 +168,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return Align(
       alignment: Alignment.bottomLeft,
       child: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
+        onTap: () => Navigator.of(context).pop(_bloc.dataChanged),
         child: const Icon(Icons.close),
       ),
     );

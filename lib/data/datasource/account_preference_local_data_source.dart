@@ -13,6 +13,8 @@ abstract class AccountPreferenceLocalDataSource {
   Future<void> enableDarkMode(bool enable);
 
   Future<void> setLanguageCode(String value);
+
+  Future<void> saveShowAccName(bool value);
 }
 
 @Injectable(as: AccountPreferenceLocalDataSource)
@@ -33,6 +35,9 @@ class AccountPreferenceLocalDataSourceImpl
       languageCode:
           sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
               AccountPreference.languageCodeDefault,
+      showAccName:
+          sharedPrefs.getBool(AccountPreferenceEntity.keyShowAccName) ??
+              AccountPreference.showAccountNameDefault,
     );
   }
 
@@ -58,5 +63,11 @@ class AccountPreferenceLocalDataSourceImpl
   Future<void> setLanguageCode(String value) async {
     final sharedPrefs = await _prefs;
     sharedPrefs.setString(AccountPreferenceEntity.keyLanguageCode, value);
+  }
+
+  @override
+  Future<void> saveShowAccName(bool value) async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.setBool(AccountPreferenceEntity.keyShowAccName, value);
   }
 }

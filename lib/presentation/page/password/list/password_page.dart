@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/main.dart';
@@ -128,6 +129,9 @@ class _PasswordPageState extends State<PasswordPage> {
           return PasswordListItem(
             key: ObjectKey(item),
             password: item,
+            prefShowAccName: _bloc.accountPreference
+                    ?.getItemValue(PreferenceName.showAccName) ??
+                AccountPreference.showAccountNameDefault,
           );
         },
         itemCount: _bloc.state.passwords.length,
@@ -167,7 +171,12 @@ class _PasswordPageState extends State<PasswordPage> {
         builder: (ctx) {
           return AccountIcon(
             user: user,
-            onTap: () => showPreferencePage(ctx),
+            onTap: () async {
+              final needsUpdate = await showPreferencePage(ctx);
+              if (needsUpdate == true) {
+                _bloc.add(RefreshDataEvent());
+              }
+            },
           );
         },
       ),

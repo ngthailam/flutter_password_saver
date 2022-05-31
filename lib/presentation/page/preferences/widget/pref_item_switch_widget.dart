@@ -55,6 +55,8 @@ class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
         return Text(S().prefRequireLogin);
       case PreferenceName.enableDarkMode:
         return Text(S().prefDarkMode);
+      case PreferenceName.showAccName:
+        return Text(S().prefDarkModeShowAccName);
       default:
         return const SizedBox.shrink();
     }

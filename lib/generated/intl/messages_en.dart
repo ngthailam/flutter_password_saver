@@ -57,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Save your first password"),
         "errorPassIncorrect":
             MessageLookupByLibrary.simpleMessage("Password incorrect"),
+        "errorUnknown":
+            MessageLookupByLibrary.simpleMessage("An error has occured"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Get started"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi "),
         "keyChain": MessageLookupByLibrary.simpleMessage("KeyChain"),
@@ -82,6 +84,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
         "prefDarkMode":
             MessageLookupByLibrary.simpleMessage("Enable dark mode"),
+        "prefDarkModeShowAccName":
+            MessageLookupByLibrary.simpleMessage("Always show account name"),
         "prefRequireLogin":
             MessageLookupByLibrary.simpleMessage("Require login on open app"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
