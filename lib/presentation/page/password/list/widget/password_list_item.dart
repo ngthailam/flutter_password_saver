@@ -32,8 +32,8 @@ class PasswordListItem extends StatefulWidget {
 class _PasswordListItemState extends State<PasswordListItem> {
   bool _alwaysShow = false;
   bool _requireAuthen = false;
-  bool _accNameVisible = false;
-  bool _passwordVisible = false;
+  bool _prefAccNameVisible = false;
+  bool _eyeShowAllContent = false;
 
   @override
   void initState() {
@@ -54,10 +54,10 @@ class _PasswordListItemState extends State<PasswordListItem> {
 
     if (passSettingAlwaysShow == true) {
       _alwaysShow = true;
-      _passwordVisible = true;
+      _eyeShowAllContent = true;
     }
 
-    _accNameVisible = widget.prefShowAccName;
+    _prefAccNameVisible = widget.prefShowAccName;
     super.initState();
   }
 
@@ -158,7 +158,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
   Widget _toggleVisibilityIcon() {
     return GestureDetector(
       onTap: () async {
-        if (!_passwordVisible) {
+        if (!_eyeShowAllContent) {
           final authenSucceed = await isAuthenSuccess();
           if (!authenSucceed) {
             return;
@@ -170,11 +170,11 @@ class _PasswordListItemState extends State<PasswordListItem> {
         }
 
         setState(() {
-          _passwordVisible = !_passwordVisible;
+          _eyeShowAllContent = !_eyeShowAllContent;
         });
       },
       child: Icon(
-        _passwordVisible ? Icons.visibility_off : Icons.visibility,
+        _eyeShowAllContent ? Icons.visibility_off : Icons.visibility,
         color: AppColors.blue500,
       ),
     );
@@ -202,8 +202,9 @@ class _PasswordListItemState extends State<PasswordListItem> {
         children: [
           Text(widget.password.name),
           const SizedBox(height: 4),
-          _textWithCopy(widget.password.accName, _accNameVisible),
-          _textWithCopy(widget.password.password, _passwordVisible),
+          _textWithCopy(widget.password.accName,
+              _prefAccNameVisible || _eyeShowAllContent),
+          _textWithCopy(widget.password.password, _eyeShowAllContent),
         ],
       ),
     );

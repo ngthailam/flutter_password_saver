@@ -82,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboard_desc_swipe": MessageLookupByLibrary.simpleMessage(
             "Swipe left on passwords for more actions"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
+        "prefAllowSearchAccName": MessageLookupByLibrary.simpleMessage(
+            "Allow search also account name"),
         "prefDarkMode":
             MessageLookupByLibrary.simpleMessage("Enable dark mode"),
         "prefDarkModeShowAccName":

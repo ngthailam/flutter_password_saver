@@ -93,5 +93,6 @@
     "onboard_desc_swipe": "Swipe left on passwords for more actions",
     "onboard_desc_settings": "Press this icon to open app settings",
     "prefDarkModeShowAccName": "Always show account name",
-    "errorUnknown": "An error has occured"
+    "errorUnknown": "An error has occured",
+    "prefAllowSearchAccName": "Allow search also account name"
 }

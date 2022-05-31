@@ -7,6 +7,8 @@ part of 'account_preference_entity.dart';
 // **************************************************************************
 
 abstract class _$AccountPreferenceEntityCWProxy {
+  AccountPreferenceEntity allowSearchAccName(bool allowSearchAccName);
+
   AccountPreferenceEntity enableDarkMode(bool enableDarkMode);
 
   AccountPreferenceEntity languageCode(String languageCode);
@@ -22,6 +24,7 @@ abstract class _$AccountPreferenceEntityCWProxy {
   /// AccountPreferenceEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   AccountPreferenceEntity call({
+    bool? allowSearchAccName,
     bool? enableDarkMode,
     String? languageCode,
     bool? requireLogin,
@@ -35,6 +38,10 @@ class _$AccountPreferenceEntityCWProxyImpl
   final AccountPreferenceEntity _value;
 
   const _$AccountPreferenceEntityCWProxyImpl(this._value);
+
+  @override
+  AccountPreferenceEntity allowSearchAccName(bool allowSearchAccName) =>
+      this(allowSearchAccName: allowSearchAccName);
 
   @override
   AccountPreferenceEntity enableDarkMode(bool enableDarkMode) =>
@@ -61,12 +68,18 @@ class _$AccountPreferenceEntityCWProxyImpl
   /// AccountPreferenceEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   AccountPreferenceEntity call({
+    Object? allowSearchAccName = const $CopyWithPlaceholder(),
     Object? enableDarkMode = const $CopyWithPlaceholder(),
     Object? languageCode = const $CopyWithPlaceholder(),
     Object? requireLogin = const $CopyWithPlaceholder(),
     Object? showAccName = const $CopyWithPlaceholder(),
   }) {
     return AccountPreferenceEntity(
+      allowSearchAccName: allowSearchAccName == const $CopyWithPlaceholder() ||
+              allowSearchAccName == null
+          ? _value.allowSearchAccName
+          // ignore: cast_nullable_to_non_nullable
+          : allowSearchAccName as bool,
       enableDarkMode: enableDarkMode == const $CopyWithPlaceholder() ||
               enableDarkMode == null
           ? _value.enableDarkMode

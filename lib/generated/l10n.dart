@@ -779,6 +779,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Allow search also account name`
+  String get prefAllowSearchAccName {
+    return Intl.message(
+      'Allow search also account name',
+      name: 'prefAllowSearchAccName',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

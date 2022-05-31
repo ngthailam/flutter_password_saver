@@ -93,5 +93,6 @@
     "onboard_desc_swipe": "Quẹt trái mật khẩu để hiển thị thêm các tác vụ",
     "onboard_desc_settings": "Bấm vào hình này để mở cài đặt của ứng dụng",
     "prefDarkModeShowAccName": "Luôn hiển thị tên tài khoản",
-    "errorUnknown": "Đã có lỗi xảy ra"
+    "errorUnknown": "Đã có lỗi xảy ra",
+    "prefAllowSearchAccName": "Cho phép tìm kiếm cả tên tài khoản"
 }

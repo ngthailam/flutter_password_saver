@@ -83,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboard_desc_swipe": MessageLookupByLibrary.simpleMessage(
             "Quẹt trái mật khẩu để hiển thị thêm các tác vụ"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
+        "prefAllowSearchAccName": MessageLookupByLibrary.simpleMessage(
+            "Cho phép tìm kiếm cả tên tài khoản"),
         "prefDarkMode": MessageLookupByLibrary.simpleMessage("Bật theme tối"),
         "prefDarkModeShowAccName":
             MessageLookupByLibrary.simpleMessage("Luôn hiển thị tên tài khoản"),

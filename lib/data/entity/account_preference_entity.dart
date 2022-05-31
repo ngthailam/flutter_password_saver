@@ -9,38 +9,41 @@ class AccountPreferenceEntity {
   static const keyEnableDarkMode = 'enableDarkMode';
   static const keyLanguageCode = 'languageCode';
   static const keyShowAccName = 'showAccName';
+  static const keyAllowSearchAccName = 'allowSearchAccName';
 
   AccountPreferenceEntity({
     required this.requireLogin,
     required this.enableDarkMode,
     required this.languageCode,
     required this.showAccName,
+    required this.allowSearchAccName,
   });
 
   final bool requireLogin;
   final bool enableDarkMode;
   final String languageCode;
   final bool showAccName;
+  final bool allowSearchAccName;
 
   factory AccountPreferenceEntity.fromAccountPreference(
       AccountPreference preference) {
     return AccountPreferenceEntity(
       // Require login
-      requireLogin:
-          preference.getItemByName(PreferenceName.requirePass)?.value ??
-              AccountPreference.requireLoginDefault,
+      requireLogin: preference.getItemValue(PreferenceName.requirePass) ??
+          AccountPreference.requireLoginDefault,
       // Dark mode
-      enableDarkMode:
-          preference.getItemByName(PreferenceName.enableDarkMode)?.value ??
-              AccountPreference.enableDarkModeDefault,
+      enableDarkMode: preference.getItemValue(PreferenceName.enableDarkMode) ??
+          AccountPreference.enableDarkModeDefault,
       // Language code
-      languageCode:
-          preference.getItemByName(PreferenceName.languageCode)?.value ??
-              AccountPreference.languageCodeDefault,
+      languageCode: preference.getItemValue(PreferenceName.languageCode) ??
+          AccountPreference.languageCodeDefault,
       // Show acc name always
-      showAccName:
-          preference.getItemByName(PreferenceName.showAccName)?.value ??
-              AccountPreference.showAccountNameDefault,
+      showAccName: preference.getItemValue(PreferenceName.showAccName) ??
+          AccountPreference.showAccountNameDefault,
+      // Allow user to search account name too
+      allowSearchAccName:
+          preference.getItemValue(PreferenceName.allowSearchAccName) ??
+              AccountPreference.allowSearchAccNameDefault,
     );
   }
 
@@ -61,6 +64,10 @@ class AccountPreferenceEntity {
           AccountPreferenceItem(
             name: PreferenceName.showAccName,
             value: showAccName,
+          ),
+          AccountPreferenceItem(
+            name: PreferenceName.allowSearchAccName,
+            value: allowSearchAccName,
           ),
         ],
       );

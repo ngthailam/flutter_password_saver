@@ -1,3 +1,4 @@
+import 'package:flutter_password_saver/data/datasource/account_preference_local_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/secure_storage.dart';
 import 'package:flutter_password_saver/data/entity/password_entity.dart';
 import 'package:flutter_password_saver/data/entity/password_settings_entity.dart';
@@ -26,9 +27,13 @@ abstract class PasswordLocalDataSource {
 
 @Injectable(as: PasswordLocalDataSource)
 class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
-  PasswordLocalDataSourceImpl(this._secureStorage);
+  PasswordLocalDataSourceImpl(
+    this._secureStorage,
+    this._preferenceLocalDataSource,
+  );
 
   final SecureStorage _secureStorage;
+  final AccountPreferenceLocalDataSource _preferenceLocalDataSource;
 
   Future<Box<PasswordEntity>> _getPasswordBox() async {
     final encryptionKey = await _secureStorage.getDbEncryptionKey();
@@ -132,12 +137,15 @@ class PasswordLocalDataSourceImpl extends PasswordLocalDataSource {
       if (keyword.isEmpty) {
         return value;
       } else {
+        final keyWordCleaned = keyword.toLowerCase();
+        final shouldSearchAccName =
+            _preferenceLocalDataSource.fastGetAllowSearchAccName();
         return value
-            .where(
-              (element) =>
-                  element.name.toLowerCase().contains(keyword.toLowerCase()),
-              //  || element.accName.contains(keyword)
-            )
+            .where((element) =>
+                element.name.toLowerCase().contains(keyWordCleaned) ||
+                (shouldSearchAccName
+                    ? element.accName.toLowerCase().contains(keyWordCleaned)
+                    : true))
             .toList();
       }
     });

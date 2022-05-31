@@ -71,8 +71,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i11.AccountPreferenceUseCase(get<_i9.AccountPrefRepo>()));
   gh.factory<_i12.AuthLocalDataSource>(() => _i12.AuthLocalDataSourceImpl(
       get<_i7.SecureStorage>(), get<_i5.AuthLoginLockDataSource>()));
-  gh.factory<_i13.PasswordLocalDataSource>(
-      () => _i13.PasswordLocalDataSourceImpl(get<_i7.SecureStorage>()));
+  gh.factory<_i13.PasswordLocalDataSource>(() =>
+      _i13.PasswordLocalDataSourceImpl(get<_i7.SecureStorage>(),
+          get<_i3.AccountPreferenceLocalDataSource>()));
   gh.factory<_i14.PasswordRepository>(
       () => _i15.PasswordRepositoryImpl(get<_i13.PasswordLocalDataSource>()));
   gh.factory<_i16.ReOrderPasswordUseCase>(
