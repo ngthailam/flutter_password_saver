@@ -14,6 +14,7 @@ class PrimaryTextInput extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 8),
     this.textInputAction,
     this.onSubmitted,
+    this.suffixWidget,
   }) : super(key: key);
 
   final String hintText;
@@ -25,7 +26,8 @@ class PrimaryTextInput extends StatelessWidget {
   final EdgeInsets padding;
   final TextInputAction? textInputAction;
   final Function(String)? onSubmitted;
-  
+  final Widget? suffixWidget;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,8 +52,9 @@ class PrimaryTextInput extends StatelessWidget {
             hintText: hintText,
             border: InputBorder.none,
             hintStyle: TextStyle(
-              color: isDarkMode() ? AppColors.white300 : AppColors.ink300,
+              color: isDarkMode() ? AppColors.white400 : AppColors.ink400,
             ),
+            suffixIcon: suffixWidget,
           ),
         ),
       ),
