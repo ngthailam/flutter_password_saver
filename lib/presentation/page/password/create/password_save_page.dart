@@ -97,7 +97,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(150),
-              color: AppColors.blue400.withOpacity(0.6),
+              color: AppColors.blue400.withOpacity(0.8),
             ),
           ),
         ),
@@ -109,7 +109,7 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
             height: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(300),
-              color: AppColors.blue400,
+              color: AppColors.blue400.withOpacity(0.6),
             ),
           ),
         ),
@@ -178,12 +178,8 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   }
 
   Widget _passTextField() {
-    return PrimaryTextInput(
-      icon: Icons.lock,
-      controller: _passwordTextEdtCtrl,
-      hintText: S().savePassHintPasswordName,
-      obscureText: true,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+    return _PasswordInputField(
+      textEditingController: _passwordTextEdtCtrl,
     );
   }
 
@@ -203,6 +199,44 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
           }
         },
         text: S().save,
+      ),
+    );
+  }
+}
+
+class _PasswordInputField extends StatefulWidget {
+  const _PasswordInputField({
+    Key? key,
+    required this.textEditingController,
+  }) : super(key: key);
+
+  final TextEditingController textEditingController;
+
+  @override
+  State<_PasswordInputField> createState() => __PasswordInputFieldState();
+}
+
+class __PasswordInputFieldState extends State<_PasswordInputField> {
+  bool _isPasswordVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return PrimaryTextInput(
+      icon: Icons.lock,
+      controller: widget.textEditingController,
+      hintText: S().savePassHintPasswordName,
+      obscureText: !_isPasswordVisible,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      suffixWidget: IconButton(
+        onPressed: () {
+          setState(() {
+            _isPasswordVisible = !_isPasswordVisible;
+          });
+        },
+        icon: Icon(
+          _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+          color: AppColors.blue500,
+        ),
       ),
     );
   }
