@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tạo mật khẩu đầu tiên"),
         "errorPassIncorrect":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không hợp lệ"),
+        "errorUnknown":
+            MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào "),
         "keyChain": MessageLookupByLibrary.simpleMessage("KeyChain"),
@@ -81,7 +83,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "onboard_desc_swipe": MessageLookupByLibrary.simpleMessage(
             "Quẹt trái mật khẩu để hiển thị thêm các tác vụ"),
         "passSaverHyphen": MessageLookupByLibrary.simpleMessage("PASS-SAVER"),
+        "prefAllowSearchAccName": MessageLookupByLibrary.simpleMessage(
+            "Cho phép tìm kiếm cả tên tài khoản"),
         "prefDarkMode": MessageLookupByLibrary.simpleMessage("Bật theme tối"),
+        "prefDarkModeShowAccName":
+            MessageLookupByLibrary.simpleMessage("Luôn hiển thị tên tài khoản"),
         "prefRequireLogin": MessageLookupByLibrary.simpleMessage(
             "Yêu cầu mật khẩu khi đăng nhập"),
         "preferences": MessageLookupByLibrary.simpleMessage("Cài đặt"),

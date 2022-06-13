@@ -91,5 +91,8 @@
     "onboard_desc_create": "Bấm nút này để bắt đầu lưu một mật khẩu mới",
     "onboard_desc_reorder": "Giữ và kéo để sắp xếp lại các mật khẩu theo sở thích",
     "onboard_desc_swipe": "Quẹt trái mật khẩu để hiển thị thêm các tác vụ",
-    "onboard_desc_settings": "Bấm vào hình này để mở cài đặt của ứng dụng"
+    "onboard_desc_settings": "Bấm vào hình này để mở cài đặt của ứng dụng",
+    "prefDarkModeShowAccName": "Luôn hiển thị tên tài khoản",
+    "errorUnknown": "Đã có lỗi xảy ra",
+    "prefAllowSearchAccName": "Cho phép tìm kiếm cả tên tài khoản"
 }

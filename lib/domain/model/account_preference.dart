@@ -8,6 +8,8 @@ class AccountPreference extends Equatable {
   static const requireLoginDefault = true;
   static const enableDarkModeDefault = false;
   static const languageCodeDefault = 'en';
+  static const showAccountNameDefault = true;
+  static const allowSearchAccNameDefault = true;
 
   const AccountPreference({this.items = defaultPrefItems});
 
@@ -25,6 +27,14 @@ class AccountPreference extends Equatable {
     AccountPreferenceItem(
       name: PreferenceName.languageCode,
       value: languageCodeDefault,
+    ),
+    AccountPreferenceItem(
+      name: PreferenceName.showAccName,
+      value: showAccountNameDefault,
+    ),
+    AccountPreferenceItem(
+      name: PreferenceName.allowSearchAccName,
+      value: allowSearchAccNameDefault,
     ),
   ];
 
@@ -46,6 +56,10 @@ class AccountPreference extends Equatable {
     return matchingItems.isEmpty ? null : matchingItems.first;
   }
 
+  dynamic getItemValue(PreferenceName name) {
+    return getItemByName(name)?.value;
+  }
+
   @override
   List<Object?> get props => [items];
 }
@@ -54,6 +68,8 @@ enum PreferenceName {
   requirePass,
   enableDarkMode,
   languageCode,
+  showAccName,
+  allowSearchAccName,
 }
 
 @CopyWith()

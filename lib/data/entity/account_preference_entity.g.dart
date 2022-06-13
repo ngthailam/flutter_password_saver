@@ -7,11 +7,15 @@ part of 'account_preference_entity.dart';
 // **************************************************************************
 
 abstract class _$AccountPreferenceEntityCWProxy {
+  AccountPreferenceEntity allowSearchAccName(bool allowSearchAccName);
+
   AccountPreferenceEntity enableDarkMode(bool enableDarkMode);
 
   AccountPreferenceEntity languageCode(String languageCode);
 
   AccountPreferenceEntity requireLogin(bool requireLogin);
+
+  AccountPreferenceEntity showAccName(bool showAccName);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountPreferenceEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -20,9 +24,11 @@ abstract class _$AccountPreferenceEntityCWProxy {
   /// AccountPreferenceEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   AccountPreferenceEntity call({
+    bool? allowSearchAccName,
     bool? enableDarkMode,
     String? languageCode,
     bool? requireLogin,
+    bool? showAccName,
   });
 }
 
@@ -32,6 +38,10 @@ class _$AccountPreferenceEntityCWProxyImpl
   final AccountPreferenceEntity _value;
 
   const _$AccountPreferenceEntityCWProxyImpl(this._value);
+
+  @override
+  AccountPreferenceEntity allowSearchAccName(bool allowSearchAccName) =>
+      this(allowSearchAccName: allowSearchAccName);
 
   @override
   AccountPreferenceEntity enableDarkMode(bool enableDarkMode) =>
@@ -46,6 +56,10 @@ class _$AccountPreferenceEntityCWProxyImpl
       this(requireLogin: requireLogin);
 
   @override
+  AccountPreferenceEntity showAccName(bool showAccName) =>
+      this(showAccName: showAccName);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountPreferenceEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -54,11 +68,18 @@ class _$AccountPreferenceEntityCWProxyImpl
   /// AccountPreferenceEntity(...).copyWith(id: 12, name: "My name")
   /// ````
   AccountPreferenceEntity call({
+    Object? allowSearchAccName = const $CopyWithPlaceholder(),
     Object? enableDarkMode = const $CopyWithPlaceholder(),
     Object? languageCode = const $CopyWithPlaceholder(),
     Object? requireLogin = const $CopyWithPlaceholder(),
+    Object? showAccName = const $CopyWithPlaceholder(),
   }) {
     return AccountPreferenceEntity(
+      allowSearchAccName: allowSearchAccName == const $CopyWithPlaceholder() ||
+              allowSearchAccName == null
+          ? _value.allowSearchAccName
+          // ignore: cast_nullable_to_non_nullable
+          : allowSearchAccName as bool,
       enableDarkMode: enableDarkMode == const $CopyWithPlaceholder() ||
               enableDarkMode == null
           ? _value.enableDarkMode
@@ -74,6 +95,11 @@ class _$AccountPreferenceEntityCWProxyImpl
               ? _value.requireLogin
               // ignore: cast_nullable_to_non_nullable
               : requireLogin as bool,
+      showAccName:
+          showAccName == const $CopyWithPlaceholder() || showAccName == null
+              ? _value.showAccName
+              // ignore: cast_nullable_to_non_nullable
+              : showAccName as bool,
     );
   }
 }

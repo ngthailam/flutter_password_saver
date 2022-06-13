@@ -13,7 +13,7 @@ class PrefItemWidgetFactory {
         return PrefItemChooseLanguage(
           preferenceItem: preferenceItem,
           onUpdate: onUpdate,
-        );
+        );  
       default:
         return PrefItemSwitcher(
           preferenceItem: preferenceItem,

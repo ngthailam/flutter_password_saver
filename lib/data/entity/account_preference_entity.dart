@@ -1,6 +1,5 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
-import 'package:collection/collection.dart';
 
 part 'account_preference_entity.g.dart';
 
@@ -9,38 +8,42 @@ class AccountPreferenceEntity {
   static const keyRequireLogin = 'requireLogin';
   static const keyEnableDarkMode = 'enableDarkMode';
   static const keyLanguageCode = 'languageCode';
+  static const keyShowAccName = 'showAccName';
+  static const keyAllowSearchAccName = 'allowSearchAccName';
 
   AccountPreferenceEntity({
-    this.requireLogin = AccountPreference.requireLoginDefault,
-    this.enableDarkMode = AccountPreference.enableDarkModeDefault,
-    this.languageCode = AccountPreference.languageCodeDefault,
+    required this.requireLogin,
+    required this.enableDarkMode,
+    required this.languageCode,
+    required this.showAccName,
+    required this.allowSearchAccName,
   });
 
   final bool requireLogin;
   final bool enableDarkMode;
   final String languageCode;
+  final bool showAccName;
+  final bool allowSearchAccName;
 
   factory AccountPreferenceEntity.fromAccountPreference(
       AccountPreference preference) {
     return AccountPreferenceEntity(
       // Require login
-      requireLogin: preference.items
-              .firstWhereOrNull(
-                  (element) => element.name == PreferenceName.requirePass)
-              ?.value ??
+      requireLogin: preference.getItemValue(PreferenceName.requirePass) ??
           AccountPreference.requireLoginDefault,
       // Dark mode
-      enableDarkMode: preference.items
-              .firstWhereOrNull(
-                  (element) => element.name == PreferenceName.enableDarkMode)
-              ?.value ??
+      enableDarkMode: preference.getItemValue(PreferenceName.enableDarkMode) ??
           AccountPreference.enableDarkModeDefault,
       // Language code
-      languageCode: preference.items
-              .firstWhereOrNull(
-                  (element) => element.name == PreferenceName.languageCode)
-              ?.value ??
+      languageCode: preference.getItemValue(PreferenceName.languageCode) ??
           AccountPreference.languageCodeDefault,
+      // Show acc name always
+      showAccName: preference.getItemValue(PreferenceName.showAccName) ??
+          AccountPreference.showAccountNameDefault,
+      // Allow user to search account name too
+      allowSearchAccName:
+          preference.getItemValue(PreferenceName.allowSearchAccName) ??
+              AccountPreference.allowSearchAccNameDefault,
     );
   }
 
@@ -57,6 +60,14 @@ class AccountPreferenceEntity {
           AccountPreferenceItem(
             name: PreferenceName.languageCode,
             value: languageCode,
+          ),
+          AccountPreferenceItem(
+            name: PreferenceName.showAccName,
+            value: showAccName,
+          ),
+          AccountPreferenceItem(
+            name: PreferenceName.allowSearchAccName,
+            value: allowSearchAccName,
           ),
         ],
       );

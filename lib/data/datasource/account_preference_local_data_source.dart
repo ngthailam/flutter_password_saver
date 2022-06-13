@@ -13,7 +13,16 @@ abstract class AccountPreferenceLocalDataSource {
   Future<void> enableDarkMode(bool enable);
 
   Future<void> setLanguageCode(String value);
+
+  Future<void> saveShowAccName(bool value);
+
+  Future<void> saveAllowSearchAccName(bool value);
+
+  bool fastGetAllowSearchAccName();
 }
+
+// To improve a tiny bit of performance when user uses search too much
+bool _allowSearchAccName = true;
 
 @Injectable(as: AccountPreferenceLocalDataSource)
 class AccountPreferenceLocalDataSourceImpl
@@ -23,6 +32,9 @@ class AccountPreferenceLocalDataSourceImpl
   @override
   Future<AccountPreferenceEntity> getAccountPrefs() async {
     final sharedPrefs = await _prefs;
+    _allowSearchAccName =
+        sharedPrefs.getBool(AccountPreferenceEntity.keyAllowSearchAccName) ??
+            AccountPreference.allowSearchAccNameDefault;
     return AccountPreferenceEntity(
       requireLogin:
           sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ??
@@ -33,6 +45,10 @@ class AccountPreferenceLocalDataSourceImpl
       languageCode:
           sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
               AccountPreference.languageCodeDefault,
+      showAccName:
+          sharedPrefs.getBool(AccountPreferenceEntity.keyShowAccName) ??
+              AccountPreference.showAccountNameDefault,
+      allowSearchAccName: _allowSearchAccName,
     );
   }
 
@@ -58,5 +74,23 @@ class AccountPreferenceLocalDataSourceImpl
   Future<void> setLanguageCode(String value) async {
     final sharedPrefs = await _prefs;
     sharedPrefs.setString(AccountPreferenceEntity.keyLanguageCode, value);
+  }
+
+  @override
+  Future<void> saveShowAccName(bool value) async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.setBool(AccountPreferenceEntity.keyShowAccName, value);
+  }
+
+  @override
+  Future<void> saveAllowSearchAccName(bool value) async {
+    final sharedPrefs = await _prefs;
+    _allowSearchAccName = value;
+    sharedPrefs.setBool(AccountPreferenceEntity.keyAllowSearchAccName, value);
+  }
+
+  @override
+  bool fastGetAllowSearchAccName() {
+    return _allowSearchAccName;
   }
 }

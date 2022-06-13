@@ -25,6 +25,8 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
   final GetCurrentAccountUseCase _getCurrentAccountUseCase;
   final DeleteAccountUseCase _deleteAccountUseCase;
 
+  bool dataChanged = false;
+
   FutureOr<void> _initialize(
     PreferenceInitEvent event,
     Emitter<PreferenceState> emit,
@@ -60,11 +62,17 @@ class PreferencesBloc extends Bloc<PreferenceEvent, PreferenceState> {
     SavePreferenceEvent event,
     Emitter<PreferenceState> emit,
   ) async {
-    await _accountPreferenceUseCase.saveAccountPreference(
-      name: event.name,
-      value: event.value,
-    );
-    final preferences = await _accountPreferenceUseCase.getAccountPrefs();
-    emit(state.copyWith(preference: preferences));
+    try {
+      dataChanged = true;
+      await _accountPreferenceUseCase.saveAccountPreference(
+        name: event.name,
+        value: event.value,
+      );
+      final preferences = await _accountPreferenceUseCase.getAccountPrefs();
+      emit(state.copyWith(
+          preference: preferences, loadState: LoadState.success));
+    } catch (e) {
+      emit(state.copyWith(loadState: LoadState.failure));
+    }
   }
 }

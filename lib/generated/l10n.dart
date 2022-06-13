@@ -759,6 +759,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Always show account name`
+  String get prefDarkModeShowAccName {
+    return Intl.message(
+      'Always show account name',
+      name: 'prefDarkModeShowAccName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error has occured`
+  String get errorUnknown {
+    return Intl.message(
+      'An error has occured',
+      name: 'errorUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Allow search also account name`
+  String get prefAllowSearchAccName {
+    return Intl.message(
+      'Allow search also account name',
+      name: 'prefAllowSearchAccName',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
