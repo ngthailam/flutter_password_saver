@@ -54,7 +54,7 @@ class _PasswordPageState extends State<PasswordPage> {
               if (state.shouldShowOnboard &&
                   !_bloc.hasShownOnboardThisSession) {
                 _bloc.add(HasShownOnboardEvent());
-                SchedulerBinding.instance?.addPostFrameCallback((_) async {
+                SchedulerBinding.instance.addPostFrameCallback((_) async {
                   await Future.delayed(const Duration(milliseconds: 500));
                   _showOnboarding();
                 });
