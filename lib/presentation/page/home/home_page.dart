@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            Center(child: _segmentControl()),
             Expanded(child: _pages()),
+            Center(child: _segmentControl()),
           ],
         ),
       ),
@@ -54,8 +54,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _segmentControl() {
     return Container(
-      height: 32,
-      margin: const EdgeInsets.only(top: 12, bottom: 4),
+      margin: const EdgeInsets.only(bottom: 16),
       child: CustomSlidingSegmentedControl<int>(
         controller: _segmentedController,
         fromMax: true,

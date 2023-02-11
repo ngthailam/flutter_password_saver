@@ -60,6 +60,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
       },
       child: Container(
         height: MediaQuery.of(context).size.height * 0.7,
+        width: MediaQuery.of(context).size.width * 0.9,
         color: Theme.of(context).scaffoldBackgroundColor,
         child: BlocProvider(
           create: (context) => _bloc..add(PreferenceInitEvent()),
