@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
@@ -38,6 +39,11 @@ void main() async {
   await initHive();
   await initPreferences();
   await initUniLink();
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(const MyApp());
 }
