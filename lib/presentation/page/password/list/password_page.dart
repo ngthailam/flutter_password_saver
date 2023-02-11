@@ -157,8 +157,8 @@ class _PasswordPageState extends State<PasswordPage>
             child: FloatingActionButton(
               backgroundColor: AppColors.blue500,
               foregroundColor: AppColors.white500,
-              child: const Icon(Icons.add),
               onPressed: _goToSavePassword,
+              child: const Icon(Icons.add),
             ),
           ),
         );

@@ -7,12 +7,12 @@ class HotRestart extends StatefulWidget {
 
   const HotRestart({Key? key, required this.child}) : super(key: key);
 
-  static _HotRestartState of(BuildContext context) {
+  static of(BuildContext context) {
     return context.findAncestorStateOfType<_HotRestartState>()!;
   }
 
   @override
-  _HotRestartState createState() => _HotRestartState();
+  State<HotRestart> createState() => _HotRestartState();
 }
 
 class _HotRestartState extends State<HotRestart> {

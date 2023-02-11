@@ -16,7 +16,7 @@ class SlideUp extends StatefulWidget {
   final VoidCallback? onComplete;
 
   @override
-  _SlideUpState createState() => _SlideUpState();
+  State<SlideUp> createState() => _SlideUpState();
 }
 
 class _SlideUpState extends State<SlideUp> with TickerProviderStateMixin {
@@ -57,11 +57,11 @@ class _SlideUpState extends State<SlideUp> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     if (_animOffset == null || _animController == null) return widget.child;
     return FadeTransition(
+      opacity: _animController!,
       child: SlideTransition(
         position: _animOffset!,
         child: widget.child,
       ),
-      opacity: _animController!,
     );
   }
 }

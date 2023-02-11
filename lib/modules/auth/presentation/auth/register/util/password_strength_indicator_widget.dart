@@ -29,15 +29,15 @@ class PasswordStrengthIndicator extends StatelessWidget {
   }
 
   Widget _strengthIndicator() {
-    final List<Widget> _bars = [];
+    final List<Widget> bars = [];
 
     for (int i = 0; i < 4; i++) {
-      _bars
+      bars
         ..add(_bar(hasColor: i < strengthIndex))
         ..add(const SizedBox(width: 4));
     }
     return Row(
-      children: _bars,
+      children: bars,
     );
   }
 

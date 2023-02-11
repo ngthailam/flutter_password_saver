@@ -76,8 +76,8 @@ class _ForgetPasswordAnswerState extends State<ForgetPasswordAnswer> {
         value: _chosenQuestion,
         items: SecurityQuestion.questionList().map((e) {
           return DropdownMenuItem(
-            child: Text(e.question),
             value: e,
+            child: Text(e.question),
           );
         }).toList(),
         onChanged: (SecurityQuestion? value) {

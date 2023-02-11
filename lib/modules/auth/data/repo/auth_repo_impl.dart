@@ -7,6 +7,7 @@ import 'package:flutter_password_saver/domain/model/user.dart';
 import 'package:flutter_password_saver/modules/auth/data/entity/account_entity.dart';
 import 'package:flutter_password_saver/modules/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
+// ignore: depend_on_referenced_packages
 import 'package:local_auth_platform_interface/types/biometric_type.dart';
 
 bool _isLoggedIn = false;

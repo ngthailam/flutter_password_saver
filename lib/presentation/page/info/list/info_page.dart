@@ -118,8 +118,8 @@ class _InfoPageState extends State<InfoPage>
             child: FloatingActionButton(
               backgroundColor: AppColors.blue500,
               foregroundColor: AppColors.white500,
-              child: const Icon(Icons.add),
               onPressed: _goToSaveInfo,
+              child: const Icon(Icons.add),
             ),
           ),
         );

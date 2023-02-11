@@ -57,7 +57,9 @@ class _RegisterPageState extends State<RegisterPage> {
               if (state.loadState == LoadState.success) {
                 _animateToNextPage();
                 await Future.delayed(const Duration(seconds: 2));
-                Navigator.of(context).popAndPushNamed(AppRouter.initialRoute);
+                if (mounted) {
+                  Navigator.of(context).popAndPushNamed(AppRouter.initialRoute);
+                }
               }
             },
             child: Stack(
@@ -486,7 +488,7 @@ class _CongratulatePageState extends State<_CongratulatePage> {
         FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
-            S().congratulation + ', ',
+            '${S().congratulation}, ',
             style: const TextStyle(
               fontSize: 36,
               color: AppColors.blue500,
@@ -645,8 +647,8 @@ class __SecurityQuestionPageState extends State<_SecurityQuestionPage> {
           value: _chosenQuestion,
           items: questions.map((e) {
             return DropdownMenuItem(
-              child: Text(e.question),
               value: e,
+              child: Text(e.question),
             );
           }).toList(),
           onChanged: (value) {

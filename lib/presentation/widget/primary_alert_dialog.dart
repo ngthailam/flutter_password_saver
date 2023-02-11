@@ -28,8 +28,8 @@ Future showAlertDialog({
               },
             ),
           TextButton(
-            child: Text(defaultActionText),
             onPressed: onDefaultAction,
+            child: Text(defaultActionText),
           ),
         ],
       ),
@@ -44,15 +44,15 @@ Future showAlertDialog({
       actions: <Widget>[
         if (cancelActionText != null)
           CupertinoDialogAction(
-            child: Text(cancelActionText),
             onPressed: () {
               onCancel == null ? Navigator.of(context).pop() : onCancel();
             },
             textStyle: const TextStyle(color: AppColors.red500),
+            child: Text(cancelActionText),
           ),
         CupertinoDialogAction(
-          child: Text(defaultActionText),
           onPressed: onDefaultAction,
+          child: Text(defaultActionText),
         ),
       ],
     ),
