@@ -117,7 +117,7 @@ class _PasswordPageState extends State<PasswordPage>
   Widget _passwordList() {
     return Container(
       // 64 == SearchBox height, to avoid widget collision
-      margin: const EdgeInsets.only(top: 64),
+      margin: const EdgeInsets.only(top: 64, right: 16, left: 16),
       child: ReorderableListView.builder(
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, i) {

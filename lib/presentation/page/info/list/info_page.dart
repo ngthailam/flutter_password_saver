@@ -89,7 +89,7 @@ class _InfoPageState extends State<InfoPage>
   Widget _infoList(List<Info> infoList) {
     return Container(
       // 64 == SearchBox height, to avoid widget collision
-      margin: const EdgeInsets.only(top: 64),
+      margin: const EdgeInsets.only(top: 64, left: 16, right: 16),
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, i) {
