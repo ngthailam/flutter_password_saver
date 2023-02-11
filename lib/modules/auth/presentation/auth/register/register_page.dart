@@ -360,6 +360,7 @@ class _NameInputPage extends StatefulWidget {
   const _NameInputPage({
     Key? key,
     required this.onContinue,
+    // ignore: unused_element
     this.name,
   }) : super(key: key);
 

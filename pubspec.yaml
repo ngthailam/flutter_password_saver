@@ -43,7 +43,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   copy_with_extension: ^4.0.0
   flutter_slidable: ^2.0.0
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.13
   flutter_svg: ^1.0.3
   top_snackbar_flutter: ^1.0.2
