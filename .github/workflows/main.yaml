@@ -20,11 +20,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+          cache: 'java12'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.0.3'
+          cache: 'flutter303'
 
       # Get flutter dependencies.
       - name: Download pub dependencies
