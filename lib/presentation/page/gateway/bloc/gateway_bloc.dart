@@ -32,7 +32,7 @@ class GatewayBloc extends Bloc<GatewayEvent, GatewayState> {
       // user is registered
       final pref = await _accountPreferenceUseCase.getAccountPrefs();
       if (pref.getItemByName(PreferenceName.requirePass)?.value == false) {
-        destinationRouteName = AppRouter.password;
+        destinationRouteName = AppRouter.initialRoute;
       } else {
         destinationRouteName = AppRouter.login;
       }

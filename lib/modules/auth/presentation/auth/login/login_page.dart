@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              _mainIcon(),
+              _mainImage(),
               const SizedBox(height: 16),
               _nameTextField(),
               _passwordTextField(),
@@ -163,8 +163,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _mainIcon() {
-    return SvgPicture.asset('assets/svg/login.svg');
+  Widget _mainImage() {
+    return SvgPicture.asset(
+      'assets/svg/login.svg',
+      width: MediaQuery.of(context).size.width / 1.5,
+    );
   }
 
   Widget _nameTextField() {
@@ -228,6 +231,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginSuccess(BuildContext context) async {
-    Navigator.of(context).popAndPushNamed(AppRouter.password);
+    Navigator.of(context).popAndPushNamed(AppRouter.initialRoute);
   }
 }

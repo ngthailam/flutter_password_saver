@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
               if (state.loadState == LoadState.success) {
                 _animateToNextPage();
                 await Future.delayed(const Duration(seconds: 2));
-                Navigator.of(context).popAndPushNamed(AppRouter.password);
+                Navigator.of(context).popAndPushNamed(AppRouter.initialRoute);
               }
             },
             child: Stack(
@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _pages() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 48, top: 32),
+      padding: const EdgeInsets.only(bottom: 36, top: 32),
       child: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -129,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Positioned(
       bottom: 0,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(bottom: 12, top: 12),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -223,7 +223,7 @@ class _BenefitPageState extends State<_BenefitPage> {
 
   Widget _content() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 32).copyWith(bottom: 60),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -238,20 +238,26 @@ class _BenefitPageState extends State<_BenefitPage> {
             ),
           ),
           const SizedBox(height: 8),
-          SlideUp(
-            delay: const Duration(milliseconds: 200),
-            child: Text(
-              S().passSaverHyphen,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: SlideUp(
+              delay: const Duration(milliseconds: 200),
+              child: Text(
+                S().passSaverHyphen,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 42,
-                  color: AppColors.blue500),
+                  color: AppColors.blue500,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 32),
-          SingleChildScrollView(
-            child: _scrollableContent(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: _scrollableContent(),
+            ),
           ),
         ],
       ),
@@ -275,8 +281,8 @@ class _BenefitPageState extends State<_BenefitPage> {
       delay: const Duration(milliseconds: 1200),
       child: SvgPicture.asset(
         'assets/svg/login.svg',
-        height: 180,
-        width: 180,
+        height: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width / 2,
       ),
     );
   }
@@ -473,16 +479,19 @@ class _CongratulatePageState extends State<_CongratulatePage> {
       children: [
         SvgPicture.asset(
           'assets/svg/register.svg',
-          height: 180,
-          width: 180,
+          height: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width / 2,
         ),
         const SizedBox(height: 32),
-        Text(
-          S().congratulation + ', ',
-          style: const TextStyle(
-            fontSize: 36,
-            color: AppColors.blue500,
-            fontWeight: FontWeight.bold,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            S().congratulation + ', ',
+            style: const TextStyle(
+              fontSize: 36,
+              color: AppColors.blue500,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(height: 8),

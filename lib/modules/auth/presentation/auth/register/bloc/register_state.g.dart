@@ -50,6 +50,7 @@ class _$RegisterStateCWProxyImpl implements _$RegisterStateCWProxy {
 }
 
 extension $RegisterStateCopyWith on RegisterState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass RegisterState.name.copyWith(...)` or like so:`instanceOfclass RegisterState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfRegisterState.copyWith(...)` or like so:`instanceOfRegisterState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$RegisterStateCWProxy get copyWith => _$RegisterStateCWProxyImpl(this);
 }

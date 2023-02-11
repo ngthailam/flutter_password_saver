@@ -34,31 +34,33 @@ class _PrefItemChooseLanguageState extends State<PrefItemChooseLanguage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(S().language),
-        SizedBox(
-          width: 150,
-          height: 100,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: DropdownButton<String>(
-              underline: const SizedBox.shrink(),
-              value: _value,
-              icon: const Icon(Icons.keyboard_arrow_down),
-              items: languageCodes.map((e) {
-                return DropdownMenuItem<String>(
-                  value: e,
-                  child: Text(_getDisplayText(e)),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                if (value != null && value != _value) {
-                  setState(() {
-                    _value = value;
-                  });
-                  widget.onUpdate?.call(
-                    widget.preferenceItem.copyWith(value: value),
+        Expanded(
+          child: SizedBox(
+            width: 150,
+            height: 100,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: DropdownButton<String>(
+                underline: const SizedBox.shrink(),
+                value: _value,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: languageCodes.map((e) {
+                  return DropdownMenuItem<String>(
+                    value: e,
+                    child: Text(_getDisplayText(e)),
                   );
-                }
-              },
+                }).toList(),
+                onChanged: (String? value) {
+                  if (value != null && value != _value) {
+                    setState(() {
+                      _value = value;
+                    });
+                    widget.onUpdate?.call(
+                      widget.preferenceItem.copyWith(value: value),
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),

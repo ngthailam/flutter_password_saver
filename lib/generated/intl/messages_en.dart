@@ -53,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "emptyInfoHint": MessageLookupByLibrary.simpleMessage(
+            "Save your first information\n Bank account number, friends phone number, where you put your drawing pencil, anything you want to save"),
         "emptyPasswordHint":
             MessageLookupByLibrary.simpleMessage("Save your first password"),
         "errorPassIncorrect":
@@ -92,6 +94,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Require login on open app"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "saveInfoError":
+            MessageLookupByLibrary.simpleMessage("Some fields are empty"),
+        "saveInfoHintDesc":
+            MessageLookupByLibrary.simpleMessage("Info (+8411111111)"),
+        "saveInfoHintName":
+            MessageLookupByLibrary.simpleMessage("Name (Jenny phone number)"),
+        "saveInfoSubTitle": MessageLookupByLibrary.simpleMessage(
+            "Your information is only saved locally, you can use network activity to check no Internet connection is establish"),
+        "saveInfoTitle":
+            MessageLookupByLibrary.simpleMessage("Save your Information"),
         "savePassError":
             MessageLookupByLibrary.simpleMessage("Some fields are empty"),
         "savePassHint":
@@ -116,6 +128,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sbDeletePassword": m2,
         "sbDeleteSuccess":
             MessageLookupByLibrary.simpleMessage("Delete successfully"),
+        "sbEditInfoSuccess":
+            MessageLookupByLibrary.simpleMessage("Info updated successfully"),
         "sbEditSuccess":
             MessageLookupByLibrary.simpleMessage("Edit password successfully"),
         "sbEye": MessageLookupByLibrary.simpleMessage(

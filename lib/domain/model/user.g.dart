@@ -97,6 +97,7 @@ class _$UserCWProxyImpl implements _$UserCWProxy {
 }
 
 extension $UserCopyWith on User {
-  /// Returns a callable class that can be used as follows: `instanceOfclass User extends Equatable.name.copyWith(...)` or like so:`instanceOfclass User extends Equatable.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfUser.copyWith(...)` or like so:`instanceOfUser.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$UserCWProxy get copyWith => _$UserCWProxyImpl(this);
 }

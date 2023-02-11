@@ -105,7 +105,8 @@ class _$AccountPreferenceEntityCWProxyImpl
 }
 
 extension $AccountPreferenceEntityCopyWith on AccountPreferenceEntity {
-  /// Returns a callable class that can be used as follows: `instanceOfclass AccountPreferenceEntity.name.copyWith(...)` or like so:`instanceOfclass AccountPreferenceEntity.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfAccountPreferenceEntity.copyWith(...)` or like so:`instanceOfAccountPreferenceEntity.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$AccountPreferenceEntityCWProxy get copyWith =>
       _$AccountPreferenceEntityCWProxyImpl(this);
 }

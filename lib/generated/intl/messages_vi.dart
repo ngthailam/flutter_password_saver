@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Xoá"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Xoá tài khoản"),
         "edit": MessageLookupByLibrary.simpleMessage("Sửa"),
+        "emptyInfoHint": MessageLookupByLibrary.simpleMessage(
+            "Lưu thông tin đầu tiên\n Số tài khoản, điện thoại bạn bè, nơi bạn để bút chì, bất kì thứ gì bạn muốn lưu lại"),
         "emptyPasswordHint":
             MessageLookupByLibrary.simpleMessage("Tạo mật khẩu đầu tiên"),
         "errorPassIncorrect":
@@ -92,6 +94,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Yêu cầu mật khẩu khi đăng nhập"),
         "preferences": MessageLookupByLibrary.simpleMessage("Cài đặt"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
+        "saveInfoError": MessageLookupByLibrary.simpleMessage(
+            "Không được để trống các trường trên"),
+        "saveInfoHintDesc":
+            MessageLookupByLibrary.simpleMessage("Thông tin (+8411111111)"),
+        "saveInfoHintName":
+            MessageLookupByLibrary.simpleMessage("Tên (Sđt của Lan)"),
+        "saveInfoSubTitle": MessageLookupByLibrary.simpleMessage(
+            "Thông tin của bạn chỉ được lưu trong máy, bạn có thể kiểm tra hoạt động Internet của máy để xác nhận"),
+        "saveInfoTitle": MessageLookupByLibrary.simpleMessage("Lưu thông tin"),
         "savePassError": MessageLookupByLibrary.simpleMessage(
             "Một số trường đang bị bỏ trống"),
         "savePassHint": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
@@ -116,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sbDeletePassword": m2,
         "sbDeleteSuccess":
             MessageLookupByLibrary.simpleMessage("Xoá thành công"),
+        "sbEditInfoSuccess": MessageLookupByLibrary.simpleMessage(
+            "Cập nhật thông tin thành công"),
         "sbEditSuccess": MessageLookupByLibrary.simpleMessage(
             "Thay đổi mật khẩu thành công"),
         "sbEye": MessageLookupByLibrary.simpleMessage(

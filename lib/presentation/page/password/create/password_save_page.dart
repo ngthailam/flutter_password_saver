@@ -61,26 +61,24 @@ class _PasswordSavePageState extends State<PasswordSavePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: BlocProvider(
-          create: (ctx) =>
-              _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
-          child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
-            listener: (context, state) {
-              if (state.loadState == LoadState.success) {
-                context.showSuccessSnackBar(S().sbEditSuccess);
-                Navigator.of(context).pop(_bloc.isDataChanged);
-              }
+      body: BlocProvider(
+        create: (ctx) =>
+            _bloc..add(PasswordSavePrefetchEvent(passwordId: widget.arg?.id)),
+        child: BlocListener<PasswordSaveBloc, PasswordSaveState>(
+          listener: (context, state) {
+            if (state.loadState == LoadState.success) {
+              context.showSuccessSnackBar(S().sbEditSuccess);
+              Navigator.of(context).pop(_bloc.isDataChanged);
+            }
 
-              final password = state.password;
-              if (password != null) {
-                _nameTextEdtCtrl.text = state.password!.name;
-                _accNameTextEdtCtrl.text = state.password!.accName;
-                _passwordTextEdtCtrl.text = state.password!.password;
-              }
-            },
-            child: _primary(),
-          ),
+            final password = state.password;
+            if (password != null) {
+              _nameTextEdtCtrl.text = state.password!.name;
+              _accNameTextEdtCtrl.text = state.password!.accName;
+              _passwordTextEdtCtrl.text = state.password!.password;
+            }
+          },
+          child: _primary(),
         ),
       ),
     );

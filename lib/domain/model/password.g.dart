@@ -117,6 +117,7 @@ class _$PasswordCWProxyImpl implements _$PasswordCWProxy {
 }
 
 extension $PasswordCopyWith on Password {
-  /// Returns a callable class that can be used as follows: `instanceOfclass Password extends Equatable.name.copyWith(...)` or like so:`instanceOfclass Password extends Equatable.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfPassword.copyWith(...)` or like so:`instanceOfPassword.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$PasswordCWProxy get copyWith => _$PasswordCWProxyImpl(this);
 }

@@ -76,7 +76,8 @@ class _$UpdatePasswordStateCWProxyImpl implements _$UpdatePasswordStateCWProxy {
 }
 
 extension $UpdatePasswordStateCopyWith on UpdatePasswordState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass UpdatePasswordState extends Equatable.name.copyWith(...)` or like so:`instanceOfclass UpdatePasswordState extends Equatable.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfUpdatePasswordState.copyWith(...)` or like so:`instanceOfUpdatePasswordState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$UpdatePasswordStateCWProxy get copyWith =>
       _$UpdatePasswordStateCWProxyImpl(this);
 }

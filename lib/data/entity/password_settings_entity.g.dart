@@ -75,7 +75,8 @@ class _$PasswordSettingsEntityCWProxyImpl
 }
 
 extension $PasswordSettingsEntityCopyWith on PasswordSettingsEntity {
-  /// Returns a callable class that can be used as follows: `instanceOfclass PasswordSettingsEntity extends HiveObject.name.copyWith(...)` or like so:`instanceOfclass PasswordSettingsEntity extends HiveObject.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfPasswordSettingsEntity.copyWith(...)` or like so:`instanceOfPasswordSettingsEntity.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$PasswordSettingsEntityCWProxy get copyWith =>
       _$PasswordSettingsEntityCWProxyImpl(this);
 }

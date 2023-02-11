@@ -94,5 +94,12 @@
     "onboard_desc_settings": "Bấm vào hình này để mở cài đặt của ứng dụng",
     "prefDarkModeShowAccName": "Luôn hiển thị tên tài khoản",
     "errorUnknown": "Đã có lỗi xảy ra",
-    "prefAllowSearchAccName": "Cho phép tìm kiếm cả tên tài khoản"
+    "prefAllowSearchAccName": "Cho phép tìm kiếm cả tên tài khoản",
+    "emptyInfoHint": "Lưu thông tin đầu tiên\n Số tài khoản, điện thoại bạn bè, nơi bạn để bút chì, bất kì thứ gì bạn muốn lưu lại",
+    "saveInfoTitle": "Lưu thông tin",
+    "saveInfoSubTitle": "Thông tin của bạn chỉ được lưu trong máy, bạn có thể kiểm tra hoạt động Internet của máy để xác nhận",
+    "saveInfoHintName": "Tên (Sđt của Lan)",
+    "saveInfoHintDesc": "Thông tin (+8411111111)",
+    "saveInfoError": "Không được để trống các trường trên",
+    "sbEditInfoSuccess": "Cập nhật thông tin thành công"
 }

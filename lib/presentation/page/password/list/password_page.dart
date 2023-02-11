@@ -27,19 +27,16 @@ class PasswordPage extends StatefulWidget {
   State<PasswordPage> createState() => _PasswordPageState();
 }
 
-class _PasswordPageState extends State<PasswordPage> {
-  late PasswordBloc _bloc;
-  late UriHandler _uriHandler;
+class _PasswordPageState extends State<PasswordPage>
+    with AutomaticKeepAliveClientMixin {
+  final PasswordBloc _bloc = getIt<PasswordBloc>();
 
   @override
-  void initState() {
-    super.initState();
-    _bloc = getIt<PasswordBloc>();
-    _uriHandler = getIt<UriHandler>();
-  }
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
@@ -87,11 +84,12 @@ class _PasswordPageState extends State<PasswordPage> {
   }
 
   void _handlePendingUri() {
-    final pendingUri = _uriHandler.getPendingUri();
+    final uriHandler = getIt<UriHandler>();
+    final pendingUri = uriHandler.getPendingUri();
     if (pendingUri == null) return;
 
     final routeName = pendingUri.getCleanRouteName();
-    _uriHandler.markPendingUriResolved();
+    uriHandler.markPendingUriResolved();
 
     Navigator.of(context).pushNamedAndRemoveUntil(
       routeName,
@@ -100,15 +98,13 @@ class _PasswordPageState extends State<PasswordPage> {
   }
 
   Widget _body(PasswordState state) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          const SizedBox(height: 16),
-          _searchBox(state.user),
-          _resolveMainContent(state),
-          _createPassFab(),
-        ],
-      ),
+    return Stack(
+      children: [
+        const SizedBox(height: 16),
+        _searchBox(state.user),
+        _resolveMainContent(state),
+        _createPassFab(),
+      ],
     );
   }
 
@@ -146,40 +142,58 @@ class _PasswordPageState extends State<PasswordPage> {
   }
 
   Widget _createPassFab() {
-    return Positioned(
-      bottom: 0,
-      right: 0,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: FloatingActionButton(
-          backgroundColor: AppColors.blue500,
-          foregroundColor: AppColors.white500,
-          child: const Icon(Icons.add),
-          onPressed: _goToSavePassword,
-        ),
-      ),
+    return BlocBuilder<PasswordBloc, PasswordState>(
+      buildWhen: (prev, current) =>
+          prev.passwords.isEmpty || current.passwords.isEmpty,
+      builder: (context, state) {
+        if (state.passwords.isEmpty && !_bloc.isSearching) {
+          return const SizedBox.shrink();
+        }
+        return Positioned(
+          bottom: 0,
+          right: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: FloatingActionButton(
+              backgroundColor: AppColors.blue500,
+              foregroundColor: AppColors.white500,
+              child: const Icon(Icons.add),
+              onPressed: _goToSavePassword,
+            ),
+          ),
+        );
+      },
     );
   }
 
   Widget _searchBox(User? user) {
-    return SearchBox(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      onChanged: (text) {
-        _bloc.add(SearchPasswordEvent(keyword: text));
-      },
-      trailingWidget: Builder(
-        builder: (ctx) {
-          return AccountIcon(
-            user: user,
-            onTap: () async {
-              final needsUpdate = await showPreferencePage(ctx);
-              if (needsUpdate == true) {
-                _bloc.add(RefreshDataEvent());
-              }
+    return BlocBuilder<PasswordBloc, PasswordState>(
+      buildWhen: (prev, current) =>
+          prev.passwords.isEmpty || current.passwords.isEmpty,
+      builder: (context, state) {
+        if (state.passwords.isEmpty && !_bloc.isSearching) {
+          return const SizedBox.shrink();
+        }
+        return SearchBox(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          onChanged: (text) {
+            _bloc.add(SearchPasswordEvent(keyword: text));
+          },
+          trailingWidget: Builder(
+            builder: (ctx) {
+              return AccountIcon(
+                user: user,
+                onTap: () async {
+                  final needsUpdate = await showPreferencePage(ctx);
+                  if (needsUpdate == true) {
+                    _bloc.add(RefreshDataEvent());
+                  }
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

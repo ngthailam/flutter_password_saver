@@ -51,6 +51,7 @@ class _$GatewayStateCWProxyImpl implements _$GatewayStateCWProxy {
 }
 
 extension $GatewayStateCopyWith on GatewayState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass GatewayState.name.copyWith(...)` or like so:`instanceOfclass GatewayState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfGatewayState.copyWith(...)` or like so:`instanceOfGatewayState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$GatewayStateCWProxy get copyWith => _$GatewayStateCWProxyImpl(this);
 }

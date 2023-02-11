@@ -100,6 +100,7 @@ class _$AuthenStateCWProxyImpl implements _$AuthenStateCWProxy {
 }
 
 extension $AuthenStateCopyWith on AuthenState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass AuthenState.name.copyWith(...)` or like so:`instanceOfclass AuthenState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfAuthenState.copyWith(...)` or like so:`instanceOfAuthenState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$AuthenStateCWProxy get copyWith => _$AuthenStateCWProxyImpl(this);
 }

@@ -42,7 +42,7 @@ dependencies:
   uuid: ^3.0.6
   flutter_bloc: ^8.0.1
   copy_with_extension: ^4.0.0
-  flutter_slidable: ^1.2.0
+  flutter_slidable: ^2.0.0
   flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.13
   flutter_svg: ^1.0.3
@@ -53,6 +53,7 @@ dependencies:
   intl_utils: ^2.1.0 
   flutter_app_shortcut: ^1.0.0
   uni_links: ^0.5.1
+  custom_sliding_segmented_control: ^1.7.4
 
 dev_dependencies:
   flutter_test:

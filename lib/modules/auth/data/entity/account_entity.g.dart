@@ -97,7 +97,8 @@ class _$AccountEntityCWProxyImpl implements _$AccountEntityCWProxy {
 }
 
 extension $AccountEntityCopyWith on AccountEntity {
-  /// Returns a callable class that can be used as follows: `instanceOfclass AccountEntity extends HiveObject.name.copyWith(...)` or like so:`instanceOfclass AccountEntity extends HiveObject.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfAccountEntity.copyWith(...)` or like so:`instanceOfAccountEntity.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$AccountEntityCWProxy get copyWith => _$AccountEntityCWProxyImpl(this);
 }
 

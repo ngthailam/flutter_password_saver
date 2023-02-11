@@ -94,5 +94,12 @@
     "onboard_desc_settings": "Press this icon to open app settings",
     "prefDarkModeShowAccName": "Always show account name",
     "errorUnknown": "An error has occured",
-    "prefAllowSearchAccName": "Allow search also account name"
+    "prefAllowSearchAccName": "Allow search also account name",
+    "emptyInfoHint": "Save your first information\n Bank account number, friends phone number, where you put your drawing pencil, anything you want to save",
+    "saveInfoTitle": "Save your Information",
+    "saveInfoSubTitle": "Your information is only saved locally, you can use network activity to check no Internet connection is establish",
+    "saveInfoHintName": "Name (Jenny phone number)",
+    "saveInfoHintDesc": "Info (+8411111111)",
+    "saveInfoError": "Some fields are empty",
+    "sbEditInfoSuccess": "Info updated successfully"
 }

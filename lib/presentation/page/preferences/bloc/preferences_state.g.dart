@@ -86,6 +86,7 @@ class _$PreferenceStateCWProxyImpl implements _$PreferenceStateCWProxy {
 }
 
 extension $PreferenceStateCopyWith on PreferenceState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass PreferenceState.name.copyWith(...)` or like so:`instanceOfclass PreferenceState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfPreferenceState.copyWith(...)` or like so:`instanceOfPreferenceState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$PreferenceStateCWProxy get copyWith => _$PreferenceStateCWProxyImpl(this);
 }

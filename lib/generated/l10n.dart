@@ -789,6 +789,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Save your first information\n Bank account number, friends phone number, where you put your drawing pencil, anything you want to save`
+  String get emptyInfoHint {
+    return Intl.message(
+      'Save your first information\n Bank account number, friends phone number, where you put your drawing pencil, anything you want to save',
+      name: 'emptyInfoHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save your Information`
+  String get saveInfoTitle {
+    return Intl.message(
+      'Save your Information',
+      name: 'saveInfoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your information is only saved locally, you can use network activity to check no Internet connection is establish`
+  String get saveInfoSubTitle {
+    return Intl.message(
+      'Your information is only saved locally, you can use network activity to check no Internet connection is establish',
+      name: 'saveInfoSubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name (Jenny phone number)`
+  String get saveInfoHintName {
+    return Intl.message(
+      'Name (Jenny phone number)',
+      name: 'saveInfoHintName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info (+8411111111)`
+  String get saveInfoHintDesc {
+    return Intl.message(
+      'Info (+8411111111)',
+      name: 'saveInfoHintDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Some fields are empty`
+  String get saveInfoError {
+    return Intl.message(
+      'Some fields are empty',
+      name: 'saveInfoError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info updated successfully`
+  String get sbEditInfoSuccess {
+    return Intl.message(
+      'Info updated successfully',
+      name: 'sbEditInfoSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

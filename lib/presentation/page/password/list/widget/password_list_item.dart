@@ -64,7 +64,7 @@ class _PasswordListItemState extends State<PasswordListItem> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: ValueKey('slide-${widget.password.accName}'),
+      key: ValueKey('slide-${widget.password.id}'),
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
         extentRatio: 0.8,

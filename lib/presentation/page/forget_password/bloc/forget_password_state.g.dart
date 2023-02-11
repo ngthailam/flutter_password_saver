@@ -74,7 +74,8 @@ class _$FpQuestionStateCWProxyImpl implements _$FpQuestionStateCWProxy {
 }
 
 extension $FpQuestionStateCopyWith on FpQuestionState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass FpQuestionState extends ForgetPasswordState.name.copyWith(...)` or like so:`instanceOfclass FpQuestionState extends ForgetPasswordState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfFpQuestionState.copyWith(...)` or like so:`instanceOfFpQuestionState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$FpQuestionStateCWProxy get copyWith => _$FpQuestionStateCWProxyImpl(this);
 }
 
@@ -124,7 +125,8 @@ class _$FpNoQuestionStateCWProxyImpl implements _$FpNoQuestionStateCWProxy {
 }
 
 extension $FpNoQuestionStateCopyWith on FpNoQuestionState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass FpNoQuestionState extends ForgetPasswordState.name.copyWith(...)` or like so:`instanceOfclass FpNoQuestionState extends ForgetPasswordState.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfFpNoQuestionState.copyWith(...)` or like so:`instanceOfFpNoQuestionState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$FpNoQuestionStateCWProxy get copyWith =>
       _$FpNoQuestionStateCWProxyImpl(this);
 }
@@ -196,6 +198,7 @@ class _$FpRenewPassStateCWProxyImpl implements _$FpRenewPassStateCWProxy {
 }
 
 extension $FpRenewPassStateCopyWith on FpRenewPassState {
-  /// Returns a callable class that can be used as follows: `instanceOfclass FpRenewPassState extends ForgetPasswordState with EquatableMixin.name.copyWith(...)` or like so:`instanceOfclass FpRenewPassState extends ForgetPasswordState with EquatableMixin.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfFpRenewPassState.copyWith(...)` or like so:`instanceOfFpRenewPassState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
   _$FpRenewPassStateCWProxy get copyWith => _$FpRenewPassStateCWProxyImpl(this);
 }
