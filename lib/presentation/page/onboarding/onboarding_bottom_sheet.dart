@@ -16,8 +16,8 @@ Future showOnboardingBottomSheet(BuildContext context) {
       ),
     ),
     builder: (context) {
-      return Wrap(
-        children: const [OnboardingBottomSheet()],
+      return const Wrap(
+        children: [OnboardingBottomSheet()],
       );
     },
   );

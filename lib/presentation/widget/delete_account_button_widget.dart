@@ -18,10 +18,10 @@ class DeleteAccountButton extends StatelessWidget {
           color: AppColors.red500,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
+          children: [
             Icon(
               Icons.delete,
               color: AppColors.white500,

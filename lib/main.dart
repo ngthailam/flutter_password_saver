@@ -18,7 +18,6 @@ import 'package:flutter_password_saver/initializer/uri_handler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'generated/l10n.dart';
 import 'main.config.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();

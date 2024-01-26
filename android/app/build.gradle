@@ -49,8 +49,8 @@ android {
 
     defaultConfig {
         applicationId "vn.thailam.flutter_password_saver"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdkVersion 24
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

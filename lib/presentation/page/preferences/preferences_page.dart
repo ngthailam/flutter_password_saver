@@ -109,10 +109,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
                   if (state.deleteLoadState == LoadState.none) {
                     return _primary(state);
                   } else {
-                    return Center(
+                    return const Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           LoadingIndicator(),
                         ],
                       ),

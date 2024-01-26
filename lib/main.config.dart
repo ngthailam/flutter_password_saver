@@ -4,6 +4,9 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+// ignore_for_file: type=lint
+// coverage:ignore-file
+
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -61,17 +64,16 @@ import 'presentation/page/password/create/bloc/password_save_bloc.dart' as _i40;
 import 'presentation/page/password/list/bloc/password_bloc.dart' as _i52;
 import 'presentation/page/preferences/bloc/preferences_bloc.dart' as _i41;
 import 'presentation/page/update_password/bloc/update_password_bloc.dart'
-    as _i46; // ignore_for_file: unnecessary_lambdas
+    as _i46;
 
-// ignore_for_file: lines_longer_than_80_chars
-/// initializes the registration of provided dependencies inside of [GetIt]
+// initializes the registration of main-scope dependencies inside of GetIt
 _i1.GetIt $initGetIt(
-  _i1.GetIt get, {
+  _i1.GetIt getIt, {
   String? environment,
   _i2.EnvironmentFilter? environmentFilter,
 }) {
   final gh = _i2.GetItHelper(
-    get,
+    getIt,
     environment,
     environmentFilter,
   );
@@ -84,133 +86,133 @@ _i1.GetIt $initGetIt(
   gh.singleton<_i7.SecureStorage>(_i7.SecureStorageImpl());
   gh.singleton<_i8.UriHandler>(_i8.UriHandlerImpl());
   gh.factory<_i9.AccountPrefRepo>(() =>
-      _i10.AccountPrefRepoImpl(get<_i3.AccountPreferenceLocalDataSource>()));
+      _i10.AccountPrefRepoImpl(gh<_i3.AccountPreferenceLocalDataSource>()));
   gh.factory<_i11.AccountPreferenceUseCase>(
-      () => _i11.AccountPreferenceUseCase(get<_i9.AccountPrefRepo>()));
+      () => _i11.AccountPreferenceUseCase(gh<_i9.AccountPrefRepo>()));
   gh.factory<_i12.AuthLocalDataSource>(() => _i12.AuthLocalDataSourceImpl(
-        get<_i7.SecureStorage>(),
-        get<_i5.AuthLoginLockDataSource>(),
+        gh<_i7.SecureStorage>(),
+        gh<_i5.AuthLoginLockDataSource>(),
       ));
   gh.factory<_i13.InfoLocalDataSource>(
-      () => _i13.InfoLocalDataSourceImpl(get<_i7.SecureStorage>()));
+      () => _i13.InfoLocalDataSourceImpl(gh<_i7.SecureStorage>()));
   gh.factory<_i14.InfoRepository>(
-      () => _i15.InfoRepositoryImpl(get<_i13.InfoLocalDataSource>()));
+      () => _i15.InfoRepositoryImpl(gh<_i13.InfoLocalDataSource>()));
   gh.factory<_i16.PasswordLocalDataSource>(
       () => _i16.PasswordLocalDataSourceImpl(
-            get<_i7.SecureStorage>(),
-            get<_i3.AccountPreferenceLocalDataSource>(),
+            gh<_i7.SecureStorage>(),
+            gh<_i3.AccountPreferenceLocalDataSource>(),
           ));
   gh.factory<_i17.PasswordRepository>(
-      () => _i18.PasswordRepositoryImpl(get<_i16.PasswordLocalDataSource>()));
+      () => _i18.PasswordRepositoryImpl(gh<_i16.PasswordLocalDataSource>()));
   gh.factory<_i19.ReOrderPasswordUseCase>(
-      () => _i19.ReOrderPasswordUseCase(get<_i17.PasswordRepository>()));
+      () => _i19.ReOrderPasswordUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i20.SaveInfoUsecase>(
-      () => _i20.SaveInfoUsecase(get<_i14.InfoRepository>()));
+      () => _i20.SaveInfoUsecase(gh<_i14.InfoRepository>()));
   gh.factory<_i21.SavePasswordUsecase>(
-      () => _i21.SavePasswordUsecase(get<_i17.PasswordRepository>()));
+      () => _i21.SavePasswordUsecase(gh<_i17.PasswordRepository>()));
   gh.factory<_i22.SearchInfoUseCase>(
-      () => _i22.SearchInfoUseCase(get<_i14.InfoRepository>()));
+      () => _i22.SearchInfoUseCase(gh<_i14.InfoRepository>()));
   gh.factory<_i23.SearchPasswordUseCase>(
-      () => _i23.SearchPasswordUseCase(get<_i17.PasswordRepository>()));
+      () => _i23.SearchPasswordUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i24.UpdatePasswordSettingsUseCase>(
-      () => _i24.UpdatePasswordSettingsUseCase(get<_i17.PasswordRepository>()));
+      () => _i24.UpdatePasswordSettingsUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i25.AuthRepository>(() => _i26.AuthRepoitoryImpl(
-        get<_i12.AuthLocalDataSource>(),
-        get<_i16.PasswordLocalDataSource>(),
-        get<_i3.AccountPreferenceLocalDataSource>(),
-        get<_i5.AuthLoginLockDataSource>(),
-        get<_i6.BiometricsDataSource>(),
+        gh<_i12.AuthLocalDataSource>(),
+        gh<_i16.PasswordLocalDataSource>(),
+        gh<_i3.AccountPreferenceLocalDataSource>(),
+        gh<_i5.AuthLoginLockDataSource>(),
+        gh<_i6.BiometricsDataSource>(),
       ));
   gh.factory<_i27.BiometricsUseCase>(
-      () => _i27.BiometricsUseCase(get<_i25.AuthRepository>()));
+      () => _i27.BiometricsUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i28.CreateAccountUseCase>(
-      () => _i28.CreateAccountUseCase(get<_i25.AuthRepository>()));
+      () => _i28.CreateAccountUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i29.DeleteAccountUseCase>(() => _i29.DeleteAccountUseCase(
-        get<_i25.AuthRepository>(),
-        get<_i4.AppShortcutManager>(),
+        gh<_i25.AuthRepository>(),
+        gh<_i4.AppShortcutManager>(),
       ));
   gh.factory<_i30.DeleteInfoUseCase>(
-      () => _i30.DeleteInfoUseCase(get<_i14.InfoRepository>()));
+      () => _i30.DeleteInfoUseCase(gh<_i14.InfoRepository>()));
   gh.factory<_i31.DeletePasswordUseCase>(
-      () => _i31.DeletePasswordUseCase(get<_i17.PasswordRepository>()));
+      () => _i31.DeletePasswordUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i32.GetAllInfosUseCase>(
-      () => _i32.GetAllInfosUseCase(get<_i14.InfoRepository>()));
+      () => _i32.GetAllInfosUseCase(gh<_i14.InfoRepository>()));
   gh.factory<_i33.GetAllPasswordsUseCase>(
-      () => _i33.GetAllPasswordsUseCase(get<_i17.PasswordRepository>()));
+      () => _i33.GetAllPasswordsUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i34.GetCurrentAccountUseCase>(
-      () => _i34.GetCurrentAccountUseCase(get<_i25.AuthRepository>()));
+      () => _i34.GetCurrentAccountUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i35.GetInfoByIdUseCase>(
-      () => _i35.GetInfoByIdUseCase(get<_i14.InfoRepository>()));
+      () => _i35.GetInfoByIdUseCase(gh<_i14.InfoRepository>()));
   gh.factory<_i36.GetPasswordByIdUseCase>(
-      () => _i36.GetPasswordByIdUseCase(get<_i17.PasswordRepository>()));
+      () => _i36.GetPasswordByIdUseCase(gh<_i17.PasswordRepository>()));
   gh.factory<_i37.InfoBloc>(() => _i37.InfoBloc(
-        get<_i32.GetAllInfosUseCase>(),
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i11.AccountPreferenceUseCase>(),
-        get<_i30.DeleteInfoUseCase>(),
-        get<_i22.SearchInfoUseCase>(),
-        get<_i20.SaveInfoUsecase>(),
+        gh<_i32.GetAllInfosUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i11.AccountPreferenceUseCase>(),
+        gh<_i30.DeleteInfoUseCase>(),
+        gh<_i22.SearchInfoUseCase>(),
+        gh<_i20.SaveInfoUsecase>(),
       ));
   gh.factory<_i38.IsNeedLogInUseCase>(
-      () => _i38.IsNeedLogInUseCase(get<_i25.AuthRepository>()));
+      () => _i38.IsNeedLogInUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i39.LoginUseCase>(
-      () => _i39.LoginUseCase(get<_i25.AuthRepository>()));
+      () => _i39.LoginUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i40.PasswordSaveBloc>(() => _i40.PasswordSaveBloc(
-        get<_i21.SavePasswordUsecase>(),
-        get<_i36.GetPasswordByIdUseCase>(),
+        gh<_i21.SavePasswordUsecase>(),
+        gh<_i36.GetPasswordByIdUseCase>(),
       ));
   gh.factory<_i41.PreferencesBloc>(() => _i41.PreferencesBloc(
-        get<_i11.AccountPreferenceUseCase>(),
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i29.DeleteAccountUseCase>(),
+        gh<_i11.AccountPreferenceUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i29.DeleteAccountUseCase>(),
       ));
   gh.factory<_i42.RegisterBloc>(
-      () => _i42.RegisterBloc(get<_i28.CreateAccountUseCase>()));
+      () => _i42.RegisterBloc(gh<_i28.CreateAccountUseCase>()));
   gh.factory<_i43.SaveInfoBloc>(() => _i43.SaveInfoBloc(
-        get<_i20.SaveInfoUsecase>(),
-        get<_i35.GetInfoByIdUseCase>(),
+        gh<_i20.SaveInfoUsecase>(),
+        gh<_i35.GetInfoByIdUseCase>(),
       ));
   gh.factory<_i44.ShowOnboardUseCase>(
-      () => _i44.ShowOnboardUseCase(get<_i25.AuthRepository>()));
+      () => _i44.ShowOnboardUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i45.UpdateAccountPasswordUseCase>(
-      () => _i45.UpdateAccountPasswordUseCase(get<_i25.AuthRepository>()));
+      () => _i45.UpdateAccountPasswordUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i46.UpdatePasswordBloc>(() => _i46.UpdatePasswordBloc(
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i45.UpdateAccountPasswordUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i45.UpdateAccountPasswordUseCase>(),
       ));
   gh.factory<_i47.AuthLockUseCase>(
-      () => _i47.AuthLockUseCase(get<_i25.AuthRepository>()));
+      () => _i47.AuthLockUseCase(gh<_i25.AuthRepository>()));
   gh.factory<_i48.AuthenCubit>(() => _i48.AuthenCubit(
-        get<_i39.LoginUseCase>(),
-        get<_i47.AuthLockUseCase>(),
-        get<_i27.BiometricsUseCase>(),
-        get<_i34.GetCurrentAccountUseCase>(),
+        gh<_i39.LoginUseCase>(),
+        gh<_i47.AuthLockUseCase>(),
+        gh<_i27.BiometricsUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
       ));
   gh.factory<_i49.ForgetPasswordBloc>(() => _i49.ForgetPasswordBloc(
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i29.DeleteAccountUseCase>(),
-        get<_i45.UpdateAccountPasswordUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i29.DeleteAccountUseCase>(),
+        gh<_i45.UpdateAccountPasswordUseCase>(),
       ));
   gh.factory<_i50.GatewayBloc>(() => _i50.GatewayBloc(
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i11.AccountPreferenceUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i11.AccountPreferenceUseCase>(),
       ));
   gh.factory<_i51.LoginBloc>(() => _i51.LoginBloc(
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i39.LoginUseCase>(),
-        get<_i47.AuthLockUseCase>(),
-        get<_i27.BiometricsUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i39.LoginUseCase>(),
+        gh<_i47.AuthLockUseCase>(),
+        gh<_i27.BiometricsUseCase>(),
       ));
   gh.factory<_i52.PasswordBloc>(() => _i52.PasswordBloc(
-        get<_i33.GetAllPasswordsUseCase>(),
-        get<_i31.DeletePasswordUseCase>(),
-        get<_i23.SearchPasswordUseCase>(),
-        get<_i34.GetCurrentAccountUseCase>(),
-        get<_i24.UpdatePasswordSettingsUseCase>(),
-        get<_i11.AccountPreferenceUseCase>(),
-        get<_i44.ShowOnboardUseCase>(),
-        get<_i19.ReOrderPasswordUseCase>(),
-        get<_i21.SavePasswordUsecase>(),
+        gh<_i33.GetAllPasswordsUseCase>(),
+        gh<_i31.DeletePasswordUseCase>(),
+        gh<_i23.SearchPasswordUseCase>(),
+        gh<_i34.GetCurrentAccountUseCase>(),
+        gh<_i24.UpdatePasswordSettingsUseCase>(),
+        gh<_i11.AccountPreferenceUseCase>(),
+        gh<_i44.ShowOnboardUseCase>(),
+        gh<_i19.ReOrderPasswordUseCase>(),
+        gh<_i21.SavePasswordUsecase>(),
       ));
-  return get;
+  return getIt;
 }

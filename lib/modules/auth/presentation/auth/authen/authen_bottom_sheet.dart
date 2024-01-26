@@ -25,8 +25,8 @@ Future<bool?> showAuthenBottomSheet(BuildContext context,
       ),
     ),
     builder: (context) {
-      return Wrap(
-        children: const [AuthenBottomSheet()],
+      return const Wrap(
+        children: [AuthenBottomSheet()],
       );
     },
   );
