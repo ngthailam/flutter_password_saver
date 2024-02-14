@@ -17,3 +17,10 @@ There are multiple heroes that share the same tag within a subtree When open cre
 ## Improve
 
 Login page small screen UI looks weird
+
+## Keystore
+
+android/keystore
+
+alias: passsaver
+password: 123456
