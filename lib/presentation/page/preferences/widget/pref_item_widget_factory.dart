@@ -9,11 +9,11 @@ class PrefItemWidgetFactory {
     Function(AccountPreferenceItem)? onUpdate,
   }) {
     switch (preferenceItem.name) {
-      case PreferenceName.languageCode:
+      case AppPreferenceEnum.languageCode:
         return PrefItemChooseLanguage(
           preferenceItem: preferenceItem,
           onUpdate: onUpdate,
-        );  
+        );
       default:
         return PrefItemSwitcher(
           preferenceItem: preferenceItem,

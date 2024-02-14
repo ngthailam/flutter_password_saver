@@ -10,7 +10,6 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_events.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/bloc/password_state.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
-import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/ui_utils.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
@@ -129,9 +128,10 @@ class _PasswordPageState extends State<PasswordPage>
           return PasswordListItem(
             key: ObjectKey(item),
             password: item,
-            prefShowAccName: _bloc.accountPreference
-                    ?.getItemValue(PreferenceName.showAccName) ??
-                AccountPreference.showAccountNameDefault,
+            prefShowAccName: _bloc.accountPreference == null
+                ? AppPreferenceEnum.showAccName.defaultValue
+                : _bloc.accountPreference!
+                    .getItemValue(AppPreferenceEnum.showAccName) as bool,
           );
         },
         itemCount: _bloc.state.passwords.length,
@@ -188,7 +188,8 @@ class _PasswordPageState extends State<PasswordPage>
               return AccountIcon(
                 user: user,
                 onTap: () async {
-                  final needsUpdate = await showPreferencePage(ctx);
+                  final needsUpdate = await Navigator.of(context)
+                      .pushNamed(AppRouter.preference);
                   if (needsUpdate == true) {
                     _bloc.add(RefreshDataEvent());
                   }

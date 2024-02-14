@@ -20,20 +20,6 @@ import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:flutter_password_saver/initializer/language_util.dart';
 import 'package:flutter_password_saver/initializer/theme_util.dart';
 
-Future<bool?> showPreferencePage(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    barrierDismissible: true,
-    barrierColor: AppColors.ink300,
-    builder: (context) {
-      return const AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        content: PreferencesPage(),
-      );
-    },
-  );
-}
-
 class PreferencesPage extends StatefulWidget {
   const PreferencesPage({Key? key}) : super(key: key);
 
@@ -52,88 +38,63 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('zzll 2 ${Theme.of(context).scaffoldBackgroundColor}');
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) {
-        if (didPop) {
-          return;
-        }
-        if (mounted) {
-          Navigator.of(context).pop(_bloc.dataChanged);
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(16),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(S().preferences),
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Navigator.of(context).pop(_bloc.dataChanged);
+          },
         ),
-        height: MediaQuery.sizeOf(context).height * 0.7,
-        width: MediaQuery.sizeOf(context).width * 0.9,
-        child: BlocProvider(
-          create: (context) => _bloc..add(PreferenceInitEvent()),
-          child: BlocConsumer<PreferencesBloc, PreferenceState>(
-            listener: ((context, state) {
-              if (state.deleteLoadState != LoadState.none) {
-                if (state.deleteLoadState == LoadState.success) {
-                  context.showErrorSnackBar(S().sbDeleteSuccess);
-                  HotRestart.of(context).hotRestart();
-                }
-
-                if (state.deleteLoadState == LoadState.failure) {
-                  context.showErrorSnackBar(S().sbDeleteError);
-                }
-              }
-
-              if (state.loadState == LoadState.failure) {
-                context.showErrorSnackBar(S().errorUnknown);
-                return;
-              }
-
-              final isEnableDarkMode =
-                  state.preference?.getItemValue(PreferenceName.enableDarkMode);
-              if (isEnableDarkMode != null &&
-                  isEnableDarkMode != isDarkMode()) {
-                changeThemeMode();
-              }
-
-              final isChangeLanguage =
-                  state.preference?.getItemValue(PreferenceName.languageCode);
-              if (isChangeLanguage != null) {
-                setLanguage(isChangeLanguage);
-              }
-            }),
-            builder: (context, state) {
-              if (state.loadState == LoadState.loading) {
-                return Center(
-                  child: LoadingIndicator(
-                    color: LoadingIndicator.defaultColor,
-                  ),
-                );
-              }
-
-              if (state.preference?.items.isNotEmpty == true) {
-                if (state.deleteLoadState == LoadState.none) {
-                  return _primary(state);
-                } else {
-                  return const Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        LoadingIndicator(),
-                      ],
+      ),
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (bool didPop) {
+          if (didPop) {
+            return;
+          }
+          if (mounted) {
+            Navigator.of(context).pop(_bloc.dataChanged);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: BlocProvider(
+            create: (context) => _bloc..add(PreferenceInitEvent()),
+            child: BlocConsumer<PreferencesBloc, PreferenceState>(
+              listener: _blocListener,
+              builder: (context, state) {
+                if (state.loadState == LoadState.loading) {
+                  return Center(
+                    child: LoadingIndicator(
+                      color: LoadingIndicator.defaultColor,
                     ),
                   );
                 }
-              }
 
-              if (state.loadState == LoadState.failure) {
-                return const Center(child: Text('Error'));
-              }
+                if (state.preference?.items.isNotEmpty == true) {
+                  if (state.deleteLoadState == LoadState.none) {
+                    return _primary(state);
+                  } else {
+                    return const Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          LoadingIndicator(),
+                        ],
+                      ),
+                    );
+                  }
+                }
 
-              return const SizedBox.shrink();
-            },
+                if (state.loadState == LoadState.failure) {
+                  return const Center(child: Text('Error'));
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
           ),
         ),
       ),
@@ -144,8 +105,6 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        _appBar(),
-        const SizedBox(height: 16),
         _accountDetails(state.user),
         const SizedBox(height: 16),
         DeleteAccountButton(
@@ -157,32 +116,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
             color: AppColors.ink200,
           ),
         ),
-        _preferences(state.preference),
+        Expanded(child: _preferences(state.preference)),
       ],
-    );
-  }
-
-  Widget _appBar() {
-    return Stack(
-      children: [
-        _closeBtn(),
-        Center(
-          child: Text(
-            S().preferences,
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _closeBtn() {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: GestureDetector(
-        onTap: () => Navigator.of(context).pop(_bloc.dataChanged),
-        child: const Icon(Icons.close),
-      ),
     );
   }
 
@@ -223,20 +158,48 @@ class _PreferencesPageState extends State<PreferencesPage> {
       return const SizedBox.shrink();
     }
     final factory = PrefItemWidgetFactory();
-    return Expanded(
-      child: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, i) {
-          return factory.create(
-            preferenceItem: items[i],
-            onUpdate: (AccountPreferenceItem pref) {
-              _bloc.add(
-                SavePreferenceEvent(name: pref.name, value: pref.value),
-              );
-            },
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, i) {
+        return factory.create(
+          preferenceItem: items[i],
+          onUpdate: (AccountPreferenceItem pref) {
+            _bloc.add(
+              SavePreferenceEvent(name: pref.name, value: pref.value),
+            );
+          },
+        );
+      },
     );
+  }
+
+  void _blocListener(BuildContext context, PreferenceState state) {
+    if (state.deleteLoadState != LoadState.none) {
+      if (state.deleteLoadState == LoadState.success) {
+        context.showErrorSnackBar(S().sbDeleteSuccess);
+        HotRestart.of(context).hotRestart();
+      }
+
+      if (state.deleteLoadState == LoadState.failure) {
+        context.showErrorSnackBar(S().sbDeleteError);
+      }
+    }
+
+    if (state.loadState == LoadState.failure) {
+      context.showErrorSnackBar(S().errorUnknown);
+      return;
+    }
+
+    final isEnableDarkMode =
+        state.preference?.getItemValue(AppPreferenceEnum.enableDarkMode);
+    if (isEnableDarkMode != null && isEnableDarkMode != isDarkMode()) {
+      changeThemeMode();
+    }
+
+    final isChangeLanguage =
+        state.preference?.getItemValue(AppPreferenceEnum.languageCode);
+    if (isChangeLanguage != null) {
+      setLanguage(isChangeLanguage);
+    }
   }
 }

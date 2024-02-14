@@ -12,21 +12,18 @@ class AccountPreferenceUseCase {
     return _accountPrefRepo.getAccountPrefs();
   }
 
-  Future<bool> getIsDarkModeEnabled() {
-    return getAccountPrefs().then((value) {
-      return value.getItemByName(PreferenceName.enableDarkMode)?.value ??
-          AccountPreference.enableDarkModeDefault;
-    });
+  Future<bool> getIsDarkModeEnabled() async {
+    final prefs = await getAccountPrefs();
+    return prefs.getItemValue(AppPreferenceEnum.enableDarkMode) as bool;
   }
 
   Future<bool> getIsRequirePassOnForeground() async {
     final prefs = await getAccountPrefs();
-    return prefs.getItemValue(PreferenceName.requirePassOnForeground) ??
-        AccountPreference.requirePassOnForeground;
+    return prefs.getItemValue(AppPreferenceEnum.requirePassOnForeground) as bool;
   }
 
   Future<void> saveAccountPreference({
-    required PreferenceName name,
+    required AppPreferenceEnum name,
     required dynamic value,
   }) {
     return _accountPrefRepo.saveAccountPreference(
@@ -35,11 +32,8 @@ class AccountPreferenceUseCase {
     );
   }
 
-  Future<String> getLanguageCode() {
-    return getAccountPrefs().then((value) {
-      final prefItemValue =
-          value.getItemByName(PreferenceName.languageCode)?.value;
-      return prefItemValue ?? AccountPreference.languageCodeDefault;
-    });
+  Future<String> getLanguageCode() async {
+    final prefs = await getAccountPrefs();
+    return prefs.getItemValue(AppPreferenceEnum.languageCode) as String;
   }
 }

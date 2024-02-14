@@ -19,23 +19,25 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
   }
 
   @override
-  Future<void> saveAccountPreference(
-      {required PreferenceName name, required value}) {
+  Future<void> saveAccountPreference({
+    required AppPreferenceEnum name,
+    required value,
+  }) {
     switch (name) {
-      case PreferenceName.requirePass:
+      case AppPreferenceEnum.requireReLogin:
         return _accountPreferenceLocalDataSource
             .saveRequireLogin(value as bool);
-      case PreferenceName.enableDarkMode:
+      case AppPreferenceEnum.enableDarkMode:
         return _accountPreferenceLocalDataSource.enableDarkMode(value as bool);
-      case PreferenceName.languageCode:
+      case AppPreferenceEnum.languageCode:
         return _accountPreferenceLocalDataSource
             .setLanguageCode(value as String);
-      case PreferenceName.showAccName:
+      case AppPreferenceEnum.showAccName:
         return _accountPreferenceLocalDataSource.saveShowAccName(value as bool);
-      case PreferenceName.allowSearchAccName:
+      case AppPreferenceEnum.allowSearchAccName:
         return _accountPreferenceLocalDataSource
             .saveAllowSearchAccName(value as bool);
-      case PreferenceName.requirePassOnForeground:
+      case AppPreferenceEnum.requirePassOnForeground:
         return _accountPreferenceLocalDataSource
             .saveRequirePassOnForeground(value as bool);
       default:

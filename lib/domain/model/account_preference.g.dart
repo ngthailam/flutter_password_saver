@@ -58,7 +58,7 @@ extension $AccountPreferenceCopyWith on AccountPreference {
 }
 
 abstract class _$AccountPreferenceItemCWProxy {
-  AccountPreferenceItem name(PreferenceName name);
+  AccountPreferenceItem name(AppPreferenceEnum name);
 
   AccountPreferenceItem value(dynamic value);
 
@@ -69,7 +69,7 @@ abstract class _$AccountPreferenceItemCWProxy {
   /// AccountPreferenceItem(...).copyWith(id: 12, name: "My name")
   /// ````
   AccountPreferenceItem call({
-    PreferenceName? name,
+    AppPreferenceEnum? name,
     dynamic? value,
   });
 }
@@ -82,7 +82,7 @@ class _$AccountPreferenceItemCWProxyImpl
   const _$AccountPreferenceItemCWProxyImpl(this._value);
 
   @override
-  AccountPreferenceItem name(PreferenceName name) => this(name: name);
+  AccountPreferenceItem name(AppPreferenceEnum name) => this(name: name);
 
   @override
   AccountPreferenceItem value(dynamic value) => this(value: value);
@@ -103,7 +103,7 @@ class _$AccountPreferenceItemCWProxyImpl
       name: name == const $CopyWithPlaceholder() || name == null
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
-          : name as PreferenceName,
+          : name as AppPreferenceEnum,
       value: value == const $CopyWithPlaceholder() || value == null
           ? _value.value
           // ignore: cast_nullable_to_non_nullable

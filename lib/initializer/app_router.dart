@@ -8,6 +8,7 @@ import 'package:flutter_password_saver/presentation/page/home/home_page.dart';
 import 'package:flutter_password_saver/presentation/page/info/save/save_info_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/create/password_save_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/password_page.dart';
+import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/page/update_password/update_password_page.dart';
 
 class AppRouter {
@@ -20,6 +21,7 @@ class AppRouter {
   static const String forgetPassword = 'password/forget';
   static const String updatePassword = 'account/password/update';
   static const String saveInfo = 'info/save';
+  static const String preference = 'preference';
 
   // Route after gateway or login or register
   static const String initialRoute = home;
@@ -60,6 +62,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => SaveInfoPage(arg: arg),
+        );
+      case preference:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const PreferencesPage(),
         );
       default:
         return null;

@@ -66,21 +66,22 @@ class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(
-      AccountPreference.enableDarkModeDefault
-          ? ThemeMode.dark
-          : ThemeMode.light);
+    AppPreferenceEnum.enableDarkMode.defaultValue
+        ? ThemeMode.dark
+        : ThemeMode.light,
+  );
 
   static final ValueNotifier<String> languageCodeNotifier =
-      ValueNotifier(AccountPreference.languageCodeDefault);
+      ValueNotifier(AppPreferenceEnum.languageCode.defaultValue);
 
   static void resetDefaultTheme() {
-    themeNotifier.value = AccountPreference.enableDarkModeDefault
+    themeNotifier.value = AppPreferenceEnum.enableDarkMode.defaultValue
         ? ThemeMode.dark
         : ThemeMode.light;
   }
 
   static void resetDefaultLanguage() {
-    languageCodeNotifier.value = AccountPreference.languageCodeDefault;
+    languageCodeNotifier.value = AppPreferenceEnum.languageCode.defaultValue;
   }
 
   @override

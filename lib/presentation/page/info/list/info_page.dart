@@ -9,7 +9,6 @@ import 'package:flutter_password_saver/presentation/page/info/list/bloc/info_blo
 import 'package:flutter_password_saver/presentation/page/info/list/bloc/info_events.dart';
 import 'package:flutter_password_saver/presentation/page/info/list/bloc/info_state.dart';
 import 'package:flutter_password_saver/presentation/page/info/list/widgets/info_list_item.dart';
-import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
@@ -145,7 +144,8 @@ class _InfoPageState extends State<InfoPage>
               return AccountIcon(
                 user: user,
                 onTap: () async {
-                  final needsUpdate = await showPreferencePage(ctx);
+                  final needsUpdate = await Navigator.of(context)
+                      .pushNamed(AppRouter.preference);
                   if (needsUpdate == true) {
                     _bloc.add(InfoRefreshDataEvent());
                   }
