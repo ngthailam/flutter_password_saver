@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_password_saver/main.dart';
 
@@ -23,11 +24,12 @@ class _HotRestartState extends State<HotRestart> {
     setState(() {
       key = UniqueKey();
     });
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return KeyedSubtree(
       key: key,
       child: widget.child,
     );

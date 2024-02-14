@@ -24,28 +24,30 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(32),
-      child: Container(
-        margin: margin,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(32),
-          color: AppColors.blue500,
-        ),
-        height: height,
-        width: width,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        alignment: Alignment.center,
-        child: isLoading
-            ? const LoadingIndicator(color: AppColors.white500)
-            : Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: fontSize,
+    return Padding(
+      padding: margin,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(32),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            color: AppColors.blue500,
+          ),
+          height: height,
+          width: width,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          alignment: Alignment.center,
+          child: isLoading
+              ? const LoadingIndicator(color: AppColors.white500)
+              : Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: fontSize,
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }

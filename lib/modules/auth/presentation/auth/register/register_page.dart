@@ -9,6 +9,7 @@ import 'package:flutter_password_saver/modules/auth/presentation/auth/register/b
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/bloc/register_state.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/util/security_question.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/register/widget/password_input_page.dart';
+import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
@@ -55,7 +56,6 @@ class _RegisterPageState extends State<RegisterPage> {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) async {
               if (state.loadState == LoadState.success) {
-                _animateToNextPage();
                 await Future.delayed(const Duration(seconds: 2));
                 if (mounted) {
                   Navigator.of(context).popAndPushNamed(AppRouter.initialRoute);
@@ -106,9 +106,20 @@ class _RegisterPageState extends State<RegisterPage> {
             onBackPressed: _animateToPrevPage,
             onSkip: () {
               _registerBloc.add(ConfirmSecurityQuestionEvent());
+              _animateToNextPage();
             },
-            onAnswer: (question) => _registerBloc
-                .add(ConfirmSecurityQuestionEvent(question: question)),
+            onAnswer: (question) {
+              _registerBloc
+                  .add(ConfirmSecurityQuestionEvent(question: question));
+              _animateToNextPage();
+            },
+          ),
+          _FastPreferencePage(
+            onConfirm: () {
+              _animateToNextPage();
+              _registerBloc.add(FinalEvent());
+            },
+            onBack: () => _animateToPrevPage(),
           ),
           const _CongratulatePage(),
         ],
@@ -140,9 +151,43 @@ class _RegisterPageState extends State<RegisterPage> {
             _PageIndicator(isActive: _selectedIndex == 2),
             _PageIndicator(isActive: _selectedIndex == 3),
             _PageIndicator(isActive: _selectedIndex == 4),
+            _PageIndicator(isActive: _selectedIndex == 5),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FastPreferencePage extends StatelessWidget {
+  const _FastPreferencePage({
+    Key? key,
+    required this.onConfirm,
+    required this.onBack,
+  }) : super(key: key);
+
+  final VoidCallback onConfirm;
+  final Function onBack;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: PreferencesPage(
+            onlyShowPreferences: true,
+            overrideOnBackPressed: onBack,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: PrimaryButton(
+            text: S().confirm,
+            onPressed: onConfirm,
+          ),
+        )
+      ],
     );
   }
 }
@@ -166,7 +211,9 @@ class _PageIndicator extends StatelessWidget {
             _boxShadow,
           ],
           shape: BoxShape.circle,
-          color: isActive ? AppColors.blue500 : AppColors.ink300,
+          color: isActive
+              ? AppColors.blue500
+              : (isDarkMode() ? AppColors.ink500 : AppColors.ink300),
         ),
       ),
     );

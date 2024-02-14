@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/presentation/widget/opaque_gesture_detector.dart';
 
 Future showAlertDialog({
   required BuildContext context,
@@ -17,13 +19,16 @@ Future showAlertDialog({
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: isDarkMode() ? AppColors.black500 : AppColors.white500,
         title: title,
         content: Text(content),
         actions: <Widget>[
           if (cancelActionText != null)
-            TextButton(
-              child: Text(cancelActionText),
-              onPressed: () {
+            OpaqueGestureDetector(
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Text(cancelActionText)),
+              onTap: () {
                 onCancel == null ? Navigator.of(context).pop() : onCancel();
               },
             ),

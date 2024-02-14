@@ -15,6 +15,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<ConfirmNameEvent>(_confirmName);
     on<ConfirmPasswordEvent>(_confirmPassword);
     on<ConfirmSecurityQuestionEvent>(_confirmSecurityQuestion);
+    on<FinalEvent>(_finalEvent);
   }
 
   final CreateAccountUseCase _createAccountUseCase;
@@ -41,12 +42,20 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     ConfirmSecurityQuestionEvent event,
     Emitter<RegisterState> emit,
   ) async {
-    emit(state.copyWith(loadState: LoadState.loading));
     _user = _user.copyWith(
       securityQuestionId: event.question?.id,
       securityQuestionAnswer: event.question?.answer,
     );
+  }
+
+  FutureOr<void> _finalEvent(
+    FinalEvent event,
+    Emitter<RegisterState> emit,
+  ) async {
+    emit(state.copyWith(loadState: LoadState.loading));
+
     await _createAccountUseCase.execute(_user);
+
     emit(state.copyWith(loadState: LoadState.success));
   }
 }
