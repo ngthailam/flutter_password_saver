@@ -7,7 +7,7 @@ class PreferenceInitEvent extends PreferenceEvent {}
 class SavePreferenceEvent extends PreferenceEvent {
   SavePreferenceEvent({required this.name, required this.value});
 
-  final PreferenceName name;
+  final AppPreferenceEnum name;
   final dynamic value;
 }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
+import 'package:flutter_password_saver/initializer/theme_util.dart';
+import 'package:flutter_password_saver/presentation/values/colors.dart';
 
 class PrefItemChooseLanguage extends StatefulWidget {
   const PrefItemChooseLanguage({
@@ -36,8 +38,7 @@ class _PrefItemChooseLanguageState extends State<PrefItemChooseLanguage> {
         Text(S().language),
         Expanded(
           child: SizedBox(
-            width: 150,
-            height: 100,
+            height: 60,
             child: Align(
               alignment: Alignment.centerRight,
               child: DropdownButton<String>(
@@ -45,10 +46,7 @@ class _PrefItemChooseLanguageState extends State<PrefItemChooseLanguage> {
                 value: _value,
                 icon: const Icon(Icons.keyboard_arrow_down),
                 items: languageCodes.map((e) {
-                  return DropdownMenuItem<String>(
-                    value: e,
-                    child: Text(_getDisplayText(e)),
-                  );
+                  return _item(e);
                 }).toList(),
                 onChanged: (String? value) {
                   if (value != null && value != _value) {
@@ -77,5 +75,21 @@ class _PrefItemChooseLanguageState extends State<PrefItemChooseLanguage> {
       default:
         return '';
     }
+  }
+
+  DropdownMenuItem<String> _item(String e) {
+    final isSelected = _value == e;
+
+    var textColor = isDarkMode()
+        ? (isSelected ? AppColors.white500 : AppColors.white200)
+        : (isSelected ? AppColors.black500 : AppColors.black200);
+
+    return DropdownMenuItem<String>(
+      value: e,
+      child: Text(
+        _getDisplayText(e),
+        style: TextStyle(color: textColor),
+      ),
+    );
   }
 }

@@ -48,15 +48,15 @@ class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
 
   Widget _getTitleWidget() {
     switch (widget.preferenceItem.name) {
-      case PreferenceName.requirePass:
+      case AppPreferenceEnum.requireReLogin:
         return Text(S().prefRequireLogin);
-      case PreferenceName.enableDarkMode:
+      case AppPreferenceEnum.enableDarkMode:
         return Text(S().prefDarkMode);
-      case PreferenceName.showAccName:
+      case AppPreferenceEnum.showAccName:
         return Text(S().prefDarkModeShowAccName);
-      case PreferenceName.allowSearchAccName:
+      case AppPreferenceEnum.allowSearchAccName:
         return Text(S().prefAllowSearchAccName);
-      case PreferenceName.requirePassOnForeground:
+      case AppPreferenceEnum.requirePassOnForeground:
         return Text(S().prefRequirePassOnForeground);
       default:
         return const SizedBox.shrink();

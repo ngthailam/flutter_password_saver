@@ -1,4 +1,5 @@
 import 'package:flutter_password_saver/data/datasource/account_preference_local_data_source.dart';
+import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/modules/auth/data/datasource/auth_local_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/auth_login_lock_data_source.dart';
 import 'package:flutter_password_saver/data/datasource/biometric_data_source.dart';
@@ -110,7 +111,7 @@ class AuthRepoitoryImpl extends AuthRepository {
   Future<bool> isNeedLogin() async {
     final pref = await _accountPreferenceLocalDataSource.getAccountPrefs();
     if (isLoggedIn()) return false;
-    return pref.requireLogin;
+    return pref.getItemValue(AppPreferenceEnum.requireReLogin) as bool;
   }
 
   @override

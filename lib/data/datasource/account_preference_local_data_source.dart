@@ -34,32 +34,26 @@ class AccountPreferenceLocalDataSourceImpl
   @override
   Future<AccountPreferenceEntity> getAccountPrefs() async {
     final sharedPrefs = await _prefs;
-    _allowSearchAccName =
-        sharedPrefs.getBool(AccountPreferenceEntity.keyAllowSearchAccName) ??
-            AccountPreference.allowSearchAccNameDefault;
+
     return AccountPreferenceEntity(
-        requireLogin:
-            sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ??
-                AccountPreference.requireLoginDefault,
-        enableDarkMode:
-            sharedPrefs.getBool(AccountPreferenceEntity.keyEnableDarkMode) ??
-                AccountPreference.enableDarkModeDefault,
-        languageCode:
-            sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
-                AccountPreference.languageCodeDefault,
-        showAccName:
-            sharedPrefs.getBool(AccountPreferenceEntity.keyShowAccName) ??
-                AccountPreference.showAccountNameDefault,
-        allowSearchAccName: _allowSearchAccName,
-        requirePassOnForeground: sharedPrefs
-                .getBool(AccountPreferenceEntity.keyRequirePassOnForeground) ??
-            AccountPreference.requirePassOnForeground);
+      items: AppPreferenceEnum.values
+          .map((e) => AccountPreferenceItem(
+              name: e, value: getOrDefault(sharedPrefs, e)))
+          .toList(),
+    );
+  }
+
+  dynamic getOrDefault(
+    SharedPreferences sharedPref,
+    AppPreferenceEnum prefEnum,
+  ) {
+    return sharedPref.get(prefEnum.name) ?? prefEnum.defaultValue;
   }
 
   @override
   Future<void> saveRequireLogin(bool require) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setBool(AccountPreferenceEntity.keyRequireLogin, require);
+    sharedPrefs.setBool(AppPreferenceEnum.requireReLogin.name, require);
   }
 
   @override
@@ -71,32 +65,32 @@ class AccountPreferenceLocalDataSourceImpl
   @override
   Future<void> enableDarkMode(bool enable) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setBool(AccountPreferenceEntity.keyEnableDarkMode, enable);
+    sharedPrefs.setBool(AppPreferenceEnum.enableDarkMode.name, enable);
   }
 
   @override
   Future<void> setLanguageCode(String value) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setString(AccountPreferenceEntity.keyLanguageCode, value);
+    sharedPrefs.setString(AppPreferenceEnum.languageCode.name, value);
   }
 
   @override
   Future<void> saveShowAccName(bool value) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setBool(AccountPreferenceEntity.keyShowAccName, value);
+    sharedPrefs.setBool(AppPreferenceEnum.showAccName.name, value);
   }
 
   @override
   Future<void> saveRequirePassOnForeground(bool value) async {
     final sharedPrefs = await _prefs;
-    sharedPrefs.setBool(AccountPreferenceEntity.keyRequirePassOnForeground, value);
+    sharedPrefs.setBool(AppPreferenceEnum.requirePassOnForeground.name, value);
   }
 
   @override
   Future<void> saveAllowSearchAccName(bool value) async {
     final sharedPrefs = await _prefs;
     _allowSearchAccName = value;
-    sharedPrefs.setBool(AccountPreferenceEntity.keyAllowSearchAccName, value);
+    sharedPrefs.setBool(AppPreferenceEnum.allowSearchAccName.name, value);
   }
 
   @override

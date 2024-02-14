@@ -4,7 +4,7 @@ abstract class AccountPrefRepo {
   Future<AccountPreference> getAccountPrefs();
 
   Future<void> saveAccountPreference({
-    required PreferenceName name,
+    required AppPreferenceEnum name,
     required dynamic value,
   });
 }
