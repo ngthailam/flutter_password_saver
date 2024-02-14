@@ -141,6 +141,9 @@ class _MyAppState extends State<MyApp> {
 class AppTheme {
   static ThemeData light = ThemeData(
     primaryColor: AppColors.blue500,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.white500,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: AppColors.white500,
     brightness: Brightness.light,

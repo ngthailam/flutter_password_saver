@@ -183,18 +183,14 @@ class _PasswordPageState extends State<PasswordPage>
           onChanged: (text) {
             _bloc.add(SearchPasswordEvent(keyword: text));
           },
-          trailingWidget: Builder(
-            builder: (ctx) {
-              return AccountIcon(
-                user: user,
-                onTap: () async {
-                  final needsUpdate = await Navigator.of(context)
-                      .pushNamed(AppRouter.preference);
-                  if (needsUpdate == true) {
-                    _bloc.add(RefreshDataEvent());
-                  }
-                },
-              );
+          trailingWidget: AccountIcon(
+            user: user,
+            onTap: () async {
+              final needsUpdate =
+                  await Navigator.of(context).pushNamed(AppRouter.preference);
+              if (needsUpdate == true) {
+                _bloc.add(RefreshDataEvent());
+              }
             },
           ),
         );

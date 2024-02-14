@@ -52,7 +52,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 onConfirm: (String password) {
                   _bloc.add(ConfirmNewPasswordEvent(password: password));
                 },
-                btnWidth: MediaQuery.of(context).size.width - 64,
+                btnWidth: MediaQuery.sizeOf(context).width - 64,
               );
             },
           ),

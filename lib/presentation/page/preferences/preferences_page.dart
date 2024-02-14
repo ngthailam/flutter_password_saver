@@ -21,7 +21,14 @@ import 'package:flutter_password_saver/initializer/language_util.dart';
 import 'package:flutter_password_saver/initializer/theme_util.dart';
 
 class PreferencesPage extends StatefulWidget {
-  const PreferencesPage({Key? key}) : super(key: key);
+  const PreferencesPage({
+    Key? key,
+    this.onlyShowPreferences = false,
+    this.overrideOnBackPressed,
+  }) : super(key: key);
+
+  final bool onlyShowPreferences;
+  final Function? overrideOnBackPressed;
 
   @override
   State<PreferencesPage> createState() => _PreferencesPageState();
@@ -42,9 +49,13 @@ class _PreferencesPageState extends State<PreferencesPage> {
       appBar: AppBar(
         title: Text(S().preferences),
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(_bloc.dataChanged);
+            if (widget.overrideOnBackPressed != null) {
+              widget.overrideOnBackPressed?.call();
+            } else {
+              Navigator.of(context).pop(_bloc.dataChanged);
+            }
           },
         ),
       ),
@@ -54,8 +65,13 @@ class _PreferencesPageState extends State<PreferencesPage> {
           if (didPop) {
             return;
           }
+
           if (mounted) {
-            Navigator.of(context).pop(_bloc.dataChanged);
+            if (widget.overrideOnBackPressed != null) {
+              widget.overrideOnBackPressed?.call();
+            } else {
+              Navigator.of(context).pop(_bloc.dataChanged);
+            }
           }
         },
         child: Padding(
@@ -102,13 +118,20 @@ class _PreferencesPageState extends State<PreferencesPage> {
   }
 
   Widget _primary(PreferenceState state) {
+    if (widget.onlyShowPreferences) {
+      return _preferences(state.preference);
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         _accountDetails(state.user),
         const SizedBox(height: 16),
         DeleteAccountButton(
-          onPressed: () => _bloc.add(DeleteAccountEvent()),
+          onPressed: () {
+            Navigator.of(context).pop();
+            _bloc.add(DeleteAccountEvent());
+          },
         ),
         const Padding(
           padding: EdgeInsets.only(top: 16, bottom: 8),
@@ -177,6 +200,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     if (state.deleteLoadState != LoadState.none) {
       if (state.deleteLoadState == LoadState.success) {
         context.showErrorSnackBar(S().sbDeleteSuccess);
+        Navigator.of(context).pop();
         HotRestart.of(context).hotRestart();
       }
 
