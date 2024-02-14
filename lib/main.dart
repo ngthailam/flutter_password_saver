@@ -123,13 +123,8 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Password Saver',
             navigatorObservers: [routeObserver],
-            theme: ThemeData(
-              primaryColor: AppColors.blue500,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              scaffoldBackgroundColor: AppColors.white500,
-              brightness: Brightness.light,
-            ),
-            darkTheme: ThemeData.dark(),
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
             themeMode: values[0],
             locale: Locale(values[1]),
             onGenerateRoute: (RouteSettings settings) =>
@@ -140,4 +135,46 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+class AppTheme {
+  static ThemeData light = ThemeData(
+    primaryColor: AppColors.blue500,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    scaffoldBackgroundColor: AppColors.white500,
+    brightness: Brightness.light,
+    switchTheme: SwitchThemeData(
+      trackColor: MaterialStateProperty.resolveWith((states) {
+        return states.contains(MaterialState.selected)
+            ? AppColors.blue500
+            : AppColors.ink300;
+      }),
+      thumbColor: MaterialStateProperty.resolveWith((states) {
+        return states.contains(MaterialState.selected)
+            ? AppColors.white400
+            : AppColors.ink100;
+      }),
+      trackOutlineColor: MaterialStateProperty.all(
+        AppColors.white200,
+      ),
+    ),
+  );
+
+  static ThemeData dark = ThemeData.dark().copyWith(
+    switchTheme: SwitchThemeData(
+      trackColor: MaterialStateProperty.resolveWith((states) {
+        return states.contains(MaterialState.selected)
+            ? AppColors.blue400
+            : AppColors.ink300;
+      }),
+      thumbColor: MaterialStateProperty.resolveWith((states) {
+        return states.contains(MaterialState.selected)
+            ? AppColors.white400
+            : AppColors.white100;
+      }),
+      trackOutlineColor: MaterialStateProperty.all(
+        AppColors.white200,
+      ),
+    ),
+  );
 }

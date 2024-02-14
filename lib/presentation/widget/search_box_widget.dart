@@ -24,7 +24,7 @@ class SearchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: isDarkMode() ? AppColors.ink500 : AppColors.ink100,
+        color: isDarkMode() ? AppColors.black200 : AppColors.ink100,
         borderRadius: BorderRadius.circular(16),
       ),
       margin: margin,

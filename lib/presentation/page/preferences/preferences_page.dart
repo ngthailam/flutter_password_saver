@@ -26,10 +26,9 @@ Future<bool?> showPreferencePage(BuildContext context) {
     barrierDismissible: true,
     barrierColor: AppColors.ink300,
     builder: (context) {
-      return AlertDialog(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: const PreferencesPage(),
+      return const AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        content: PreferencesPage(),
       );
     },
   );
@@ -53,6 +52,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('zzll 2 ${Theme.of(context).scaffoldBackgroundColor}');
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) {
@@ -64,9 +64,13 @@ class _PreferencesPageState extends State<PreferencesPage> {
         }
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: MediaQuery.of(context).size.width * 0.9,
-        color: Theme.of(context).scaffoldBackgroundColor,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        height: MediaQuery.sizeOf(context).height * 0.7,
+        width: MediaQuery.sizeOf(context).width * 0.9,
         child: BlocProvider(
           create: (context) => _bloc..add(PreferenceInitEvent()),
           child: BlocConsumer<PreferencesBloc, PreferenceState>(
@@ -101,31 +105,34 @@ class _PreferencesPageState extends State<PreferencesPage> {
               }
             }),
             builder: (context, state) {
-              switch (state.loadState) {
-                case LoadState.loading:
-                  return Center(
-                    child: LoadingIndicator(
-                      color: LoadingIndicator.defaultColor,
+              if (state.loadState == LoadState.loading) {
+                return Center(
+                  child: LoadingIndicator(
+                    color: LoadingIndicator.defaultColor,
+                  ),
+                );
+              }
+
+              if (state.preference?.items.isNotEmpty == true) {
+                if (state.deleteLoadState == LoadState.none) {
+                  return _primary(state);
+                } else {
+                  return const Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        LoadingIndicator(),
+                      ],
                     ),
                   );
-                case LoadState.failure:
-                  return const Center(child: Text('Error'));
-                case LoadState.success:
-                  if (state.deleteLoadState == LoadState.none) {
-                    return _primary(state);
-                  } else {
-                    return const Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          LoadingIndicator(),
-                        ],
-                      ),
-                    );
-                  }
-                default:
-                  return const SizedBox.shrink();
+                }
               }
+
+              if (state.loadState == LoadState.failure) {
+                return const Center(child: Text('Error'));
+              }
+
+              return const SizedBox.shrink();
             },
           ),
         ),

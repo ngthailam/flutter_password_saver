@@ -32,6 +32,9 @@ class AccountPrefRepoImpl extends AccountPrefRepo {
             .setLanguageCode(value as String);
       case PreferenceName.showAccName:
         return _accountPreferenceLocalDataSource.saveShowAccName(value as bool);
+      case PreferenceName.allowSearchAccName:
+        return _accountPreferenceLocalDataSource
+            .saveAllowSearchAccName(value as bool);
       case PreferenceName.requirePassOnForeground:
         return _accountPreferenceLocalDataSource
             .saveRequirePassOnForeground(value as bool);

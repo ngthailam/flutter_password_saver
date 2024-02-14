@@ -7,7 +7,9 @@ import 'package:flutter_password_saver/modules/auth/presentation/auth/authen/blo
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
 import 'package:flutter_password_saver/presentation/utils/snackbar_ext.dart';
 import 'package:flutter_password_saver/presentation/utils/time_util.dart';
+import 'package:flutter_password_saver/presentation/utils/ui_utils.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
+import 'package:flutter_password_saver/presentation/widget/opaque_gesture_detector.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
 import 'package:flutter_password_saver/presentation/widget/primary_text_input.dart';
 
@@ -70,8 +72,8 @@ class _AuthenBottomSheetState extends State<AuthenBottomSheet> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: OpaqueGestureDetector(
+        onTap: () => unfocus(),
         child: Container(
           padding: MediaQuery.of(context).viewInsets,
           child: BlocProvider(

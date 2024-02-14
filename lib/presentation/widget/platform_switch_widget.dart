@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlatformSwitch extends StatefulWidget {
@@ -25,18 +22,7 @@ class _PlatformSwitchState extends State<PlatformSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isAndroid ? _androidSwitcher() : _iosSwitcher();
-  }
-
-  Widget _androidSwitcher() {
-    return Switch(
-      value: _switchValue,
-      onChanged: _internalOnChanged,
-    );
-  }
-
-  Widget _iosSwitcher() {
-    return CupertinoSwitch(
+    return Switch.adaptive(
       value: _switchValue,
       onChanged: _internalOnChanged,
     );

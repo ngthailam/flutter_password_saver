@@ -12,13 +12,14 @@ import 'package:flutter_password_saver/presentation/page/password/list/bloc/pass
 import 'package:flutter_password_saver/presentation/page/password/list/widget/password_list_item.dart';
 import 'package:flutter_password_saver/presentation/page/preferences/preferences_page.dart';
 import 'package:flutter_password_saver/presentation/utils/load_state.dart';
+import 'package:flutter_password_saver/presentation/utils/ui_utils.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/account_icon_widget.dart';
-import 'package:flutter_password_saver/presentation/widget/primary_button.dart';
+import 'package:flutter_password_saver/presentation/widget/empty_state.dart';
+import 'package:flutter_password_saver/presentation/widget/opaque_gesture_detector.dart';
 import 'package:flutter_password_saver/presentation/widget/search_box_widget.dart';
 import 'package:flutter_password_saver/initializer/app_router.dart';
 import 'package:flutter_password_saver/initializer/uri_handler.dart';
-import 'package:flutter_svg/svg.dart';
 
 class PasswordPage extends StatefulWidget {
   const PasswordPage({Key? key}) : super(key: key);
@@ -62,8 +63,8 @@ class _PasswordPageState extends State<PasswordPage>
               return AnimatedCrossFade(
                 key: const Key('password_cross_fade_main'),
                 firstChild: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.sizeOf(context).height,
+                  width: MediaQuery.sizeOf(context).width,
                 ),
                 secondChild: _body(state),
                 crossFadeState: (state.loadState == LoadState.none ||
@@ -98,19 +99,22 @@ class _PasswordPageState extends State<PasswordPage>
   }
 
   Widget _body(PasswordState state) {
-    return Stack(
-      children: [
-        const SizedBox(height: 16),
-        _searchBox(state.user),
-        _resolveMainContent(state),
-        _createPassFab(),
-      ],
+    return OpaqueGestureDetector(
+      onTap: () => unfocus(),
+      child: Stack(
+        children: [
+          const SizedBox(height: 16),
+          _searchBox(state.user),
+          _resolveMainContent(state),
+          _createPassFab(),
+        ],
+      ),
     );
   }
 
   Widget _resolveMainContent(PasswordState state) {
     return state.passwords.isEmpty
-        ? (_bloc.isSearching ? _noSearchResultState() : _emptyState())
+        ? _emptyState(isSearching: _bloc.isSearching)
         : _passwordList();
   }
 
@@ -197,46 +201,15 @@ class _PasswordPageState extends State<PasswordPage>
     );
   }
 
-  Widget _emptyState() {
-    return Align(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/svg/login.svg',
-            height: 160,
-            width: 160,
-          ),
-          const SizedBox(height: 32),
-          PrimaryButton(
-            margin: const EdgeInsets.symmetric(horizontal: 48),
-            text: S().emptyPasswordHint,
-            onPressed: _goToSavePassword,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _noSearchResultState() {
-    return Align(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/svg/login.svg',
-            height: 160,
-            width: 160,
-          ),
-          const SizedBox(height: 32),
-          Text(
-            S().noResults,
-            style: const TextStyle(fontSize: 16),
-          )
-        ],
-      ),
+  Widget _emptyState({required bool isSearching}) {
+    if (isSearching) {
+      return EmptyState(
+        description: S().noResults,
+      );
+    }
+    return EmptyState(
+      ctaText: S().emptyPasswordHint,
+      onCtaPressed: _goToSavePassword,
     );
   }
 
