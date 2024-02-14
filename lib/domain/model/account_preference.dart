@@ -10,6 +10,7 @@ class AccountPreference extends Equatable {
   static const languageCodeDefault = 'en';
   static const showAccountNameDefault = true;
   static const allowSearchAccNameDefault = true;
+  static const requirePassOnForeground = true;
 
   const AccountPreference({this.items = defaultPrefItems});
 
@@ -35,6 +36,10 @@ class AccountPreference extends Equatable {
     AccountPreferenceItem(
       name: PreferenceName.allowSearchAccName,
       value: allowSearchAccNameDefault,
+    ),
+    AccountPreferenceItem(
+      name: PreferenceName.requirePassOnForeground,
+      value: requirePassOnForeground,
     ),
   ];
 
@@ -65,11 +70,14 @@ class AccountPreference extends Equatable {
 }
 
 enum PreferenceName {
+  // If app require password when user open app from closed to foreground
   requirePass,
   enableDarkMode,
   languageCode,
   showAccName,
   allowSearchAccName,
+  // If app require password when user open app from background to foreground
+  requirePassOnForeground,
 }
 
 @CopyWith()

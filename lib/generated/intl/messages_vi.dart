@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "answer": MessageLookupByLibrary.simpleMessage("Trả lời"),
+        "authenReasonRequirePassOnForeground": MessageLookupByLibrary.simpleMessage(
+            "Ứng dụng yêu cầu mật khẩu khi mở lại để tăng tính bảo mật. Bạn có thể tắt tính năng này ở Cài đặt"),
         "benefit1Highlight1": MessageLookupByLibrary.simpleMessage("BẢO MẬT "),
         "benefit1Part1": MessageLookupByLibrary.simpleMessage(
             "Nơi lưu trữ tất cả mật khẩu của bạn một cách "),
@@ -92,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Luôn hiển thị tên tài khoản"),
         "prefRequireLogin": MessageLookupByLibrary.simpleMessage(
             "Yêu cầu mật khẩu khi đăng nhập"),
+        "prefRequirePassOnForeground": MessageLookupByLibrary.simpleMessage(
+            "Yêu cầu mật khẩu khi mở lại ứng dụng để tăng tính bảo mật."),
         "preferences": MessageLookupByLibrary.simpleMessage("Cài đặt"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
         "saveInfoError": MessageLookupByLibrary.simpleMessage(

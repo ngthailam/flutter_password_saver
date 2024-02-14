@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "answer": MessageLookupByLibrary.simpleMessage("Answer"),
+        "authenReasonRequirePassOnForeground": MessageLookupByLibrary.simpleMessage(
+            "The app requires password after inactive use to improve security. You can turn this behaviour off in Preference page"),
         "benefit1Highlight1": MessageLookupByLibrary.simpleMessage("SECURELY "),
         "benefit1Part1": MessageLookupByLibrary.simpleMessage(
             "A place to remember all of your Passwords for you "),
@@ -92,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Always show account name"),
         "prefRequireLogin":
             MessageLookupByLibrary.simpleMessage("Require login on open app"),
+        "prefRequirePassOnForeground": MessageLookupByLibrary.simpleMessage(
+            "Require password when opening app from background to improve security."),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveInfoError":

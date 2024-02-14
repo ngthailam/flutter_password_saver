@@ -859,6 +859,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Require password when opening app from background to improve security.`
+  String get prefRequirePassOnForeground {
+    return Intl.message(
+      'Require password when opening app from background to improve security.',
+      name: 'prefRequirePassOnForeground',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The app requires password after inactive use to improve security. You can turn this behaviour off in Preference page`
+  String get authenReasonRequirePassOnForeground {
+    return Intl.message(
+      'The app requires password after inactive use to improve security. You can turn this behaviour off in Preference page',
+      name: 'authenReasonRequirePassOnForeground',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
