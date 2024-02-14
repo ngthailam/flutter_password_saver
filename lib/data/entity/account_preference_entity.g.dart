@@ -15,6 +15,8 @@ abstract class _$AccountPreferenceEntityCWProxy {
 
   AccountPreferenceEntity requireLogin(bool requireLogin);
 
+  AccountPreferenceEntity requirePassOnForeground(bool requirePassOnForeground);
+
   AccountPreferenceEntity showAccName(bool showAccName);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AccountPreferenceEntity(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -28,6 +30,7 @@ abstract class _$AccountPreferenceEntityCWProxy {
     bool? enableDarkMode,
     String? languageCode,
     bool? requireLogin,
+    bool? requirePassOnForeground,
     bool? showAccName,
   });
 }
@@ -56,6 +59,11 @@ class _$AccountPreferenceEntityCWProxyImpl
       this(requireLogin: requireLogin);
 
   @override
+  AccountPreferenceEntity requirePassOnForeground(
+          bool requirePassOnForeground) =>
+      this(requirePassOnForeground: requirePassOnForeground);
+
+  @override
   AccountPreferenceEntity showAccName(bool showAccName) =>
       this(showAccName: showAccName);
 
@@ -72,6 +80,7 @@ class _$AccountPreferenceEntityCWProxyImpl
     Object? enableDarkMode = const $CopyWithPlaceholder(),
     Object? languageCode = const $CopyWithPlaceholder(),
     Object? requireLogin = const $CopyWithPlaceholder(),
+    Object? requirePassOnForeground = const $CopyWithPlaceholder(),
     Object? showAccName = const $CopyWithPlaceholder(),
   }) {
     return AccountPreferenceEntity(
@@ -95,6 +104,12 @@ class _$AccountPreferenceEntityCWProxyImpl
               ? _value.requireLogin
               // ignore: cast_nullable_to_non_nullable
               : requireLogin as bool,
+      requirePassOnForeground:
+          requirePassOnForeground == const $CopyWithPlaceholder() ||
+                  requirePassOnForeground == null
+              ? _value.requirePassOnForeground
+              // ignore: cast_nullable_to_non_nullable
+              : requirePassOnForeground as bool,
       showAccName:
           showAccName == const $CopyWithPlaceholder() || showAccName == null
               ? _value.showAccName

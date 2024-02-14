@@ -7,7 +7,6 @@ import 'package:flutter_password_saver/domain/model/account_preference.dart';
 import 'package:flutter_password_saver/domain/usecase/preference/account_preference_use_case.dart';
 import 'package:flutter_password_saver/generated/l10n.dart';
 import 'package:flutter_password_saver/initializer/hive_initializer.dart';
-import 'package:flutter_password_saver/presentation/page/gateway/gateway_page.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 import 'package:flutter_password_saver/presentation/widget/hot_restart_widget.dart';
 import 'package:flutter_password_saver/initializer/app_router.dart';
@@ -135,7 +134,7 @@ class _MyAppState extends State<MyApp> {
             locale: Locale(values[1]),
             onGenerateRoute: (RouteSettings settings) =>
                 AppRouter.generateRoute(settings),
-            home: const GatewayPage(),
+            initialRoute: AppRouter.gateway,
           );
         },
       ),

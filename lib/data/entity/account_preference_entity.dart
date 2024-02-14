@@ -9,6 +9,7 @@ class AccountPreferenceEntity {
   static const keyEnableDarkMode = 'enableDarkMode';
   static const keyLanguageCode = 'languageCode';
   static const keyShowAccName = 'showAccName';
+  static const keyRequirePassOnForeground = 'requirePassOnForeground';
   static const keyAllowSearchAccName = 'allowSearchAccName';
 
   AccountPreferenceEntity({
@@ -17,6 +18,7 @@ class AccountPreferenceEntity {
     required this.languageCode,
     required this.showAccName,
     required this.allowSearchAccName,
+    required this.requirePassOnForeground,
   });
 
   final bool requireLogin;
@@ -24,6 +26,7 @@ class AccountPreferenceEntity {
   final String languageCode;
   final bool showAccName;
   final bool allowSearchAccName;
+  final bool requirePassOnForeground;
 
   factory AccountPreferenceEntity.fromAccountPreference(
       AccountPreference preference) {
@@ -44,6 +47,9 @@ class AccountPreferenceEntity {
       allowSearchAccName:
           preference.getItemValue(PreferenceName.allowSearchAccName) ??
               AccountPreference.allowSearchAccNameDefault,
+      requirePassOnForeground:
+          preference.getItemValue(PreferenceName.requirePassOnForeground) ??
+              AccountPreference.requirePassOnForeground,
     );
   }
 
@@ -68,6 +74,10 @@ class AccountPreferenceEntity {
           AccountPreferenceItem(
             name: PreferenceName.allowSearchAccName,
             value: allowSearchAccName,
+          ),
+          AccountPreferenceItem(
+            name: PreferenceName.requirePassOnForeground,
+            value: requirePassOnForeground,
           ),
         ],
       );

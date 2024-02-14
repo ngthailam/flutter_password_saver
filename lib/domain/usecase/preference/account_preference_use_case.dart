@@ -19,6 +19,12 @@ class AccountPreferenceUseCase {
     });
   }
 
+  Future<bool> getIsRequirePassOnForeground() async {
+    final prefs = await getAccountPrefs();
+    return prefs.getItemValue(PreferenceName.requirePassOnForeground) ??
+        AccountPreference.requirePassOnForeground;
+  }
+
   Future<void> saveAccountPreference({
     required PreferenceName name,
     required dynamic value,
@@ -31,7 +37,8 @@ class AccountPreferenceUseCase {
 
   Future<String> getLanguageCode() {
     return getAccountPrefs().then((value) {
-      final prefItemValue = value.getItemByName(PreferenceName.languageCode)?.value;
+      final prefItemValue =
+          value.getItemByName(PreferenceName.languageCode)?.value;
       return prefItemValue ?? AccountPreference.languageCodeDefault;
     });
   }

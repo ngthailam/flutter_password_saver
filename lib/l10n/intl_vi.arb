@@ -101,5 +101,7 @@
     "saveInfoHintName": "Tên (Sđt của Lan)",
     "saveInfoHintDesc": "Thông tin (+8411111111)",
     "saveInfoError": "Không được để trống các trường trên",
-    "sbEditInfoSuccess": "Cập nhật thông tin thành công"
+    "sbEditInfoSuccess": "Cập nhật thông tin thành công",
+    "prefRequirePassOnForeground": "Yêu cầu mật khẩu khi mở lại ứng dụng để tăng tính bảo mật.",
+    "authenReasonRequirePassOnForeground": "Ứng dụng yêu cầu mật khẩu khi mở lại để tăng tính bảo mật. Bạn có thể tắt tính năng này ở Cài đặt"
 }

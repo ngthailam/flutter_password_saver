@@ -28,20 +28,17 @@ class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            flex: 2,
             child: _getTitleWidget(),
           ),
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: PlatformSwitch(
-                value: widget.preferenceItem.value as bool,
-                onChanged: (value) {
-                  widget.onUpdate
-                      ?.call(widget.preferenceItem.copyWith(value: value));
-                },
-              ),
+          const SizedBox(width: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: PlatformSwitch(
+              value: widget.preferenceItem.value as bool,
+              onChanged: (value) {
+                widget.onUpdate
+                    ?.call(widget.preferenceItem.copyWith(value: value));
+              },
             ),
           )
         ],
@@ -59,6 +56,8 @@ class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
         return Text(S().prefDarkModeShowAccName);
       case PreferenceName.allowSearchAccName:
         return Text(S().prefAllowSearchAccName);
+      case PreferenceName.requirePassOnForeground:
+        return Text(S().prefRequirePassOnForeground);
       default:
         return const SizedBox.shrink();
     }

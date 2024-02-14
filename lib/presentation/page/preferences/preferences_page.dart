@@ -53,10 +53,15 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.of(context).pop(_bloc.dataChanged);
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) {
+        if (didPop) {
+          return;
+        }
+        if (mounted) {
+          Navigator.of(context).pop(_bloc.dataChanged);
+        }
       },
       child: Container(
         height: MediaQuery.of(context).size.height * 0.7,

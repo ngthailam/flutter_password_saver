@@ -18,6 +18,8 @@ abstract class AccountPreferenceLocalDataSource {
 
   Future<void> saveAllowSearchAccName(bool value);
 
+  Future<void> saveRequirePassOnForeground(bool value);
+
   bool fastGetAllowSearchAccName();
 }
 
@@ -36,20 +38,22 @@ class AccountPreferenceLocalDataSourceImpl
         sharedPrefs.getBool(AccountPreferenceEntity.keyAllowSearchAccName) ??
             AccountPreference.allowSearchAccNameDefault;
     return AccountPreferenceEntity(
-      requireLogin:
-          sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ??
-              AccountPreference.requireLoginDefault,
-      enableDarkMode:
-          sharedPrefs.getBool(AccountPreferenceEntity.keyEnableDarkMode) ??
-              AccountPreference.enableDarkModeDefault,
-      languageCode:
-          sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
-              AccountPreference.languageCodeDefault,
-      showAccName:
-          sharedPrefs.getBool(AccountPreferenceEntity.keyShowAccName) ??
-              AccountPreference.showAccountNameDefault,
-      allowSearchAccName: _allowSearchAccName,
-    );
+        requireLogin:
+            sharedPrefs.getBool(AccountPreferenceEntity.keyRequireLogin) ??
+                AccountPreference.requireLoginDefault,
+        enableDarkMode:
+            sharedPrefs.getBool(AccountPreferenceEntity.keyEnableDarkMode) ??
+                AccountPreference.enableDarkModeDefault,
+        languageCode:
+            sharedPrefs.getString(AccountPreferenceEntity.keyLanguageCode) ??
+                AccountPreference.languageCodeDefault,
+        showAccName:
+            sharedPrefs.getBool(AccountPreferenceEntity.keyShowAccName) ??
+                AccountPreference.showAccountNameDefault,
+        allowSearchAccName: _allowSearchAccName,
+        requirePassOnForeground: sharedPrefs
+                .getBool(AccountPreferenceEntity.keyRequirePassOnForeground) ??
+            AccountPreference.requirePassOnForeground);
   }
 
   @override
@@ -80,6 +84,12 @@ class AccountPreferenceLocalDataSourceImpl
   Future<void> saveShowAccName(bool value) async {
     final sharedPrefs = await _prefs;
     sharedPrefs.setBool(AccountPreferenceEntity.keyShowAccName, value);
+  }
+
+  @override
+  Future<void> saveRequirePassOnForeground(bool value) async {
+    final sharedPrefs = await _prefs;
+    sharedPrefs.setBool(AccountPreferenceEntity.keyRequirePassOnForeground, value);
   }
 
   @override
