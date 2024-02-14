@@ -20,8 +20,8 @@ class PrefItemSwitcher extends StatefulWidget {
 class _PrefItemSwitcherState extends State<PrefItemSwitcher> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -9,6 +9,7 @@ import 'package:flutter_password_saver/main.dart';
 import 'package:flutter_password_saver/modules/auth/presentation/auth/authen/authen_bottom_sheet.dart';
 import 'package:flutter_password_saver/presentation/page/info/list/info_page.dart';
 import 'package:flutter_password_saver/presentation/page/password/list/password_page.dart';
+import 'package:flutter_password_saver/presentation/utils/ui_utils.dart';
 import 'package:flutter_password_saver/presentation/values/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -90,38 +91,43 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Widget _segmentControl() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: CustomSlidingSegmentedControl<int>(
-        controller: _segmentedController,
-        fromMax: true,
-        initialValue: 0,
-        children: {
-          0: _segmentItem('Password', 0),
-          1: _segmentItem('Information', 1),
-        },
-        decoration: BoxDecoration(
-          color: isDarkMode()
-              ? AppColors.black300
-              : CupertinoColors.lightBackgroundGray,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        thumbDecoration: BoxDecoration(
-          color: AppColors.blue400,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInToLinear,
-        onValueChanged: (int index) {
-          if (index != _pageController.page) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut,
-            );
-          }
-        },
-      ),
+    return ValueListenableBuilder(
+      valueListenable: MyApp.themeNotifier,
+      builder: (context, newValue, child) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          child: CustomSlidingSegmentedControl<int>(
+            controller: _segmentedController,
+            fromMax: true,
+            initialValue: 0,
+            children: {
+              0: _segmentItem('Password', 0),
+              1: _segmentItem('Information', 1),
+            },
+            decoration: BoxDecoration(
+              color: newValue == ThemeMode.dark
+                  ? AppColors.black300
+                  : CupertinoColors.lightBackgroundGray,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            thumbDecoration: BoxDecoration(
+              color: AppColors.blue400,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            duration: const Duration(milliseconds: 350),
+            curve: Curves.easeInToLinear,
+            onValueChanged: (int index) {
+              if (index != _pageController.page) {
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -146,6 +152,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       controller: _pageController,
       onPageChanged: (int index) {
         if (index != _segmentedController.value) {
+          unfocus();
           _segmentedController.value = index;
         }
       },
