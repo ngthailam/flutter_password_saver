@@ -105,31 +105,34 @@ class _PreferencesPageState extends State<PreferencesPage> {
               }
             }),
             builder: (context, state) {
-              switch (state.loadState) {
-                case LoadState.loading:
-                  return Center(
-                    child: LoadingIndicator(
-                      color: LoadingIndicator.defaultColor,
+              if (state.loadState == LoadState.loading) {
+                return Center(
+                  child: LoadingIndicator(
+                    color: LoadingIndicator.defaultColor,
+                  ),
+                );
+              }
+
+              if (state.preference?.items.isNotEmpty == true) {
+                if (state.deleteLoadState == LoadState.none) {
+                  return _primary(state);
+                } else {
+                  return const Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        LoadingIndicator(),
+                      ],
                     ),
                   );
-                case LoadState.failure:
-                  return const Center(child: Text('Error'));
-                case LoadState.success:
-                  if (state.deleteLoadState == LoadState.none) {
-                    return _primary(state);
-                  } else {
-                    return const Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          LoadingIndicator(),
-                        ],
-                      ),
-                    );
-                  }
-                default:
-                  return const SizedBox.shrink();
+                }
               }
+
+              if (state.loadState == LoadState.failure) {
+                return const Center(child: Text('Error'));
+              }
+
+              return const SizedBox.shrink();
             },
           ),
         ),
